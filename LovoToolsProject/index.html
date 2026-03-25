@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AudioFlow - Premium Ses Editörü</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <i class="ph ph-squares-four"></i>
+        <h1>Araç Kutusu</h1>
+      </div>
+      <p class="subtitle">Tüm dijital ihtiyaçlarınız için hepsi bir arada araçlar</p>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- Dashboard Screen -->
+      <section id="dashboard-zone" class="dashboard-zone active">
+        <div class="tools-grid">
+          <button class="tool-card" onclick="openPanel('audio-editor-panel')">
+            <div class="tool-icon"><i class="ph ph-wave-sawtooth"></i></div>
+            <h3>Ses Düzenleme</h3>
+            <p>Ses dosyalarını kesin, kırpın ve formatlarını dönüştürün.</p>
+          </button>
+          <button class="tool-card" onclick="openPanel('url-shortener-panel')">
+            <div class="tool-icon"><i class="ph ph-link"></i></div>
+            <h3>Link Kısaltma</h3>
+            <p>Uzun bağlantıları hızlıca kısaltın ve paylaşın.</p>
+          </button>
+          <button class="tool-card" onclick="openPanel('qr-generator-panel')">
+            <div class="tool-icon"><i class="ph ph-qr-code"></i></div>
+            <h3>QR Kod Oluşturma</h3>
+            <p>Web siteleri ve metinler için özel QR kodlar tasarlayın.</p>
+          </button>
+          <button class="tool-card" onclick="openPanel('pdf-editor-panel')">
+            <div class="tool-icon"><i class="ph ph-file-pdf"></i></div>
+            <h3>PDF Düzenleme</h3>
+            <p>PDF dosyalarını birleştirin, ayırın ve düzenleyin.</p>
+          </button>
+          <button class="tool-card" onclick="openPanel('video-compressor-panel')">
+            <div class="tool-icon"><i class="ph ph-video-camera"></i></div>
+            <h3>Video Sıkıştırma</h3>
+            <p>Videolarınızın boyutunu kalite kaybı olmadan küçültün.</p>
+          </button>
+        </div>
+      </section>
+
+      <!-- Audio Editor Panel -->
+      <section id="audio-editor-panel" class="tool-panel">
+        <div class="panel-header">
+          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
+            <i class="ph ph-arrow-left"></i> Geri
+          </button>
+          <h2>Ses Düzenleme</h2>
+        </div>
+        
+        <!-- Upload Zone -->
+        <section id="upload-zone" class="upload-zone active">
+          <div class="upload-content">
+            <div class="upload-icon-wrapper">
+              <i class="ph ph-upload-simple"></i>
+            </div>
+            <h2>Düzenlemek istediğiniz sesi yükleyin</h2>
+            <p>Sürükleyip bırakın veya seçmek için tıklayın.</p>
+            <input type="file" id="audio-input" accept="audio/*" multiple hidden>
+            <button class="btn btn-primary" onclick="document.getElementById('audio-input').click()">
+              Ses Dosyası Seç
+            </button>
+          </div>
+        </section>
+
+        <!-- Editor Context -->
+        <section id="editor-zone" class="editor-zone">
+          <div class="batch-header">
+            <div style="flex: 1;">
+              <p class="subtitle" style="text-align: left; margin-bottom: 1rem;">Düzenlenen Dosyalar</p>
+            </div>
+            <button id="btn-add-more" class="btn btn-icon btn-primary" title="Yeni Ekle">
+              <i class="ph ph-plus"></i> Yeni Dosya
+            </button>
+          </div>
+
+          <div id="editors-list" class="editors-list">
+            <!-- JS ile doldurulacak -->
+          </div>
+
+          <div class="batch-footer" style="display: flex; justify-content: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-light);">
+            <button id="btn-batch-export" class="btn btn-primary btn-glow btn-large" style="padding: 1rem 3rem; font-size: 1.1rem; border-radius: 50px;" title="Tüm listeyi ayrı ayrı indir" disabled>
+              <i class="ph ph-download-simple"></i>
+              Tüm Dosyaları Toplu İndir
+            </button>
+          </div>
+        </section>
+
+      </section>
+
+      <!-- URL Shortener Panel -->
+      <section id="url-shortener-panel" class="tool-panel">
+        <div class="panel-header">
+          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
+            <i class="ph ph-arrow-left"></i> Geri
+          </button>
+          <h2>Link Kısaltma</h2>
+        </div>
+        
+        <div class="tool-content-wrapper">
+          <div class="shortener-container">
+            <div class="shortener-header">
+              <i class="ph ph-link"></i>
+              <h3>Bağlantınızı Kısaltın</h3>
+              <p>Uzun ve karmaşık URL'leri daha paylaşılabilir, kısa bağlantılara dönüştürün.</p>
+            </div>
+            
+            <div class="shortener-input-group">
+              <input type="url" id="url-input" class="large-input" placeholder="https://ornek.com/uzun-baglanti-adresi" required>
+              <button id="btn-shorten" class="btn btn-primary btn-large">Kısalt</button>
+            </div>
+
+            <div id="shortener-result" class="shortener-result hidden">
+              <p>Kısaltılmış Bağlantınız:</p>
+              <div class="result-box">
+                <input type="text" id="shortened-url" class="result-input" readonly>
+                <button id="btn-copy-url" class="btn btn-success btn-icon" title="Kopyala">
+                  <i class="ph ph-copy"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QR Generator Panel -->
+      <section id="qr-generator-panel" class="tool-panel">
+        <div class="panel-header">
+          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
+            <i class="ph ph-arrow-left"></i> Geri
+          </button>
+          <h2>QR Kod Oluşturma</h2>
+        </div>
+        <div class="empty-panel-content">
+          <i class="ph ph-wrench"></i>
+          <h3>Yapım Aşamasında</h3>
+          <p>QR Kod Oluşturma aracı yakında eklenecektir.</p>
+        </div>
+      </section>
+
+      <!-- PDF Editor Panel -->
+      <section id="pdf-editor-panel" class="tool-panel">
+        <div class="panel-header">
+          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
+            <i class="ph ph-arrow-left"></i> Geri
+          </button>
+          <h2>PDF Düzenleme</h2>
+        </div>
+        <div class="empty-panel-content">
+          <i class="ph ph-wrench"></i>
+          <h3>Yapım Aşamasında</h3>
+          <p>PDF Düzenleme aracı yakında eklenecektir.</p>
+        </div>
+      </section>
+
+      <!-- Video Compressor Panel -->
+      <section id="video-compressor-panel" class="tool-panel">
+        <div class="panel-header">
+          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
+            <i class="ph ph-arrow-left"></i> Geri
+          </button>
+          <h2>Video Sıkıştırma</h2>
+        </div>
+        
+        <div class="tool-content-wrapper" style="flex-direction: column; width: 100%;">
+          
+          <!-- Video Upload Area -->
+          <section id="video-upload-zone" class="upload-zone active" style="margin-bottom: 2rem;">
+            <div class="upload-content">
+              <div class="upload-icon-wrapper">
+                <i class="ph ph-file-video"></i>
+              </div>
+              <h2>Sıkıştırmak istediğiniz videoyu yükleyin</h2>
+              <p>Sürükleyip bırakın veya seçmek için tıklayın. (Cihazınızda işlenir, sunucuya yüklenmez!)</p>
+              <input type="file" id="video-input" accept="video/*" hidden>
+              <button class="btn btn-primary" onclick="document.getElementById('video-input').click()">
+                Video Seç
+              </button>
+            </div>
+          </section>
+
+          <!-- Video Processing Area -->
+          <section id="video-editor-zone" class="editor-zone" style="display:none; width: 100%;">
+            <div class="video-workspace">
+              <div class="video-preview-container">
+                <video id="video-preview" controls></video>
+                <div class="video-info">
+                  <span id="video-name">video.mp4</span>
+                  <span id="video-original-size" class="badge">0 MB</span>
+                </div>
+              </div>
+              
+              <div class="compression-controls controls-panel">
+                <h3>Sıkıştırma Ayarları</h3>
+                <div class="compress-options">
+                  <div class="option-group">
+                    <label>Dosya Adı:</label>
+                    <input type="text" id="video-export-filename" class="custom-input" placeholder="video_sikistirilmis" style="width: 100%;">
+                  </div>
+                  <div class="option-group">
+                    <label>Format:</label>
+                    <select id="video-export-format" class="custom-select">
+                      <option value="webm">WebM (Krom/PC için en iyisi)</option>
+                      <option value="mp4">MP4 (Safari/Mobil için en iyisi)</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label>Kalite:</label>
+                    <select id="video-quality" class="custom-select">
+                      <option value="23">Yüksek Kalite (Az Sıkıştırma)</option>
+                      <option value="28" selected>Orta Kalite (Dengeli)</option>
+                      <option value="32">Düşük Kalite (Yüksek Sıkıştırma)</option>
+                      <option value="36">En Düşük Kalite (Maksimum Sıkıştırma)</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label>Çözünürlük Küçültme:</label>
+                    <select id="video-scale" class="custom-select">
+                      <option value="1">Orijinal Boyut (100%)</option>
+                      <option value="0.75">75% (Daha Hızlı)</option>
+                      <option value="0.5">Yarı Yarıya (50%)</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="action-row" style="text-align: center;">
+                  <button id="btn-compress-video" class="btn btn-primary btn-glow btn-large" style="width: 100%;">
+                    <i class="ph ph-arrows-in"></i> Videoyu Sıkıştır
+                  </button>
+                </div>
+                
+                <div id="video-progress-container" class="progress-container hidden" style="margin-top: 1.5rem;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span id="video-progress-text">Hazırlanıyor...</span>
+                    <span id="video-progress-percent">0%</span>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div id="video-progress-bar" class="progress-bar-fill"></div>
+                  </div>
+                </div>
+                
+                <div id="video-result-container" class="result-container hidden" style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+                  <div class="success-stats" style="margin-bottom: 1rem; color: var(--success);">
+                    <i class="ph ph-check-circle" style="font-size: 3rem;"></i>
+                    <h3 style="margin-top:0.5rem;">Sıkıştırma Tamamlandı!</h3>
+                    <p style="font-size:1.1rem; color: var(--text-main); margin-top:0.5rem;">Yeni Boyut: <strong id="video-new-size">0 MB</strong></p>
+                  </div>
+                  <button id="btn-download-video" class="btn btn-success btn-large" style="width: 100%;">
+                    <i class="ph ph-download-simple"></i> Videoyu İndir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </section>
+
+    </main>
+
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+
+  <template id="editor-template">
+    <div class="editor-card">
+      <div class="file-info-bar">
+        <div class="file-details">
+          <i class="ph ph-file-audio"></i>
+          <span class="file-name-display">audio_file.mp3</span>
+        </div>
+        <button class="btn-close-file btn btn-icon btn-danger" title="Kaldır">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <div class="waveform-container">
+        <div class="waveform"></div>
+        <div class="timeline"></div>
+        <div class="loading-overlay">
+          <div class="spinner"></div>
+          <p class="loading-text">Yükleniyor...</p>
+        </div>
+      </div>
+
+      <div class="controls-panel">
+        <div class="controls-row-top">
+          <div class="playback-controls">
+            <button class="btn-play-pause btn btn-icon btn-large btn-primary">
+              <i class="ph ph-play play-icon"></i>
+            </button>
+            <div class="time-display">
+              <span class="current-time">00:00.0</span> <span class="divider">/</span> <span class="total-time">00:00.0</span>
+            </div>
+          </div>
+          
+          <div class="volume-control">
+            <i class="ph ph-speaker-high volume-icon"></i>
+            <input type="range" class="volume-slider" min="0" max="3" step="0.05" value="1" title="Ses Seviyesi">
+            <span class="volume-percentage">100%</span>
+          </div>
+        </div>
+
+        <div class="controls-divider"></div>
+
+        <div class="controls-row-bottom">
+          <div class="edit-inputs">
+            <div class="filename-input">
+              <label>Dosya Adı:</label>
+              <input type="text" class="custom-input export-filename" placeholder="yeni_ses_dosyasi">
+            </div>
+
+            <div class="format-selector">
+              <label>Format:</label>
+              <select class="custom-select export-format">
+                <option value="mp3">MP3</option>
+                <option value="wav">WAV</option>
+                <option value="ogg">OGG</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="export-actions">
+            <button class="btn-cut-export btn btn-success btn-glow" disabled>
+              <i class="ph ph-scissors"></i>
+              Seçimi İndir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Wavesurfer -->
+  <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/timeline.min.js"></script>
+
+  <!-- Lamejs for MP3 Export -->
+  <script src="https://unpkg.com/lamejs@1.2.1/lame.all.js"></script>
+  
+  <!-- FFmpeg for Video Compression -->
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+  <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+
+  <!-- App Logic -->
+  <script src="main.js"></script>
+</body>
+</html>
