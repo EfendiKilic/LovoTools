@@ -998,3 +998,110 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast("İndirme başladı!", "info");
     });
 });
+
+// QR Generator Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const btnGenerateQR = document.getElementById('btn-generate-qr');
+    const qrUrlInput = document.getElementById('qr-url-input');
+    const qrResultBox = document.getElementById('qr-result-box');
+    const qrContainer = document.getElementById('qr-container');
+    const qrFilenameInput = document.getElementById('qr-filename-input');
+    const btnDownloadQR = document.getElementById('btn-download-qr');
+
+    if (btnGenerateQR && qrUrlInput) {
+        btnGenerateQR.addEventListener('click', () => {
+            const url = qrUrlInput.value.trim();
+            if (!url) {
+                showToast("Lütfen QR koda dönüştürülecek bir bağlantı girin.", "error");
+                return;
+            }
+
+            btnGenerateQR.disabled = true;
+            btnGenerateQR.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Oluşturuluyor';
+            qrResultBox.classList.add('hidden');
+
+            try {
+                if (typeof QRCode === 'undefined') {
+                    throw new Error("QR Kod kütüphanesi yüklenemedi. Sayfayı yenilemeyi deneyin.");
+                }
+                
+                qrContainer.innerHTML = ""; // Temizle
+                
+                new QRCode(qrContainer, {
+                    text: url,
+                    width: 250,
+                    height: 250,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.L
+                });
+
+                btnGenerateQR.disabled = false;
+                btnGenerateQR.innerHTML = 'Oluştur';
+                qrResultBox.classList.remove('hidden');
+                showToast("QR Kod başarıyla oluşturuldu!", "success");
+                qrFilenameInput.focus();
+            } catch (err) {
+                console.error("QR Error:", err);
+                btnGenerateQR.disabled = false;
+                btnGenerateQR.innerHTML = 'Oluştur';
+                showToast(err.message || "QR Kod oluşturulurken bir hata oluştu.", "error");
+            }
+        });
+
+        // Enter key to trigger generation
+        qrUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                btnGenerateQR.click();
+            }
+        });
+    }
+
+    if (btnDownloadQR && qrContainer) {
+        btnDownloadQR.addEventListener('click', () => {
+            const filename = (qrFilenameInput.value.trim() || 'qr_kodu');
+            
+            const canvas = qrContainer.querySelector('canvas');
+            if (!canvas) {
+                showToast("İndirilecek QR kod bulunamadı.", "error");
+                return;
+            }
+            
+            // Çerçeve (padding) ayarı
+            const padding = 20;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width + (padding * 2);
+            tempCanvas.height = canvas.height + (padding * 2);
+            const ctx = tempCanvas.getContext('2d');
+            
+            // Beyaz arka planı çiz (ekrandaki gibi hafif yuvarlatılmış)
+            ctx.fillStyle = '#ffffff';
+            if (ctx.roundRect) {
+                ctx.beginPath();
+                ctx.roundRect(0, 0, tempCanvas.width, tempCanvas.height, 16);
+                ctx.fill();
+            } else {
+                ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            }
+            
+            // QR Kodu tam ortaya çiz
+            ctx.drawImage(canvas, padding, padding);
+            
+            const dataUrl = tempCanvas.toDataURL("image/png");
+            
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = dataUrl;
+            a.download = filename + '.png';
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+            }, 100);
+            
+            showToast("QR Kod çerçeveli biçimde indirildi!", "success");
+        });
+    }
+});

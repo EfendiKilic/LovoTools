@@ -150,10 +150,33 @@
           </button>
           <h2>QR Kod Oluşturma</h2>
         </div>
-        <div class="empty-panel-content">
-          <i class="ph ph-wrench"></i>
-          <h3>Yapım Aşamasında</h3>
-          <p>QR Kod Oluşturma aracı yakında eklenecektir.</p>
+        
+        <div class="tool-content-wrapper">
+          <div class="shortener-container">
+            <div class="shortener-header">
+              <i class="ph ph-qr-code"></i>
+              <h3>QR Kodunuzu Oluşturun</h3>
+              <p>Herhangi bir bağlantıyı kolayca taranabilir QR koda dönüştürün.</p>
+            </div>
+            
+            <div class="shortener-input-group">
+              <input type="url" id="qr-url-input" class="large-input" placeholder="https://ornek.com" required>
+              <button id="btn-generate-qr" class="btn btn-primary btn-large">Oluştur</button>
+            </div>
+
+            <div id="qr-result-box" class="shortener-result hidden" style="text-align: center;">
+              <div class="qr-preview-container" style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem;">
+                <div id="qr-container"></div>
+              </div>
+              
+              <div class="shortener-input-group" style="margin-bottom: 0;">
+                <input type="text" id="qr-filename-input" class="large-input" placeholder="Dosya adı (Örn: qr_kodu)" value="qr_kodu">
+                <button id="btn-download-qr" class="btn btn-success btn-large">
+                  <i class="ph ph-download-simple"></i> İndir
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -360,6 +383,9 @@
   <!-- FFmpeg for Video Compression -->
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
   <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+
+  <!-- QRCode Generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <!-- App Logic -->
   <script src="main.js"></script>
