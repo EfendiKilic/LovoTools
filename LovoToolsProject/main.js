@@ -877,6 +877,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoInstance.onerror = () => reject("Video yüklenemedi");
             });
 
+            // Akıllı Bitrate Algoritması: Orijinal videonun saniye başına düşen verisini hesapla.
+            // Eğer hedef bitrate orijinalden yüksekse (video zaten çok sıkıştırılmışsa),
+            // yeni bitrate değerini orijinalin %60'ı olacak şekilde zorla (şişmeyi önle).
+            const duration = videoInstance.duration || 1;
+            const sourceBitrate = (currentVideoFile.size * 8) / duration;
+            if (bitrate >= sourceBitrate) {
+                bitrate = sourceBitrate * 0.6;
+            }
+
             const canvas = document.createElement('canvas');
             canvas.width = Math.floor(videoInstance.videoWidth * scale / 2) * 2;
             canvas.height = Math.floor(videoInstance.videoHeight * scale / 2) * 2;
