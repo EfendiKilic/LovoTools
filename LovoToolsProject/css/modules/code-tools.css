@@ -1,0 +1,404 @@
+/* --- Advanced Code Editor --- */
+.editor-container {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    background: #1e1e1e;
+    overflow: hidden;
+}
+.line-numbers { padding: 1.5rem 0.5rem; background: #1e1e1e; color: #858585; text-align: right; min-width: 45px; font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.5; border-right: 1px solid #333; user-select: none; }
+.editor-layers { position: relative; flex: 1; height: 100%; }
+.editor-textarea, .editor-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    margin: 0;
+    border: none;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+.editor-textarea { background: transparent; color: transparent; caret-color: #fff; z-index: 2; resize: none; outline: none; }
+.editor-highlight { z-index: 1; pointer-events: none; background: transparent; }
+.editor-highlight code { background: transparent !important; padding: 0 !important; font-family: inherit !important; font-size: inherit !important; }
+
+/* Prism Override */
+pre[class*='language-'] { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+
+/* Force Word Wrap for Prism and IDE */
+.editor-container, .editor-layers { max-width: 100%; overflow: hidden; }
+.editor-textarea, .editor-highlight, .editor-highlight code, pre[class*='language-'], code[class*='language-'] {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    overflow-x: hidden !important;
+}
+
+/* Perfect Sync for Code Editor Layers */
+.editor-textarea, .editor-highlight, .editor-highlight code, pre[class*='language-'], code[class*='language-'] {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+    font-size: 14px !important;
+    line-height: 21px !important; /* 1.5 * 14px = 21px fixed height */
+    padding: 24px !important; /* 1.5rem = 24px fixed padding */
+    margin: 0 !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    tab-size: 4 !important;
+    -moz-tab-size: 4 !important;
+}
+
+/* --- VS Code Precise Theme for CodeMirror --- */
+.CodeMirror { 
+    background: #1e1e1e !important; 
+    color: #d4d4d4 !important; 
+    font-family: 'Consolas', 'Monaco', monospace !important; 
+    font-size: 14px !important; 
+    line-height: 1.5 !important; 
+    height: 100% !important;
+}
+.CodeMirror-gutters { background: #1e1e1e !important; border-right: 1px solid #333 !important; padding-right: 10px !important; }
+.CodeMirror-linenumber { color: #858585 !important; left: 0 !important; }
+.CodeMirror-activeline-background { background: rgba(255, 255, 255, 0.05) !important; }
+
+/* VS Code Specific Colors */
+.cm-tag { color: #569cd6 !important; } 
+.cm-attribute { color: #9cdcfe !important; } 
+.cm-string { color: #ce9178 !important; } 
+.cm-meta, .cm-tag.cm-bracket { color: #808080 !important; } 
+.cm-comment { color: #6a9955 !important; } 
+.cm-atom { color: #569cd6 !important; }
+.cm-number { color: #b5cea8 !important; } 
+
+/* Scrollbar Styling for Editor */
+.CodeMirror-vscrollbar::-webkit-scrollbar { width: 10px; }
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+.CodeMirror-vscrollbar::-webkit-scrollbar-track { background: transparent; }
+
+/* IDE Autocomplete Styling */
+.CodeMirror-hints {
+    background: #2b363c !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 8px !important;
+    box-shadow: var(--shadow-xl) !important;
+    padding: 6px 0 !important;
+    z-index: 1000 !important;
+}
+
+.CodeMirror-hint {
+    padding: 8px 15px 8px 38px !important;
+    color: #ccc !important;
+    border-radius: 6px !important;
+    margin: 2px 8px !important;
+    font-size: 0.9rem !important;
+}
+
+.CodeMirror-hint::before {
+    content: '' !important;
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2FhYSIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik02OS4xMiw5NC4xMiwyOC41MywxMjhsNDAuNTksMzMuODhhOCw4LDAsMSwxLTEwLjI0LDEyLjI0bC00OC00MGE4LDgsMCwwLDEsMC0xMi4yNGw0OC00MGE4LDgsMCwwLDEsMTAuMjQsMTIuMjRabTE3NiwyNy43Ni00OC00MGE4LDgsMCwxLDAtMTAuMjQsMTIuMjRMMjI3LjQ3LDEyOGwtNDAuNTksMzMuODhhOCw4LDAsMSwwLDEwLjI0LDEyLjI0bDQ4LTQwYTgsOCwwLDAsMCwwLTEyLjI0Wk0xNjIuNzMsMzIuNDhhOCw4LDAsMCwwLTEwLjI1LDQuNzlsLTY0LDE3NmE4LDgsMCwwLDAsNC43OSwxMC4yNSw4LjE0LDguMTQsMCwwLDAsMi43NC40OCw4LDgsMCwwLDAsNy41MS01LjI3bDY0LTE3NkE4LDgsMCwwLDAsMTYyLjczLDMyLjQ4WiI+PC9wYXRoPjwvc3ZnPg==') !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6 !important;
+}
+
+.CodeMirror-hint-active {
+    background: #6c5ce7 !important;
+    color: #fff !important;
+}
+.CodeMirror-hint-active::before { opacity: 1 !important; filter: brightness(0) invert(1) !important; }
+
+/* Resizer */
+#ide-resizer, #json-resizer {
+    width: 6px;
+    cursor: col-resize;
+    background: transparent;
+    transition: background 0.2s;
+    z-index: 10;
+    position: relative;
+}
+#ide-resizer:hover, #json-resizer:hover {
+    background: var(--primary);
+}
+
+/* --- Layout Enhancements --- */
+.tools-container {
+    background: #fff;
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    min-height: 700px;
+}
+
+.header-tabs {
+    display: flex;
+    background: #f8fafc;
+    padding: 0.75rem 1.5rem;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.header-tabs .toggle-btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.header-tabs .toggle-btn.active {
+    background: #fff;
+    color: var(--primary);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-sm);
+}
+
+/* IDE Specific */
+.ide-main-container {
+    display: flex;
+    flex-direction: column;
+    height: 650px;
+}
+
+.ide-toolbar {
+    background: #1e272c;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.ide-toolbar .btn-outline {
+    color: #aeb9c2;
+    border-color: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.02);
+}
+
+.ide-toolbar .btn-outline:hover {
+    color: #fff;
+    border-color: var(--primary);
+    background: rgba(255,255,255,0.05);
+}
+
+.ide-toolbar i {
+    color: inherit;
+    font-size: 1.1rem;
+}
+
+.file-management {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem; /* Sekmelerle buton arasını açtık */
+}
+
+.file-tabs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+}
+
+.btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px; }
+
+.ide-split-pane {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    background: #1e1e1e;
+}
+
+.editor-side {
+    flex: 1;
+    min-width: 200px;
+    height: 100%;
+}
+
+.ide-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255,255,255,0.1);
+    margin: 0 0.25rem;
+}
+
+.preview-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.preview-header {
+    background: #f1f5f9;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-light);
+}
+
+#html-preview {
+    flex: 1;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+/* JSON Processor */
+.json-main-container {
+    display: flex;
+    flex-direction: column;
+    height: 650px;
+}
+
+.json-toolbar {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+}
+
+.json-split-pane {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.json-side {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 0.75rem;
+}
+
+.json-side label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#json-input {
+    flex: 1;
+    background: #fdfdfd;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.25rem;
+    font-family: 'Consolas', monospace;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+}
+
+#json-output-container {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin: 0;
+    overflow: auto;
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    animation: modalSlide 0.3s ease-out;
+}
+
+@keyframes modalSlide {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.modal-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.modal-input-group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.modal-footer {
+    padding: 1.25rem 1.5rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+.btn-icon:hover { color: var(--primary); }

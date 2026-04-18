@@ -1,0 +1,135 @@
+<section id="code-center-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="code_breadcrumb">Kod Merkezi</span>
+    </div>
+    <h2 data-i18n="code_title">Akıllı Kod Editörü</h2>
+  </div>
+
+  <div class="tools-container">
+    <!-- Header Tabs -->
+    <div class="header-tabs">
+        <button class="toggle-btn active" data-tab="html">
+            <i class="ph ph-code"></i> <span data-i18n="code_ide_tab">Monster IDE</span>
+        </button>
+        <button class="toggle-btn" data-tab="json">
+            <i class="ph ph-brackets-curly"></i> <span data-i18n="code_json_tab">JSON İşlemci</span>
+        </button>
+    </div>
+
+    <!-- IDE Tab (HTML/CSS/JS) -->
+    <div id="tab-html" class="code-tab-content">
+        <div class="ide-main-container">
+            <!-- IDE Toolbar -->
+            <div class="ide-toolbar">
+                <div class="file-management">
+                    <div id="file-tabs-container" class="file-tabs">
+                        <!-- Dynamic Tabs appear here -->
+                    </div>
+                    <button id="btn-add-file" class="btn btn-primary btn-sm">
+                        <i class="ph ph-plus"></i> <span data-i18n="code_add_file">Yeni Dosya</span>
+                    </button>
+                </div>
+                <div class="ide-actions">
+                    <button id="btn-font-size" class="btn btn-outline btn-sm" data-i18n-title="code_font_size_title">
+                        <i class="ph ph-text-t"></i>
+                    </button>
+                    <button class="btn btn-outline btn-sm btn-copy" data-target="code-editor" data-i18n-title="code_copy_title">
+                        <i class="ph ph-copy"></i>
+                    </button>
+                    <button id="btn-download-html" class="btn btn-outline btn-sm">
+                        <i class="ph ph-download-simple"></i>
+                    </button>
+                    <div class="toolbar-divider"></div>
+                    <button id="btn-run-html" class="btn btn-success btn-sm">
+                        <i class="ph ph-play"></i> <span data-i18n="code_run_btn">Çalıştır</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="ide-split-pane">
+                <!-- Editor Side -->
+                <div id="ide-editor-side" class="editor-side">
+                    <textarea id="html-editor-raw"></textarea>
+                </div>
+
+                <!-- Resizer -->
+                <div id="ide-resizer" class="resizer"></div>
+
+                <!-- Preview Side -->
+                <div class="preview-side">
+                    <div class="preview-header">
+                        <span><i class="ph ph-browser"></i> <span data-i18n="code_preview_label">Canlı Önizleme</span></span>
+                        <button id="btn-refresh-preview" class="btn-icon"><i class="ph ph-arrows-clockwise"></i></button>
+                    </div>
+                    <iframe id="html-preview"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JSON Tab -->
+    <div id="tab-json" class="code-tab-content" style="display: none;">
+        <div class="json-main-container">
+            <div class="json-toolbar">
+                <div class="toolbar-left">
+                    <button id="btn-format-json" class="btn btn-primary btn-sm">
+                        <i class="ph ph-broom"></i> <span data-i18n="code_format_btn">Biçimlendir</span>
+                    </button>
+                    <button id="btn-minify-json" class="btn btn-outline btn-sm">
+                        <i class="ph ph-align-left"></i> <span data-i18n="code_minify_btn">Küçült (Minify)</span>
+                    </button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="btn btn-outline btn-sm btn-copy" data-target="json-output">
+                        <i class="ph ph-copy"></i> <span data-i18n="code_copy_btn">Kopyala</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="json-split-pane">
+                <div id="json-input-side" class="json-side">
+                    <label data-i18n="code_json_input_label">Girdi (JSON)</label>
+                    <textarea id="json-input" data-i18n-placeholder="code_json_placeholder"></textarea>
+                </div>
+
+                <div id="json-resizer" class="resizer"></div>
+
+                <div class="json-side">
+                    <label data-i18n="code_json_output_label">Sonuç</label>
+                    <pre id="json-output-container"><code id="json-output" class="language-json"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Modal: Yeni Dosya -->
+  <div id="modal-add-file" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 data-i18n="code_modal_title">Yeni Dosya Oluştur</h3>
+            <button class="btn-close-modal"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-input-group">
+                <label data-i18n="code_modal_name_label">Dosya Adı</label>
+                <input type="text" id="modal-file-name" placeholder="style" class="custom-input">
+            </div>
+            <div class="modal-input-group">
+                <label data-i18n="code_modal_type_label">Dosya Uzantısı</label>
+                <select id="modal-file-type" class="custom-select">
+                    <option value=".html">.html</option>
+                    <option value=".css">.css</option>
+                    <option value=".js">.js</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline btn-close-modal" data-i18n="code_modal_cancel">Vazgeç</button>
+            <button id="btn-create-file-submit" class="btn btn-primary" data-i18n="code_modal_create">Oluştur</button>
+        </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,124 @@
+/* ===== UPDATES / CHANGELOG PAGE ===== */
+
+.upd-subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Timeline */
+.upd-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 900px;
+}
+
+.upd-entry {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 0 2.5rem;
+  position: relative;
+}
+
+/* Vertical line between entries */
+.upd-entry:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 179px;
+  top: 28px;
+  bottom: -28px;
+  width: 2px;
+  background: var(--border-light);
+}
+
+/* Meta column (left) */
+.upd-entry-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 0.2rem;
+  position: relative;
+}
+
+.upd-date {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Timeline dot */
+.upd-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  position: absolute;
+  right: -26px;
+  top: 6px;
+  box-shadow: 0 0 0 2px var(--bg-main);
+}
+
+.upd-dot-latest {
+  background: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
+}
+
+.upd-dot-first {
+  background: var(--success);
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.2);
+}
+
+/* Entry body */
+.upd-entry-body {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.upd-entry-body:hover {
+  box-shadow: var(--shadow-ring);
+  border-color: var(--border-strong);
+}
+
+.upd-entry-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.upd-entry-header h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+/* Changes list */
+.upd-changes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.upd-changes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .upd-entry { grid-template-columns: 1fr; }
+  .upd-entry::after { display: none; }
+  .upd-entry-meta { flex-direction: row; align-items: center; justify-content: flex-start; margin-bottom: 1rem; }
+  .upd-dot { display: none; }
+  .upd-intro { flex-direction: column; align-items: flex-start; }
+}

@@ -1,0 +1,157 @@
+<section id="pdf-editor-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="pdf_breadcrumb">Dosya İşlemleri</span>
+    </div>
+    <h2 id="pdf-mode-title" data-i18n="pdf_title">PDF Düzenleme</h2>
+  </div>
+
+  <!-- PDF Home (Tool Selection) -->
+  <div id="pdf-home" class="pdf-home-grid active" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem;">
+    <div class="pdf-tool-card" onclick="switchPdfTool('merge')">
+        <div class="tool-icon"><i class="ph ph-intersect"></i></div>
+        <h3 data-i18n="pdf_merge_title">Birleştir</h3>
+        <p data-i18n="pdf_merge_desc">Birden fazla PDF'i tek bir dosyada toplayın.</p>
+    </div>
+    <div class="pdf-tool-card" onclick="switchPdfTool('split')">
+        <div class="tool-icon"><i class="ph ph-scissors"></i></div>
+        <h3 data-i18n="pdf_split_title">Ayır</h3>
+        <p data-i18n="pdf_split_desc">PDF'den sayfalar seçip yeni dosya oluşturun.</p>
+    </div>
+    <div class="pdf-tool-card" onclick="switchPdfTool('organize')">
+        <div class="tool-icon"><i class="ph ph-grid-four"></i></div>
+        <h3 data-i18n="pdf_organize_title">Düzenle</h3>
+        <p data-i18n="pdf_organize_desc">Sayfaların yerini sürükleyip değiştirin.</p>
+    </div>
+  </div>
+
+  <!-- PDF Workspace -->
+  <div id="pdf-workspace" class="hidden" style="margin-top: 2rem;">
+    <div class="workspace-layout" style="display: grid; grid-template-columns: 7fr 3fr; gap: 2rem; align-items: start;">
+
+        <!-- Main Area: Grid of Pages -->
+        <div class="workspace-main" style="background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 24px; padding: 2rem; min-height: 500px; box-shadow: var(--shadow-ring);">
+            <div id="pdf-pages-grid" class="pdf-pages-grid">
+                <!-- PDF Pages thumbs injected here -->
+            </div>
+            <div id="pdf-loading-indicator" class="hidden" style="text-align: center; padding: 3rem;">
+                <div class="spinner"></div>
+                <p style="margin-top: 1rem; color: var(--text-muted);" data-i18n="pdf_loading">PDF Sayfaları Ayrıştırılıyor...</p>
+            </div>
+        </div>
+
+        <!-- Sidebar: Options & Actions -->
+        <aside class="workspace-sidebar" style="background: var(--bg-subtle); border: 1px solid var(--border-light); border-radius: 24px; padding: 1.5rem; position: sticky; top: 100px;">
+            <div class="sidebar-section" style="margin-bottom: 2rem;">
+                <h4 data-i18n="pdf_file_info">Dosya Bilgisi</h4>
+                <div class="info-row"><span data-i18n="pdf_file_name_label">Ad:</span> <strong id="pdf-info-name">-</strong></div>
+                <div class="info-row"><span data-i18n="pdf_page_count_label">Sayfa:</span> <strong id="pdf-info-pages">0</strong></div>
+            </div>
+
+            <!-- Mode Specific Options -->
+            <div id="merge-options" class="sidebar-section hidden">
+                <p data-i18n="pdf_merge_hint">Dosya sırasını değiştirmek için sürükleyin.</p>
+            </div>
+
+            <div id="split-options" class="sidebar-section hidden">
+                <label data-i18n="pdf_split_label">Aralık (Örn: 1-3, 5):</label>
+                <input type="text" id="pdf-range-input" class="custom-input" data-i18n-placeholder="pdf_split_placeholder">
+            </div>
+
+            <div id="organize-options" class="sidebar-section hidden">
+                <p data-i18n="pdf_organize_hint">Sayfaları sürükleyerek yeniden sıralayın.</p>
+            </div>
+
+            <div class="sidebar-actions" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-light);">
+                <button id="btn-process-pdf" class="btn btn-primary" style="width: 100%; padding: 1rem;" disabled>
+                   <i class="ph ph-check"></i> <span data-i18n="pdf_process_btn">İşlemi Başlat</span>
+                </button>
+                <button onclick="switchPdfTool('home')" class="btn btn-outline" style="width: 100%; margin-top: 1rem; padding: 0.8rem;" data-i18n="common_cancel">
+                    Vazgeç
+                </button>
+            </div>
+        </aside>
+    </div>
+  </div>
+
+  <input type="file" id="pdf-input" accept="application/pdf" hidden>
+</section>
+
+<style>
+.pdf-tool-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.pdf-tool-card:hover {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-ring);
+}
+.pdf-tool-card .tool-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+.pdf-tool-card h3 { margin-bottom: 0.5rem; font-size: 1.25rem; }
+.pdf-tool-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+.pdf-pages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1.5rem;
+}
+
+.pdf-page-card {
+    background: #f1f5f9;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 0.5rem;
+    position: relative;
+    cursor: grab;
+    transition: all 0.2s;
+}
+.pdf-page-card.selected {
+    border-color: var(--primary);
+    background: rgba(79, 70, 229, 0.05);
+}
+.pdf-page-card canvas {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.pdf-page-card .page-num {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--primary);
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.hidden { display: none !important; }
+
+/* Sortable Ghost */
+.pdf-page-ghost { opacity: 0.4; transform: scale(0.95); }
+</style>

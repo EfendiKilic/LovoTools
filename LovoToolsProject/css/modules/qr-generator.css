@@ -1,0 +1,13 @@
+/* QR Generator Styles */
+.qr-preview-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+#qr-container {
+    display: flex;
+    justify-content: center;
+}

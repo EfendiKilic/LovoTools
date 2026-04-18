@@ -1,0 +1,42 @@
+<section id="audio-editor-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="audio_breadcrumb">Ses İşleme</span>
+    </div>
+    <h2 data-i18n="audio_title">Ses Düzenleme</h2>
+  </div>
+
+  <section id="audio-upload-zone" class="upload-zone active">
+    <div class="upload-card" onclick="document.getElementById('audio-input').click()">
+      <div class="icon-circle">
+        <i class="ph ph-upload-simple"></i>
+      </div>
+      <h3 data-i18n="audio_upload_title">Düzenlemek istediğiniz sesi yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="audio_multi_support">(Birden fazla dosya desteklenir)</small>
+      <input type="file" id="audio-input" accept="audio/*" multiple hidden>
+      <button class="btn btn-primary" style="margin-top: 1rem; padding: 0.8rem 2rem;" data-i18n="audio_select_btn">Ses Seç</button>
+    </div>
+  </section>
+
+  <section id="audio-editor-zone" class="editor-zone">
+    <div class="batch-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem;">
+      <div style="flex: 1;">
+        <p class="subtitle" style="text-align: left; margin: 0; font-weight: 700; font-size: 1.1rem; color: #000;" data-i18n="audio_edited_files">Düzenlenen Dosyalar</p>
+      </div>
+      <button id="btn-add-more" class="btn btn-outline" style="padding: 0.6rem 1.25rem; font-size: 0.9rem; border-color: var(--primary); color: var(--primary);">
+        <i class="ph ph-plus"></i> <span data-i18n="audio_add_file">Yeni Dosya</span>
+      </button>
+    </div>
+
+    <div id="editors-list" class="editors-list" style="display: flex; flex-direction: column; gap: 3rem;"></div>
+
+    <div class="batch-footer" style="display: flex; justify-content: center; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-light);">
+      <button id="btn-batch-export" class="btn btn-primary btn-glow btn-large" style="padding: 1.2rem 4rem; font-size: 1.1rem; border-radius: 999px;" title="Tüm listeyi ayrı ayrı indir" disabled>
+        <i class="ph ph-download-simple"></i>
+        <span data-i18n="audio_batch_export">Tüm Dosyaları Toplu İndir</span>
+      </button>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,53 @@
+<section id="qr-generator-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="qr_breadcrumb">Geliştirici</span>
+    </div>
+    <h2 data-i18n="qr_title">QR Kod Oluşturucu</h2>
+  </div>
+
+  <div class="editor-main-container" style="background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 24px; padding: 4rem; box-shadow: var(--shadow-ring); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1100px; margin: 0 auto;">
+    <!-- Controls (Left) -->
+    <div class="qr-controls">
+      <div class="input-group" style="margin-bottom: 2.5rem;">
+        <label style="display: block; margin-bottom: 1rem; font-weight: 700; font-size: 1.1rem; color: var(--text-main);" data-i18n="qr_content_label">QR Kod İçeriği:</label>
+        <textarea id="qr-url-input" class="custom-input" style="width: 100%; height: 140px; resize: none; font-size: 1.1rem; padding: 1.5rem; border-radius: 16px;" data-i18n-placeholder="qr_input_placeholder"></textarea>
+      </div>
+
+      <button id="btn-generate-qr" class="btn btn-primary" style="width: 100%; padding: 1.25rem; font-size: 1.1rem; border-radius: 14px; box-shadow: var(--shadow-md);">
+        <i class="ph ph-qr-code"></i> <span data-i18n="qr_generate_btn">QR Kod Oluştur</span>
+      </button>
+
+      <div id="qr-result-box" class="hidden" style="margin-top: 3rem; animation: fadeIn 0.4s ease;">
+        <div class="input-group" style="margin-bottom: 1.5rem;">
+           <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-muted);" data-i18n="qr_filename_label">Dosya Adı (Opsiyonel):</label>
+           <input type="text" id="qr-filename-input" class="custom-input" style="width: 100%; border-radius: 12px;" data-i18n-placeholder="qr_filename_placeholder">
+        </div>
+        <button id="btn-download-qr" class="btn btn-success" style="width: 100%; padding: 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+          <i class="ph ph-download-simple"></i> <span data-i18n="qr_download_btn">QR Kodu İndir (.png)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Preview (Right) -->
+    <div class="qr-preview-side" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--bg-subtle); border-radius: 32px; padding: 3rem; border: 2px dashed var(--border-strong); min-height: 400px;">
+      <div id="qr-container" style="background: var(--bg-card); padding: 1.5rem; border-radius: 20px; box-shadow: var(--shadow-lg); transition: transform 0.3s ease;">
+         <div style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; color: #cbd5e1;">
+            <i class="ph ph-image-square" style="font-size: 4rem;"></i>
+         </div>
+      </div>
+      <p id="qr-hint" style="font-size: 0.95rem; color: var(--text-muted); text-align: center; margin-top: 2rem; max-width: 250px; line-height: 1.5;" data-i18n="qr_hint">
+        İçeriği girin ve ardından oluştur butonuna basın.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hidden { display: none !important; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

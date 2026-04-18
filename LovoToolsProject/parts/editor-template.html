@@ -1,0 +1,68 @@
+<template id="editor-template">
+  <div class="editor-card">
+    <div class="file-info-bar">
+      <div class="file-details">
+        <i class="ph ph-file-audio"></i>
+        <span class="file-name-display">audio_file.mp3</span>
+      </div>
+      <button class="btn-close-file btn btn-icon btn-danger" data-i18n-title="audio_tpl_remove">
+        <i class="ph ph-x"></i>
+      </button>
+    </div>
+
+    <div class="waveform-container">
+      <div class="waveform"></div>
+      <div class="timeline"></div>
+      <div class="loading-overlay">
+        <div class="spinner"></div>
+        <p class="loading-text" data-i18n="audio_tpl_loading">Yükleniyor...</p>
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <div class="controls-row-top">
+        <div class="playback-controls">
+          <button class="btn-play-pause btn btn-icon btn-large btn-primary">
+            <i class="ph ph-play play-icon"></i>
+          </button>
+          <div class="time-display">
+            <span class="current-time">00:00.0</span> <span class="divider">/</span> <span class="total-time">00:00.0</span>
+          </div>
+        </div>
+
+        <div class="volume-control">
+          <i class="ph ph-speaker-high volume-icon"></i>
+          <input type="range" class="volume-slider" min="0" max="3" step="0.05" value="1" data-i18n-title="audio_tpl_vol_title">
+          <span class="volume-percentage">100%</span>
+        </div>
+      </div>
+
+      <div class="controls-divider"></div>
+
+      <div class="controls-row-bottom">
+        <div class="edit-inputs">
+          <div class="filename-input">
+            <label data-i18n="audio_tpl_filename_label">Dosya Adı:</label>
+            <input type="text" class="custom-input export-filename" placeholder="yeni_ses_dosyasi">
+          </div>
+
+          <div class="format-selector">
+            <label data-i18n="audio_tpl_format_label">Format:</label>
+            <select class="custom-select export-format">
+              <option value="mp3">MP3</option>
+              <option value="wav">WAV</option>
+              <option value="ogg">OGG</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="export-actions">
+          <button class="btn-cut-export btn btn-success btn-glow" disabled>
+            <i class="ph ph-scissors"></i>
+            <span data-i18n="audio_tpl_cut_export">Seçimi İndir</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

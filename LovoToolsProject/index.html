@@ -3,391 +3,300 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AudioFlow - Premium Ses Editörü</title>
+  <title>LovoTools - Smart Audio & Code Tools</title>
   <link rel="stylesheet" href="style.css">
-  
-  <!-- Google Fonts: Outfit -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dark-overrides.css">
   
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <!-- External Libraries -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/material-palenight.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/show-hint.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/dialog/dialog.min.css">
 </head>
 <body>
-  
-  <div class="app-container">
-    <header class="app-header">
-      <div class="logo">
-        <i class="ph ph-squares-four"></i>
-        <h1>Araç Kutusu</h1>
+
+  <!-- Dashed Top Fade Grid Background -->
+  <div class="grid-background"></div>
+
+  <!-- Floating Navigation Bar (YC/Linear Style) -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="javascript:void(0)" class="nav-logo" onclick="openDashboard()">
+        <i class="ph-fill ph-circles-four"></i>
+        <span>LovoTools</span>
+      </a>
+
+      <div class="nav-links">
+        <div class="nav-dropdown-wrap">
+          <a href="#dashboard-zone" class="nav-dropdown-trigger" data-i18n="nav_tools">Araçlar</a>
+          <div class="nav-dropdown">
+            <div class="nav-dropdown-col">
+              <div class="nav-dropdown-item" onclick="openPanel('audio-editor-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_audio">Ses Düzenleme</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('video-compressor-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_video">Video İşleme</span>
+              </div>
+            </div>
+            <div class="nav-dropdown-col">
+              <div class="nav-dropdown-item" onclick="openPanel('pdf-editor-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_pdf">PDF Düzenleme</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('image-editor-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_image">Görsel Düzenleyici</span>
+              </div>
+            </div>
+            <div class="nav-dropdown-col">
+              <div class="nav-dropdown-item" onclick="openPanel('code-center-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_dev">Geliştirici</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_code">Kod Merkezi</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('qr-generator-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_tools">Araçlar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_qr">QR Kod</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('url-shortener-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_tools">Araçlar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_url">Link Kısaltma</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#resources-panel" onclick="app.openPanel('resources-panel')" data-i18n="nav_resources">Kaynaklar</a>
+        <a href="#updates-panel" onclick="app.openPanel('updates-panel')" data-i18n="nav_updates">Güncellemeler</a>
       </div>
-      <p class="subtitle">Tüm dijital ihtiyaçlarınız için hepsi bir arada araçlar</p>
-    </header>
 
-    <main class="main-content">
-      
-      <!-- Dashboard Screen -->
-      <section id="dashboard-zone" class="dashboard-zone active">
-        <div class="tools-grid">
-          <button class="tool-card" onclick="openPanel('audio-editor-panel')">
-            <div class="tool-icon"><i class="ph ph-wave-sawtooth"></i></div>
-            <h3>Ses Düzenleme</h3>
-            <p>Ses dosyalarını kesin, kırpın ve formatlarını dönüştürün.</p>
-          </button>
-          <button class="tool-card" onclick="openPanel('url-shortener-panel')">
-            <div class="tool-icon"><i class="ph ph-link"></i></div>
-            <h3>Link Kısaltma</h3>
-            <p>Uzun bağlantıları hızlıca kısaltın ve paylaşın.</p>
-          </button>
-          <button class="tool-card" onclick="openPanel('qr-generator-panel')">
-            <div class="tool-icon"><i class="ph ph-qr-code"></i></div>
-            <h3>QR Kod Oluşturma</h3>
-            <p>Web siteleri ve metinler için özel QR kodlar tasarlayın.</p>
-          </button>
-          <button class="tool-card" onclick="openPanel('pdf-editor-panel')">
-            <div class="tool-icon"><i class="ph ph-file-pdf"></i></div>
-            <h3>PDF Düzenleme</h3>
-            <p>PDF dosyalarını birleştirin, ayırın ve düzenleyin.</p>
-          </button>
-          <button class="tool-card" onclick="openPanel('video-compressor-panel')">
-            <div class="tool-icon"><i class="ph ph-video-camera"></i></div>
-            <h3>Video Sıkıştırma</h3>
-            <p>Videolarınızın boyutunu kalite kaybı olmadan küçültün.</p>
-          </button>
-        </div>
-      </section>
-
-      <!-- Audio Editor Panel -->
-      <section id="audio-editor-panel" class="tool-panel">
-        <div class="panel-header">
-          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
-            <i class="ph ph-arrow-left"></i> Geri
-          </button>
-          <h2>Ses Düzenleme</h2>
-        </div>
-        
-        <!-- Upload Zone -->
-        <section id="upload-zone" class="upload-zone active">
-          <div class="upload-content">
-            <div class="upload-icon-wrapper">
-              <i class="ph ph-upload-simple"></i>
-            </div>
-            <h2>Düzenlemek istediğiniz sesi yükleyin</h2>
-            <p>Sürükleyip bırakın veya seçmek için tıklayın.</p>
-            <input type="file" id="audio-input" accept="audio/*" multiple hidden>
-            <button class="btn btn-primary" onclick="document.getElementById('audio-input').click()">
-              Ses Dosyası Seç
-            </button>
-          </div>
-        </section>
-
-        <!-- Editor Context -->
-        <section id="editor-zone" class="editor-zone">
-          <div class="batch-header">
-            <div style="flex: 1;">
-              <p class="subtitle" style="text-align: left; margin-bottom: 1rem;">Düzenlenen Dosyalar</p>
-            </div>
-            <button id="btn-add-more" class="btn btn-icon btn-primary" title="Yeni Ekle">
-              <i class="ph ph-plus"></i> Yeni Dosya
-            </button>
-          </div>
-
-          <div id="editors-list" class="editors-list">
-            <!-- JS ile doldurulacak -->
-          </div>
-
-          <div class="batch-footer" style="display: flex; justify-content: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-light);">
-            <button id="btn-batch-export" class="btn btn-primary btn-glow btn-large" style="padding: 1rem 3rem; font-size: 1.1rem; border-radius: 50px;" title="Tüm listeyi ayrı ayrı indir" disabled>
-              <i class="ph ph-download-simple"></i>
-              Tüm Dosyaları Toplu İndir
-            </button>
-          </div>
-        </section>
-
-      </section>
-
-      <!-- URL Shortener Panel -->
-      <section id="url-shortener-panel" class="tool-panel">
-        <div class="panel-header">
-          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
-            <i class="ph ph-arrow-left"></i> Geri
-          </button>
-          <h2>Link Kısaltma</h2>
-        </div>
-        
-        <div class="tool-content-wrapper">
-          <div class="shortener-container">
-            <div class="shortener-header">
-              <i class="ph ph-link"></i>
-              <h3>Bağlantınızı Kısaltın</h3>
-              <p>Uzun ve karmaşık URL'leri daha paylaşılabilir, kısa bağlantılara dönüştürün.</p>
-            </div>
-            
-            <div class="shortener-input-group">
-              <input type="url" id="url-input" class="large-input" placeholder="https://ornek.com/uzun-baglanti-adresi" required>
-              <button id="btn-shorten" class="btn btn-primary btn-large">Kısalt</button>
-            </div>
-
-            <div id="shortener-result" class="shortener-result hidden">
-              <p>Kısaltılmış Bağlantınız:</p>
-              <div class="result-box">
-                <input type="text" id="shortened-url" class="result-input" readonly>
-                <button id="btn-copy-url" class="btn btn-success btn-icon" title="Kopyala">
-                  <i class="ph ph-copy"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- QR Generator Panel -->
-      <section id="qr-generator-panel" class="tool-panel">
-        <div class="panel-header">
-          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
-            <i class="ph ph-arrow-left"></i> Geri
-          </button>
-          <h2>QR Kod Oluşturma</h2>
-        </div>
-        
-        <div class="tool-content-wrapper">
-          <div class="shortener-container">
-            <div class="shortener-header">
-              <i class="ph ph-qr-code"></i>
-              <h3>QR Kodunuzu Oluşturun</h3>
-              <p>Herhangi bir bağlantıyı kolayca taranabilir QR koda dönüştürün.</p>
-            </div>
-            
-            <div class="shortener-input-group">
-              <input type="url" id="qr-url-input" class="large-input" placeholder="https://ornek.com" required>
-              <button id="btn-generate-qr" class="btn btn-primary btn-large">Oluştur</button>
-            </div>
-
-            <div id="qr-result-box" class="shortener-result hidden" style="text-align: center;">
-              <div class="qr-preview-container" style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem;">
-                <div id="qr-container"></div>
-              </div>
-              
-              <div class="shortener-input-group" style="margin-bottom: 0;">
-                <input type="text" id="qr-filename-input" class="large-input" placeholder="Dosya adı (Örn: qr_kodu)" value="qr_kodu">
-                <button id="btn-download-qr" class="btn btn-success btn-large">
-                  <i class="ph ph-download-simple"></i> İndir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PDF Editor Panel -->
-      <section id="pdf-editor-panel" class="tool-panel">
-        <div class="panel-header">
-          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
-            <i class="ph ph-arrow-left"></i> Geri
-          </button>
-          <h2>PDF Düzenleme</h2>
-        </div>
-        <div class="empty-panel-content">
-          <i class="ph ph-wrench"></i>
-          <h3>Yapım Aşamasında</h3>
-          <p>PDF Düzenleme aracı yakında eklenecektir.</p>
-        </div>
-      </section>
-
-      <!-- Video Compressor Panel -->
-      <section id="video-compressor-panel" class="tool-panel">
-        <div class="panel-header">
-          <button class="btn btn-icon btn-outline btn-back" onclick="openDashboard()">
-            <i class="ph ph-arrow-left"></i> Geri
-          </button>
-          <h2>Video Sıkıştırma</h2>
-        </div>
-        
-        <div class="tool-content-wrapper" style="flex-direction: column; width: 100%;">
-          
-          <!-- Video Upload Area -->
-          <section id="video-upload-zone" class="upload-zone active" style="margin-bottom: 2rem;">
-            <div class="upload-content">
-              <div class="upload-icon-wrapper">
-                <i class="ph ph-file-video"></i>
-              </div>
-              <h2>Sıkıştırmak istediğiniz videoyu yükleyin</h2>
-              <p>Sürükleyip bırakın veya seçmek için tıklayın. (Cihazınızda işlenir, sunucuya yüklenmez!)</p>
-              <input type="file" id="video-input" accept="video/*" hidden>
-              <button class="btn btn-primary" onclick="document.getElementById('video-input').click()">
-                Video Seç
-              </button>
-            </div>
-          </section>
-
-          <!-- Video Processing Area -->
-          <section id="video-editor-zone" class="editor-zone" style="display:none; width: 100%;">
-            <div class="video-workspace">
-              <div class="video-preview-container">
-                <video id="video-preview" controls></video>
-                <div class="video-info">
-                  <span id="video-name">video.mp4</span>
-                  <span id="video-original-size" class="badge">0 MB</span>
-                </div>
-              </div>
-              
-              <div class="compression-controls controls-panel">
-                <h3>Sıkıştırma Ayarları</h3>
-                <div class="compress-options">
-                  <div class="option-group">
-                    <label>Dosya Adı:</label>
-                    <input type="text" id="video-export-filename" class="custom-input" placeholder="video_sikistirilmis" style="width: 100%;">
-                  </div>
-                  <div class="option-group">
-                    <label>Format:</label>
-                    <select id="video-export-format" class="custom-select">
-                      <option value="webm">WebM (Krom/PC için en iyisi)</option>
-                      <option value="mp4">MP4 (Safari/Mobil için en iyisi)</option>
-                    </select>
-                  </div>
-                  <div class="option-group">
-                    <label>Kalite:</label>
-                    <select id="video-quality" class="custom-select">
-                      <option value="23">Yüksek Kalite (Az Sıkıştırma)</option>
-                      <option value="28" selected>Orta Kalite (Dengeli)</option>
-                      <option value="32">Düşük Kalite (Yüksek Sıkıştırma)</option>
-                      <option value="36">En Düşük Kalite (Maksimum Sıkıştırma)</option>
-                    </select>
-                  </div>
-                  <div class="option-group">
-                    <label>Çözünürlük Küçültme:</label>
-                    <select id="video-scale" class="custom-select">
-                      <option value="1">Orijinal Boyut (100%)</option>
-                      <option value="0.75">75% (Daha Hızlı)</option>
-                      <option value="0.5">Yarı Yarıya (50%)</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="action-row" style="text-align: center;">
-                  <button id="btn-compress-video" class="btn btn-primary btn-glow btn-large" style="width: 100%;">
-                    <i class="ph ph-arrows-in"></i> Videoyu Sıkıştır
-                  </button>
-                </div>
-                
-                <div id="video-progress-container" class="progress-container hidden" style="margin-top: 1.5rem;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span id="video-progress-text">Hazırlanıyor...</span>
-                    <span id="video-progress-percent">0%</span>
-                  </div>
-                  <div class="progress-bar-bg">
-                    <div id="video-progress-bar" class="progress-bar-fill"></div>
-                  </div>
-                </div>
-                
-                <div id="video-result-container" class="result-container hidden" style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
-                  <div class="success-stats" style="margin-bottom: 1rem; color: var(--success);">
-                    <i class="ph ph-check-circle" style="font-size: 3rem;"></i>
-                    <h3 style="margin-top:0.5rem;">Sıkıştırma Tamamlandı!</h3>
-                    <p style="font-size:1.1rem; color: var(--text-main); margin-top:0.5rem;">Yeni Boyut: <strong id="video-new-size">0 MB</strong></p>
-                  </div>
-                  <button id="btn-download-video" class="btn btn-success btn-large" style="width: 100%;">
-                    <i class="ph ph-download-simple"></i> Videoyu İndir
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-        </div>
-      </section>
-
-    </main>
-
-    <div class="toast-container" id="toast-container"></div>
-  </div>
-
-  <template id="editor-template">
-    <div class="editor-card">
-      <div class="file-info-bar">
-        <div class="file-details">
-          <i class="ph ph-file-audio"></i>
-          <span class="file-name-display">audio_file.mp3</span>
-        </div>
-        <button class="btn-close-file btn btn-icon btn-danger" title="Kaldır">
-          <i class="ph ph-x"></i>
+      <div class="nav-right">
+        <a href="https://github.com" target="_blank" class="nav-btn-secondary">
+          <i class="ph-fill ph-github-logo"></i>
+          <span>GitHub</span>
+          <i class="ph-fill ph-star" style="font-size: 0.9rem;"></i>
+          <span>1.2k</span>
+        </a>
+        <button class="nav-btn-secondary theme-toggle-btn" onclick="window.toggleTheme()" title="Tema Değiştir" style="cursor:pointer; border:none; padding: 0.5rem 0.75rem;">
+          <i class="ph-fill ph-moon" id="theme-icon"></i>
         </button>
-      </div>
-
-      <div class="waveform-container">
-        <div class="waveform"></div>
-        <div class="timeline"></div>
-        <div class="loading-overlay">
-          <div class="spinner"></div>
-          <p class="loading-text">Yükleniyor...</p>
-        </div>
-      </div>
-
-      <div class="controls-panel">
-        <div class="controls-row-top">
-          <div class="playback-controls">
-            <button class="btn-play-pause btn btn-icon btn-large btn-primary">
-              <i class="ph ph-play play-icon"></i>
-            </button>
-            <div class="time-display">
-              <span class="current-time">00:00.0</span> <span class="divider">/</span> <span class="total-time">00:00.0</span>
-            </div>
-          </div>
-          
-          <div class="volume-control">
-            <i class="ph ph-speaker-high volume-icon"></i>
-            <input type="range" class="volume-slider" min="0" max="3" step="0.05" value="1" title="Ses Seviyesi">
-            <span class="volume-percentage">100%</span>
-          </div>
-        </div>
-
-        <div class="controls-divider"></div>
-
-        <div class="controls-row-bottom">
-          <div class="edit-inputs">
-            <div class="filename-input">
-              <label>Dosya Adı:</label>
-              <input type="text" class="custom-input export-filename" placeholder="yeni_ses_dosyasi">
-            </div>
-
-            <div class="format-selector">
-              <label>Format:</label>
-              <select class="custom-select export-format">
-                <option value="mp3">MP3</option>
-                <option value="wav">WAV</option>
-                <option value="ogg">OGG</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="export-actions">
-            <button class="btn-cut-export btn btn-success btn-glow" disabled>
-              <i class="ph ph-scissors"></i>
-              Seçimi İndir
-            </button>
-          </div>
-        </div>
+        <button class="nav-btn-secondary" onclick="window.toggleLang()" style="cursor:pointer; border:none;">
+          <i class="ph-fill ph-translate"></i>
+          <span data-i18n="lang_other">EN</span>
+        </button>
+        <a href="#" class="nav-btn-primary" data-i18n="nav_start">Hemen Başla</a>
       </div>
     </div>
-  </template>
+  </nav>
 
-  <!-- Wavesurfer -->
-  <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
-  <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.min.js"></script>
-  <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/timeline.min.js"></script>
+  <div class="app-container">
+    
+    <!-- Hero Section (Premium Layout) -->
+    <header class="hero-section" id="hero-header">
+      <h1>Smart <em>Tools,</em><br>Built to <span class="hero-typewriter" id="typewriter-text">Save Time.</span><span class="hero-cursor"></span></h1>
+      
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        LovoTools, tüm dijital ihtiyaçlarınız için hepsi bir arada, modern ve yüksek performanslı bir araç merkezidir.
+      </p>
 
-  <!-- Lamejs for MP3 Export -->
-  <script src="https://unpkg.com/lamejs@1.2.1/lame.all.js"></script>
+<div class="hero-stats">
+        <div class="hero-stat">
+          <i class="ph-fill ph-wrench"></i>
+          <span class="stat-number" data-i18n="stat_tools_number">7 Araç</span>
+          <span class="stat-label" data-i18n="stat_tools_label">Hepsi ücretsiz</span>
+        </div>
+        <div class="hero-stat">
+          <i class="ph-fill ph-browser"></i>
+          <span class="stat-number" data-i18n="stat_browser_number">100% Tarayıcı</span>
+          <span class="stat-label" data-i18n="stat_browser_label">Kurulum gerekmez</span>
+        </div>
+        <div class="hero-stat">
+          <i class="ph-fill ph-lock-key"></i>
+          <span class="stat-number" data-i18n="stat_zero_number">Sıfır Yükleme</span>
+          <span class="stat-label" data-i18n="stat_zero_label">Veriler cihazında kalır</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content" id="main-content">
+      
+      <!-- Dashboard Screen (Bento Grid) -->
+      <section id="dashboard-zone" class="dashboard-zone active">
+
+        <div class="section-header">
+          <div class="section-header-left">
+            <h2 data-i18n-html="section_title">İhtiyacın olan her şey,<br>tek bir yerde.</h2>
+          </div>
+          <p class="section-desc" data-i18n="section_desc">PDF'den videoya, koddan QR'a — tüm araçlar tarayıcınızda çalışır. Hesap açmanıza, dosya yüklemenize gerek yok.</p>
+        </div>
+
+        <div class="tools-grid">
+          
+          <!-- PDF Düzenleme (Large Hero) -->
+          <div id="files" class="tool-card card-large" onclick="app.openPanel('pdf-editor-panel')">
+            <div class="tool-icon"><i class="ph ph-file-pdf"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_pdf_title">PDF Düzenleme</h3>
+              <p data-i18n="card_pdf_desc">Merge, Split ve çok daha fazlası. Masaüstü kalitesinde PDF araçları tarayıcınızda.</p>
+            </div>
+            <img src="assets/img/pdf_art.png" class="card-art" alt="PDF Art">
+          </div>
+
+          <!-- Kod Merkezi (Wide) -->
+          <div id="dev" class="tool-card card-wide" onclick="app.openPanel('code-center-panel')">
+            <div class="tool-icon"><i class="ph ph-code"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_code_title">Kod Merkezi</h3>
+              <p data-i18n="card_code_desc">JSON, HTML ve metin araçlarıyla akıllı kod editörü.</p>
+            </div>
+            <img src="assets/img/code_art.png" class="card-art" alt="Code Art">
+          </div>
+
+          <!-- QR Kod (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('qr-generator-panel')">
+            <div class="tool-icon"><i class="ph ph-qr-code"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_qr_title">QR Kod</h3>
+              <p data-i18n="card_qr_desc">Hızlı ve kurumsal QR oluşturucu.</p>
+            </div>
+            <img src="assets/img/qr_art.png" class="card-art" alt="QR Art">
+          </div>
+
+          <!-- Link Kısaltma (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('url-shortener-panel')">
+            <div class="tool-icon"><i class="ph ph-link"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_url_title">Link Kısaltma</h3>
+              <p data-i18n="card_url_desc">Analitik ve güvenli kısaltma.</p>
+            </div>
+            <img src="assets/img/url_art.png" class="card-art" alt="URL Art">
+          </div>
+
+          <!-- Ses Düzenleme (Normal) -->
+          <div id="media" class="tool-card" onclick="app.openPanel('audio-editor-panel')">
+            <div class="tool-icon"><i class="ph ph-wave-sine"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_audio_title">Ses Düzenleme</h3>
+              <p data-i18n="card_audio_desc">Hızlı ve profesyonel editör.</p>
+            </div>
+            <img src="assets/img/audio_edit_art.png" class="card-art" alt="Audio Art">
+          </div>
+
+          <!-- Video Sıkıştırma (Wide) -->
+          <div class="tool-card card-wide" onclick="app.openPanel('video-compressor-panel')">
+            <div class="tool-icon"><i class="ph ph-video-camera"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_video_title">Video İşleme</h3>
+              <p data-i18n="card_video_desc">WASM teknolojisiyle lokal video optimizasyonu.</p>
+            </div>
+            <img src="assets/img/video_art.png" class="card-art" alt="Video Art">
+          </div>
+
+          <!-- Görsel Düzenleyici (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('image-editor-panel')">
+            <div class="tool-icon"><i class="ph ph-image"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_image_title">Görsel Düzenleyici</h3>
+              <p data-i18n="card_image_desc">Sıkıştır ve boyutlandır.</p>
+            </div>
+            <img src="assets/img/image_art.png" class="card-art" alt="Image Art">
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Panel Container -->
+      <div id="panel-container">
+        <!-- Panels loaded here -->
+      </div>
+
+    </main>
+  </div> <!-- .app-container sonu -->
+
+  <!-- Footer (Artık gövdenin en altında ve yapışık olacak) -->
+  <footer class="app-footer" id="app-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <i class="ph-fill ph-circles-four"></i>
+            <span>LovoTools</span>
+          </div>
+          <p data-i18n="footer_tagline">Yüksek performanslı, güvenli ve tarayıcı tabanlı dijital araçlar.</p>
+          <div class="footer-socials">
+            <a href="#"><i class="ph ph-twitter-logo"></i></a>
+            <a href="#"><i class="ph ph-github-logo"></i></a>
+            <a href="#"><i class="ph ph-discord-logo"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-groups">
+          <div class="footer-group">
+            <h4 data-i18n="footer_product">Ürün</h4>
+            <a href="#files" data-i18n="card_pdf_title">PDF Düzenleme</a>
+            <a href="#dev" data-i18n="card_code_title">Kod Merkezi</a>
+            <a href="#media" data-i18n="card_audio_title">Ses Düzenleme</a>
+          </div>
+          <div class="footer-group">
+            <h4 data-i18n="footer_resources_group">Kaynaklar</h4>
+            <a href="#" data-i18n="footer_docs">Dokümantasyon</a>
+            <a href="#">GitHub</a>
+            <a href="#" data-i18n="footer_feedback">Geri Bildirim</a>
+          </div>
+          <div class="footer-group">
+            <h4 data-i18n="footer_legal">Yasal</h4>
+            <a href="#" data-i18n="footer_privacy">Gizlilik</a>
+            <a href="#" data-i18n="footer_terms">Şartlar</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p data-i18n="footer_copyright">&copy; 2026 LovoTools. Tüm hakları saklıdır. Dosyalarınız cihazınızda kalır.</p>
+      </div>
+    </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Libraries for Code Editor -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
   
-  <!-- FFmpeg for Video Compression -->
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+  <!-- Editor Addons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closetag.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closebrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/matchbrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/show-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/xml-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/javascript-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/css-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/html-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/comment/comment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/search/search.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/search/searchcursor.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/dialog/dialog.min.js"></script>
+  
+  <!-- Emmet & Multi-file Support -->
+  <script src="https://cdn.jsdelivr.net/npm/@emmetio/codemirror-plugin@0.5.4/dist/emmet-codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+  <!-- Media Tools Libraries (Restored) -->
+  <script src="https://unpkg.com/wavesurfer.js@6.6.4"></script>
+  <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.regions.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.timeline.min.js"></script>
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.model.js"></script> <!-- Note: Using UMD version -->
   <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
 
-  <!-- QRCode Generator -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script type="module" src="js/app.js"></script>
 
-  <!-- App Logic -->
-  <script src="main.js"></script>
 </body>
 </html>

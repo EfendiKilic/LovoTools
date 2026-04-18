@@ -1,0 +1,98 @@
+<section id="image-editor-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="image_breadcrumb">Medya İşlemleri</span>
+    </div>
+    <h2 data-i18n="image_title">Görsel Optimize Edici</h2>
+  </div>
+
+  <!-- Upload Zone -->
+  <div id="image-upload-zone" class="upload-zone active">
+    <div class="upload-card" onclick="document.getElementById('image-input').click()">
+      <div class="icon-circle">
+        <i class="ph ph-image"></i>
+      </div>
+      <h3 data-i18n="image_upload_title">Optimize etmek istediğiniz görseli yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="image_fast_note">(Hızlı ve lokal işlem)</small>
+      <input type="file" id="image-input" accept="image/*" hidden>
+      <button class="btn btn-primary" style="margin-top: 1.5rem; padding: 1rem 3rem;" data-i18n="image_select_btn">Görsel Seç</button>
+    </div>
+  </div>
+
+  <!-- Workspace -->
+  <div id="image-workspace" class="image-workspace hidden">
+
+    <!-- Preview Area -->
+    <div class="image-main-card">
+        <div class="image-preview-container">
+            <img id="image-preview" src="" alt="Önizleme">
+        </div>
+
+        <div class="image-file-info">
+            <div class="info-item">
+                <label data-i18n="common_file_name">Dosya Adı</label>
+                <span id="image-info-name">-</span>
+            </div>
+            <div class="info-item">
+                <label data-i18n="common_original_size">Orijinal Boyut</label>
+                <span id="image-original-size" style="color: var(--danger);">-</span>
+            </div>
+            <div class="info-item">
+                <label data-i18n="image_dimensions">Boyutlar</label>
+                <span id="image-dimensions">-</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls Sidebar -->
+    <aside class="image-sidebar">
+        <h4 class="sidebar-title" data-i18n="image_settings_title">Optimizasyon Ayarları</h4>
+
+        <!-- Quality Toggles -->
+        <div class="control-group">
+            <label data-i18n="image_quality_label">Çıktı Kalitesi:</label>
+            <div id="quality-toggles" class="button-group">
+                <button class="btn btn-outline btn-sm toggle-btn" data-value="100" data-i18n="image_quality_max">En Yüksek</button>
+                <button class="btn btn-outline btn-sm toggle-btn active" data-value="80" data-i18n="image_quality_good">İyi (80)</button>
+                <button class="btn btn-outline btn-sm toggle-btn" data-value="60" data-i18n="image_quality_eco">Eko (60)</button>
+            </div>
+        </div>
+
+        <!-- Scale Toggles -->
+        <div class="control-group">
+            <label data-i18n="image_scale_label">Ölçekleme:</label>
+            <div id="scale-toggles" class="button-group">
+                <button class="btn btn-outline btn-sm toggle-btn active" data-value="100">100%</button>
+                <button class="btn btn-outline btn-sm toggle-btn" data-value="75">75%</button>
+                <button class="btn btn-outline btn-sm toggle-btn" data-value="50">50%</button>
+            </div>
+            <div id="new-dimensions-preview" style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--primary); font-weight: 600; text-align: center;">Tahmini: -</div>
+        </div>
+
+        <div class="control-group">
+            <label data-i18n="image_format_label">Kayıt Formatı:</label>
+            <select id="image-export-format" class="custom-select" style="width: 100%;">
+                <option value="image/png">PNG</option>
+                <option value="image/jpeg" selected data-i18n="image_format_jpg">JPG (Hızlı/Küçük)</option>
+                <option value="image/webp" data-i18n="image_format_webp">WEBP (Modern)</option>
+            </select>
+        </div>
+
+        <button id="btn-process-image" class="btn btn-primary" style="width: 100%; padding: 1.25rem; font-size: 1.1rem; border-radius: 14px;" data-i18n="image_process_btn">
+            İşlemi Başlat
+        </button>
+
+        <!-- Result Card -->
+        <div id="image-result-container" class="image-status-box status-success hidden">
+            <div class="status-title" data-i18n="image_done">İşlem Tamamlandı!</div>
+            <div class="status-value" id="image-new-size">-</div>
+            <div class="status-ratio" id="image-save-ratio">-</div>
+            <button id="btn-download-image" class="btn btn-success" style="width: 100%; padding: 1rem; border-radius: 10px;" data-i18n="image_download_btn">
+                Görseli İndir
+            </button>
+        </div>
+    </aside>
+  </div>
+</section>

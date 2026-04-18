@@ -1,0 +1,128 @@
+<section id="resources-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="res_home">Ana Sayfa</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="res_breadcrumb">Kaynaklar</span>
+    </div>
+    <h2 data-i18n="res_title">Kaynaklar</h2>
+  </div>
+
+  <!-- Featured Doc -->
+  <div class="res-featured">
+    <div class="res-featured-badge"><i class="ph-fill ph-star"></i> <span data-i18n="res_featured_badge">Başlangıç Rehberi</span></div>
+    <h3 data-i18n="res_featured_title">LovoTools'a Hızlı Başlangıç</h3>
+    <p data-i18n="res_featured_desc">Tüm araçları 5 dakikada keşfedin. Kurulum gerektirmez — tarayıcınızı açın ve hemen başlayın.</p>
+    <a href="#" class="btn btn-primary res-featured-btn">
+      <i class="ph ph-book-open"></i> <span data-i18n="res_featured_btn">Rehberi Oku</span>
+    </a>
+  </div>
+
+  <!-- Doc Categories -->
+  <div class="res-section-title">
+    <h4 data-i18n="res_docs_title">Dokümantasyon</h4>
+    <span data-i18n="res_docs_subtitle">Araç başına detaylı kullanım kılavuzları</span>
+  </div>
+
+  <div class="res-docs-grid">
+    <div class="res-doc-card">
+      <div class="res-doc-icon" style="background:#eff6ff;color:#3b82f6;"><i class="ph ph-file-pdf"></i></div>
+      <div class="res-doc-body">
+        <h5 data-i18n="res_doc_pdf_title">PDF Araçları</h5>
+        <p data-i18n="res_doc_pdf_desc">Birleştir, böl ve düzenle operasyonları</p>
+      </div>
+      <i class="ph ph-arrow-right res-doc-arrow"></i>
+    </div>
+    <div class="res-doc-card">
+      <div class="res-doc-icon" style="background:#f0fdf4;color:#22c55e;"><i class="ph ph-code"></i></div>
+      <div class="res-doc-body">
+        <h5 data-i18n="res_doc_code_title">Kod Merkezi</h5>
+        <p data-i18n="res_doc_code_desc">JSON, HTML, CSS editörü ve araçları</p>
+      </div>
+      <i class="ph ph-arrow-right res-doc-arrow"></i>
+    </div>
+    <div class="res-doc-card">
+      <div class="res-doc-icon" style="background:#fdf4ff;color:#a855f7;"><i class="ph ph-wave-sine"></i></div>
+      <div class="res-doc-body">
+        <h5 data-i18n="res_doc_audio_title">Ses Düzenleme</h5>
+        <p data-i18n="res_doc_audio_desc">Kesim, ses seviyesi ve dışa aktarma</p>
+      </div>
+      <i class="ph ph-arrow-right res-doc-arrow"></i>
+    </div>
+    <div class="res-doc-card">
+      <div class="res-doc-icon" style="background:#fff7ed;color:#f97316;"><i class="ph ph-video-camera"></i></div>
+      <div class="res-doc-body">
+        <h5 data-i18n="res_doc_video_title">Video İşleme</h5>
+        <p data-i18n="res_doc_video_desc">FFmpeg.wasm ile lokal sıkıştırma</p>
+      </div>
+      <i class="ph ph-arrow-right res-doc-arrow"></i>
+    </div>
+    <div class="res-doc-card">
+      <div class="res-doc-icon" style="background:#fefce8;color:#eab308;"><i class="ph ph-qr-code"></i></div>
+      <div class="res-doc-body">
+        <h5 data-i18n="res_doc_qr_title">QR Kod</h5>
+        <p data-i18n="res_doc_qr_desc">Oluşturma, özelleştirme ve indirme</p>
+      </div>
+      <i class="ph ph-arrow-right res-doc-arrow"></i>
+    </div>
+    <div class="res-doc-card">
+      <div class="res-doc-icon" style="background:#f0f9ff;color:#0ea5e9;"><i class="ph ph-link"></i></div>
+      <div class="res-doc-body">
+        <h5 data-i18n="res_doc_url_title">Link Kısaltma</h5>
+        <p data-i18n="res_doc_url_desc">Kısa URL oluşturma ve yönetimi</p>
+      </div>
+      <i class="ph ph-arrow-right res-doc-arrow"></i>
+    </div>
+  </div>
+
+  <!-- Guides -->
+  <div class="res-section-title" style="margin-top: 3.5rem;">
+    <h4 data-i18n="res_guides_title">Rehberler</h4>
+    <span data-i18n="res_guides_subtitle">Adım adım kullanım senaryoları</span>
+  </div>
+
+  <div class="res-guides-list">
+    <div class="res-guide-item">
+      <div class="res-guide-meta">
+        <span class="res-guide-tag res-tag-video" data-i18n="res_guide_tag_video">Video</span>
+        <span class="res-guide-read" data-i18n="res_guide1_read">5 dk okuma</span>
+      </div>
+      <h5 data-i18n="res_guide1_title">Büyük PDF dosyalarını nasıl bölersiniz?</h5>
+      <p data-i18n="res_guide1_desc">Sayfa aralığı seçimi ve tek tıkla dışa aktarma</p>
+    </div>
+    <div class="res-guide-item">
+      <div class="res-guide-meta">
+        <span class="res-guide-tag res-tag-article" data-i18n="res_guide_tag_article">Makale</span>
+        <span class="res-guide-read" data-i18n="res_guide2_read">3 dk okuma</span>
+      </div>
+      <h5 data-i18n="res_guide2_title">Video dosyanızı %70 küçültün, kaliteyi koruyun</h5>
+      <p data-i18n="res_guide2_desc">CRF değerleri ve ölçekleme ayarlarının doğru kullanımı</p>
+    </div>
+    <div class="res-guide-item">
+      <div class="res-guide-meta">
+        <span class="res-guide-tag res-tag-article" data-i18n="res_guide_tag_article">Makale</span>
+        <span class="res-guide-read" data-i18n="res_guide3_read">4 dk okuma</span>
+      </div>
+      <h5 data-i18n="res_guide3_title">Toplu ses dosyası dışa aktarma</h5>
+      <p data-i18n="res_guide3_desc">Birden fazla dosyayı aynı anda kırpma ve indirme</p>
+    </div>
+  </div>
+
+  <!-- Community -->
+  <div class="res-community">
+    <div class="res-community-left">
+      <h4 data-i18n="res_community_title">Topluluk & Destek</h4>
+      <p data-i18n="res_community_desc">Sorularınız için GitHub Issues açabilir, Discord'dan bize ulaşabilirsiniz.</p>
+    </div>
+    <div class="res-community-links">
+      <a href="https://github.com" target="_blank" class="btn btn-outline res-comm-btn">
+        <i class="ph ph-github-logo"></i> GitHub
+      </a>
+      <a href="#" class="btn btn-outline res-comm-btn">
+        <i class="ph ph-discord-logo"></i> Discord
+      </a>
+      <a href="#" class="btn btn-outline res-comm-btn">
+        <i class="ph ph-chat-circle-dots"></i> <span data-i18n="res_feedback_btn">Geri Bildirim</span>
+      </a>
+    </div>
+  </div>
+</section>

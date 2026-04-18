@@ -1,0 +1,133 @@
+/* ===== DARK MODE MODULE OVERRIDES ===== */
+
+/* --- Audio Editor --- */
+[data-theme="dark"] .editor-card {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .waveform-container {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .controls-panel {
+  background: var(--bg-main);
+}
+
+/* --- Code Tools --- */
+[data-theme="dark"] .tools-container {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .header-tabs {
+  background: var(--bg-main);
+  border-color: var(--border-light);
+}
+
+[data-theme="dark"] .header-tabs .toggle-btn.active {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .json-output-container,
+[data-theme="dark"] .text-tool-container,
+[data-theme="dark"] .html-tool-container {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .json-output-area,
+[data-theme="dark"] .tool-output-area {
+  background: var(--bg-main);
+  color: var(--text-main);
+  border-color: var(--border-light);
+}
+
+[data-theme="dark"] .format-options,
+[data-theme="dark"] .tool-options-panel {
+  background: var(--bg-main);
+}
+
+/* --- Resources --- */
+[data-theme="dark"] .res-search-box {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .res-doc-card {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .res-tool-card,
+[data-theme="dark"] .res-video-card,
+[data-theme="dark"] .res-article-card {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .res-featured-btn {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+}
+
+[data-theme="dark"] .res-featured-btn:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-theme="dark"] .res-tag-video {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+}
+
+[data-theme="dark"] .res-tag-article {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+}
+
+/* --- Updates / Changelog --- */
+[data-theme="dark"] .upd-entry-body {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .upd-dot {
+  background: #1f1f1f;
+  border-color: var(--bg-main);
+  box-shadow: 0 0 0 2px #1f1f1f;
+}
+
+/* --- PDF Editor --- */
+[data-theme="dark"] .pdf-preview-area,
+[data-theme="dark"] .pdf-page-thumb {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .pdf-toolbar,
+[data-theme="dark"] .pdf-sidebar {
+  background: var(--bg-main);
+  border-color: var(--border-light);
+}
+
+/* --- Image Editor --- */
+[data-theme="dark"] .image-canvas-wrap,
+[data-theme="dark"] .image-editor-panel-inner {
+  background: var(--bg-card);
+}
+
+/* --- URL Shortener --- */
+[data-theme="dark"] .url-result-card,
+[data-theme="dark"] .url-history-item {
+  background: var(--bg-card);
+}
+
+/* --- QR Generator --- */
+[data-theme="dark"] .qr-preview-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+}
+
+/* --- Video Compressor --- */
+[data-theme="dark"] .compression-controls {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+}
+
+[data-theme="dark"] .progress-bar-bg {
+  background: var(--bg-subtle);
+}

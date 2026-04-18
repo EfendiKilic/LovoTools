@@ -1,0 +1,105 @@
+<section id="video-compressor-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="video_breadcrumb">Video İşleme</span>
+    </div>
+    <h2 data-i18n="video_title">Video Sıkıştırma (Lokal)</h2>
+  </div>
+
+  <!-- Upload Area -->
+  <div id="video-upload-zone" class="upload-zone active">
+    <div class="upload-card" onclick="document.getElementById('video-input').click()">
+      <div class="icon-circle">
+        <i class="ph ph-video-camera"></i>
+      </div>
+      <h3 data-i18n="video_upload_title">Sıkıştırmak istediğiniz videoyu yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="video_ffmpeg_note">(FFmpeg.wasm ile cihazınızda işlenir)</small>
+      <input type="file" id="video-input" accept="video/*" hidden>
+      <button class="btn btn-primary" style="margin-top: 1.5rem; padding: 1rem 3rem;" data-i18n="video_select_btn">Dosya Seç</button>
+    </div>
+  </div>
+
+  <!-- Editor Workspace -->
+  <div id="video-editor-zone" class="video-workspace hidden">
+
+    <!-- Video Preview & Info -->
+    <div class="video-main-card">
+        <div class="video-preview-box">
+            <video id="video-preview" controls></video>
+        </div>
+        <div class="video-file-info">
+            <div class="info-item">
+                <label data-i18n="video_file_name_label">Dosya Adı</label>
+                <span id="video-name">-</span>
+            </div>
+            <div class="info-item">
+                <label data-i18n="video_original_size_label">Orijinal Boyut</label>
+                <span id="video-original-size" style="color: var(--danger);">-</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Options & Actions -->
+    <aside class="video-sidebar">
+        <h4 class="sidebar-title" data-i18n="video_settings_title">Sıkıştırma Ayarları</h4>
+
+        <div class="input-group">
+            <label data-i18n="video_quality_label">Kalite (CRF):</label>
+            <select id="video-quality" class="custom-select" style="width: 100%;">
+                <option value="28" selected data-i18n="video_quality_normal">Normal (28 - Dengeli)</option>
+                <option value="32" data-i18n="video_quality_low">Düşük (32 - Küçük Boyut)</option>
+                <option value="23" data-i18n="video_quality_high">Yüksek (23 - Net Görüntü)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label data-i18n="video_scale_label">Ölçekleme:</label>
+            <select id="video-scale" class="custom-select" style="width: 100%;">
+                <option value="1" selected data-i18n="video_scale_100">Orijinal Boyut (1:1)</option>
+                <option value="0.75" data-i18n="video_scale_75">75% Ölçek</option>
+                <option value="0.5" data-i18n="video_scale_50">50% Ölçek (SD)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label data-i18n="video_format_label">Export Format:</label>
+            <select id="video-export-format" class="custom-select" style="width: 100%;">
+                <option value="mp4">MP4 (H.264)</option>
+                <option value="mkv">MKV</option>
+            </select>
+        </div>
+
+        <div class="divider" style="height: 1px; background: var(--border-light); margin: 1.5rem 0;"></div>
+
+        <div class="input-group">
+            <label data-i18n="video_filename_label">Dışa Aktarılacak Ad:</label>
+            <input type="text" id="video-export-filename" class="custom-input" style="width: 100%;" placeholder="final_video">
+        </div>
+
+        <button id="btn-compress-video" class="btn btn-primary" style="width: 100%; padding: 1.25rem; font-size: 1.1rem;">
+            <i class="ph ph-lightning"></i> <span data-i18n="video_compress_btn">Sıkıştırmayı Başlat</span>
+        </button>
+
+        <!-- Dynamic Progress Area -->
+        <div id="video-progress-container" class="video-status-box status-processing hidden">
+            <div id="video-progress-text" style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;" data-i18n="video_ffmpeg_loading">FFmpeg başlatılıyor...</div>
+            <div class="progress-bar-bg">
+                <div id="video-progress-bar" class="progress-bar-fill"></div>
+            </div>
+            <div id="video-progress-percent" style="font-weight: 700; color: var(--primary); font-size: 1.1rem;">0%</div>
+        </div>
+
+        <!-- Result Container -->
+        <div id="video-result-container" class="video-status-box status-success hidden">
+            <div style="font-size: 0.85rem; margin-bottom: 1rem;">
+                <span data-i18n="video_new_size_label">Yeni Boyut:</span> <strong id="video-new-size">-</strong>
+            </div>
+            <button id="btn-download-video" class="btn btn-success" style="width: 100%; padding: 1rem;">
+                <i class="ph ph-download-simple"></i> <span data-i18n="video_download_btn">Videoyu İndir</span>
+            </button>
+        </div>
+    </aside>
+  </div>
+</section>

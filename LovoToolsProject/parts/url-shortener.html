@@ -1,0 +1,39 @@
+<section id="url-shortener-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="url_breadcrumb">Geliştirici</span>
+    </div>
+    <h2 data-i18n="url_title">Link Kısaltma</h2>
+  </div>
+
+  <div class="editor-main-container" style="background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 24px; padding: 4rem 2rem; box-shadow: var(--shadow-ring); text-align: center; max-width: 900px; margin: 0 auto;">
+    <div class="input-group" style="margin-bottom: 2rem; max-width: 600px; margin: 0 auto 2.5rem;">
+      <label style="display: block; margin-bottom: 1rem; font-weight: 700; font-size: 1.25rem; color: var(--text-main);" data-i18n="url_input_label">Uzun Linkinizi Buraya Yapıştırın:</label>
+      <input type="url" id="url-input" class="custom-input" style="width: 100%; height: 64px; font-size: 1.1rem; padding: 0 1.5rem; text-align: center; border-radius: 16px;" placeholder="https://very-long-url.com/something-very-long...">
+    </div>
+
+    <button id="btn-shorten" class="btn btn-primary" style="padding: 1.25rem 4rem; font-size: 1.1rem; border-radius: 14px; box-shadow: var(--shadow-lg);">
+      <i class="ph ph-link-break"></i> <span data-i18n="url_shorten_btn">Şimdi Kısalt</span>
+    </button>
+
+    <!-- Result Card -->
+    <div id="shortener-result" class="hidden" style="margin-top: 4rem; padding: 3rem; background: var(--bg-subtle); border-radius: 24px; border: 2px dashed var(--border-strong); text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; transition: all 0.3s;">
+      <h4 style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="url_result_title">Kısa Linkiniz Hazır</h4>
+
+      <div style="position: relative; margin-bottom: 2.5rem;">
+        <input type="text" id="shortened-url" readonly style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); padding: 1.25rem; border-radius: 16px; font-size: 1.4rem; font-weight: 700; color: var(--primary); text-align: center; outline: none;">
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 1.5rem;">
+        <button id="btn-copy-url" class="btn btn-success" style="padding: 1rem 2.5rem; border-radius: 12px; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="ph ph-copy"></i> <span data-i18n="url_copy_btn">Kopyala</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hidden { display: none !important; }
+</style>
