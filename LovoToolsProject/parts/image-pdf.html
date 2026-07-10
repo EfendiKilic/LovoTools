@@ -1,0 +1,86 @@
+<section id="image-pdf-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="ipdf_breadcrumb">Dosyalar</span>
+    </div>
+    <h2 data-i18n="ipdf_title">Görsel ↔ PDF Dönüştürücü</h2>
+  </div>
+
+  <div class="ipdf-tabs">
+    <button id="ipdf-tab-img2pdf" class="ipdf-tab active">
+      <i class="ph ph-images"></i> <span data-i18n="ipdf_tab_img2pdf">Görsel → PDF</span>
+    </button>
+    <button id="ipdf-tab-pdf2img" class="ipdf-tab">
+      <i class="ph ph-file-image"></i> <span data-i18n="ipdf_tab_pdf2img">PDF → Görsel</span>
+    </button>
+  </div>
+
+  <!-- Görsel -> PDF -->
+  <div id="ipdf-img2pdf-section" class="ipdf-section active">
+    <div class="upload-card ipdf-upload" onclick="document.getElementById('ipdf-image-input').click()">
+      <div class="icon-circle"><i class="ph ph-images"></i></div>
+      <h3 data-i18n="ipdf_img_upload_title">PDF'e dönüştürülecek görselleri yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="ipdf_img_note">(Birden fazla görsel seçebilirsiniz — her görsel bir sayfa olur)</small>
+      <input type="file" id="ipdf-image-input" accept="image/*" multiple hidden>
+    </div>
+
+    <div id="ipdf-image-list" class="ipdf-image-list"></div>
+
+    <div id="ipdf-img2pdf-actions" class="ipdf-actions hidden">
+      <div class="ipdf-field">
+        <label data-i18n="ipdf_filename_label">Çıktı Dosya Adı:</label>
+        <input type="text" id="ipdf-pdf-filename" class="custom-input" value="gorsellerden_pdf">
+      </div>
+      <button id="ipdf-btn-create-pdf" class="btn btn-primary btn-glow" style="padding: 1.1rem 3rem; border-radius: 14px;">
+        <i class="ph ph-file-pdf"></i> <span data-i18n="ipdf_create_btn">PDF Oluştur ve İndir</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- PDF -> Görsel -->
+  <div id="ipdf-pdf2img-section" class="ipdf-section">
+    <div class="upload-card ipdf-upload" onclick="document.getElementById('ipdf-pdf-input').click()">
+      <div class="icon-circle"><i class="ph ph-file-pdf"></i></div>
+      <h3 data-i18n="ipdf_pdf_upload_title">Görsele dönüştürülecek PDF'i yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="ipdf_pdf_note">(Her sayfa ayrı bir görsel olarak indirilir)</small>
+      <input type="file" id="ipdf-pdf-input" accept="application/pdf" hidden>
+    </div>
+
+    <div id="ipdf-pdf2img-actions" class="ipdf-actions-card hidden">
+      <div class="ipdf-pdf-info">
+        <i class="ph ph-file-pdf"></i>
+        <strong id="ipdf-pdf-name">-</strong>
+        <span id="ipdf-pdf-pages">-</span>
+      </div>
+      <div class="ipdf-options-grid">
+        <div class="ipdf-field">
+          <label data-i18n="ipdf_format_label">Görsel Formatı:</label>
+          <select id="ipdf-img-format" class="custom-select" style="width: 100%;">
+            <option value="png" selected>PNG</option>
+            <option value="jpg">JPG</option>
+            <option value="webp">WebP</option>
+          </select>
+        </div>
+        <div class="ipdf-field">
+          <label data-i18n="ipdf_quality_label">Çözünürlük:</label>
+          <select id="ipdf-img-scale" class="custom-select" style="width: 100%;">
+            <option value="1">1x (Normal)</option>
+            <option value="2" selected>2x (Yüksek)</option>
+            <option value="3">3x (Çok Yüksek)</option>
+          </select>
+        </div>
+        <div class="ipdf-field">
+          <label data-i18n="ipdf_prefix_label">Dosya Adı Öneki:</label>
+          <input type="text" id="ipdf-img-prefix" class="custom-input" style="width: 100%;" value="sayfa">
+        </div>
+      </div>
+      <button id="ipdf-btn-convert-pdf" class="btn btn-primary btn-glow" style="width: 100%; padding: 1.1rem; border-radius: 14px; margin-top: 1.25rem;">
+        <i class="ph ph-download-simple"></i> <span data-i18n="ipdf_convert_btn">Sayfaları Görsel Olarak İndir</span>
+      </button>
+      <p id="ipdf-pdf2img-status" style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);"></p>
+    </div>
+  </div>
+</section>

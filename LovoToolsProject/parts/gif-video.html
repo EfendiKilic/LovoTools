@@ -1,0 +1,112 @@
+<section id="gif-video-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="gifv_breadcrumb">Medya</span>
+    </div>
+    <h2 data-i18n="gifv_title">GIF ↔ Video Dönüştürücü</h2>
+  </div>
+
+  <div class="gifv-tabs">
+    <button id="gifv-tab-v2g" class="gifv-tab active">
+      <i class="ph ph-film-strip"></i> <span data-i18n="gifv_tab_v2g">Video → GIF</span>
+    </button>
+    <button id="gifv-tab-g2v" class="gifv-tab">
+      <i class="ph ph-video-camera"></i> <span data-i18n="gifv_tab_g2v">GIF → Video (MP4)</span>
+    </button>
+  </div>
+
+  <!-- Video -> GIF -->
+  <div id="gifv-v2g-section" class="gifv-section active">
+    <div class="upload-card gifv-upload" onclick="document.getElementById('gifv-video-input').click()">
+      <div class="icon-circle"><i class="ph ph-film-strip"></i></div>
+      <h3 data-i18n="gifv_v2g_upload_title">GIF'e dönüştürülecek videoyu yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="gifv_v2g_note">(Kısa videolar önerilir — GIF dosyaları hızlı büyür)</small>
+      <input type="file" id="gifv-video-input" accept="video/*" hidden>
+    </div>
+
+    <div id="gifv-v2g-workspace" class="gifv-card hidden">
+      <div class="gifv-file-info">
+        <i class="ph ph-file-video"></i>
+        <strong id="gifv-v2g-name">-</strong>
+        <span id="gifv-v2g-size">-</span>
+      </div>
+      <div class="gifv-options-grid">
+        <div class="gifv-field">
+          <label>FPS:</label>
+          <select id="gifv-fps" class="custom-select" style="width: 100%;">
+            <option value="10">10 (Küçük dosya)</option>
+            <option value="15" selected>15 (Dengeli)</option>
+            <option value="20">20 (Akıcı)</option>
+          </select>
+        </div>
+        <div class="gifv-field">
+          <label data-i18n="gifv_width_label">Genişlik:</label>
+          <select id="gifv-width" class="custom-select" style="width: 100%;">
+            <option value="240">240 px</option>
+            <option value="320">320 px</option>
+            <option value="480" selected>480 px</option>
+            <option value="640">640 px</option>
+            <option value="0" data-i18n="gifv_width_original">Orijinal</option>
+          </select>
+        </div>
+        <div class="gifv-field">
+          <label data-i18n="gifv_filename_label">Çıktı Dosya Adı:</label>
+          <input type="text" id="gifv-v2g-filename" class="custom-input" style="width: 100%;">
+        </div>
+      </div>
+      <button id="gifv-btn-v2g" class="btn btn-primary btn-glow" style="width: 100%; padding: 1.1rem; border-radius: 14px; margin-top: 1.25rem;">
+        <i class="ph ph-film-strip"></i> <span data-i18n="gifv_v2g_btn">GIF'e Dönüştür</span>
+      </button>
+      <p id="gifv-v2g-status" class="gifv-status"></p>
+      <div id="gifv-v2g-result" class="gifv-result hidden">
+        <img id="gifv-v2g-preview" alt="GIF önizleme">
+        <div class="gifv-result-row">
+          <span id="gifv-v2g-result-size">-</span>
+          <button id="gifv-btn-v2g-download" class="btn btn-success">
+            <i class="ph ph-download-simple"></i> <span data-i18n="gifv_download_gif">GIF'i İndir</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GIF -> Video -->
+  <div id="gifv-g2v-section" class="gifv-section">
+    <div class="upload-card gifv-upload" onclick="document.getElementById('gifv-gif-input').click()">
+      <div class="icon-circle"><i class="ph ph-gif"></i></div>
+      <h3 data-i18n="gifv_g2v_upload_title">Videoya dönüştürülecek GIF'i yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="gifv_g2v_note">(MP4 çok daha küçük dosya boyutu sağlar)</small>
+      <input type="file" id="gifv-gif-input" accept="image/gif" hidden>
+    </div>
+
+    <div id="gifv-g2v-workspace" class="gifv-card hidden">
+      <div class="gifv-file-info">
+        <i class="ph ph-gif"></i>
+        <strong id="gifv-g2v-name">-</strong>
+        <span id="gifv-g2v-size">-</span>
+      </div>
+      <div class="gifv-options-grid" style="grid-template-columns: 1fr;">
+        <div class="gifv-field">
+          <label data-i18n="gifv_filename_label">Çıktı Dosya Adı:</label>
+          <input type="text" id="gifv-g2v-filename" class="custom-input" style="width: 100%;">
+        </div>
+      </div>
+      <button id="gifv-btn-g2v" class="btn btn-primary btn-glow" style="width: 100%; padding: 1.1rem; border-radius: 14px; margin-top: 1.25rem;">
+        <i class="ph ph-video-camera"></i> <span data-i18n="gifv_g2v_btn">MP4'e Dönüştür</span>
+      </button>
+      <p id="gifv-g2v-status" class="gifv-status"></p>
+      <div id="gifv-g2v-result" class="gifv-result hidden">
+        <video id="gifv-g2v-preview" controls muted loop playsinline></video>
+        <div class="gifv-result-row">
+          <span id="gifv-g2v-result-size">-</span>
+          <button id="gifv-btn-g2v-download" class="btn btn-success">
+            <i class="ph ph-download-simple"></i> <span data-i18n="gifv_download_mp4">MP4'ü İndir</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

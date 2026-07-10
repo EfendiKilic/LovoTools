@@ -10,22 +10,53 @@
   <div class="editor-main-container" style="background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 24px; padding: 4rem; box-shadow: var(--shadow-ring); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1100px; margin: 0 auto;">
     <!-- Controls (Left) -->
     <div class="qr-controls">
-      <div class="input-group" style="margin-bottom: 2.5rem;">
+      <div class="input-group" style="margin-bottom: 2rem;">
         <label style="display: block; margin-bottom: 1rem; font-weight: 700; font-size: 1.1rem; color: var(--text-main);" data-i18n="qr_content_label">QR Kod İçeriği:</label>
         <textarea id="qr-url-input" class="custom-input" style="width: 100%; height: 140px; resize: none; font-size: 1.1rem; padding: 1.5rem; border-radius: 16px;" data-i18n-placeholder="qr_input_placeholder"></textarea>
+      </div>
+
+      <div class="qr-options-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem;">
+        <div class="input-group">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem; color: var(--text-muted);" data-i18n="qr_color_dark">Kod Rengi:</label>
+          <input type="color" id="qr-color-dark" value="#000000" style="width: 100%; height: 44px; border: 1px solid var(--border-light); border-radius: 10px; background: var(--bg-card); cursor: pointer; padding: 4px;">
+        </div>
+        <div class="input-group">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem; color: var(--text-muted);" data-i18n="qr_color_light">Arka Plan:</label>
+          <input type="color" id="qr-color-light" value="#ffffff" style="width: 100%; height: 44px; border: 1px solid var(--border-light); border-radius: 10px; background: var(--bg-card); cursor: pointer; padding: 4px;">
+        </div>
       </div>
 
       <button id="btn-generate-qr" class="btn btn-primary" style="width: 100%; padding: 1.25rem; font-size: 1.1rem; border-radius: 14px; box-shadow: var(--shadow-md);">
         <i class="ph ph-qr-code"></i> <span data-i18n="qr_generate_btn">QR Kod Oluştur</span>
       </button>
 
-      <div id="qr-result-box" class="hidden" style="margin-top: 3rem; animation: fadeIn 0.4s ease;">
+      <div id="qr-result-box" class="hidden" style="margin-top: 2.5rem; animation: fadeIn 0.4s ease;">
         <div class="input-group" style="margin-bottom: 1.5rem;">
            <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-muted);" data-i18n="qr_filename_label">Dosya Adı (Opsiyonel):</label>
            <input type="text" id="qr-filename-input" class="custom-input" style="width: 100%; border-radius: 12px;" data-i18n-placeholder="qr_filename_placeholder">
         </div>
+        <div class="qr-options-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+          <div class="input-group">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem; color: var(--text-muted);" data-i18n="qr_format_label">Format:</label>
+            <select id="qr-format-select" class="custom-select" style="width: 100%; border-radius: 10px;">
+              <option value="png" selected>PNG</option>
+              <option value="jpg">JPG</option>
+              <option value="webp">WebP</option>
+              <option value="svg">SVG (Vektör)</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem; color: var(--text-muted);" data-i18n="qr_size_label">Boyut:</label>
+            <select id="qr-size-select" class="custom-select" style="width: 100%; border-radius: 10px;">
+              <option value="256">256 px</option>
+              <option value="512" selected>512 px</option>
+              <option value="1024">1024 px</option>
+              <option value="2048">2048 px</option>
+            </select>
+          </div>
+        </div>
         <button id="btn-download-qr" class="btn btn-success" style="width: 100%; padding: 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
-          <i class="ph ph-download-simple"></i> <span data-i18n="qr_download_btn">QR Kodu İndir (.png)</span>
+          <i class="ph ph-download-simple"></i> <span data-i18n="qr_download_btn">QR Kodu İndir</span>
         </button>
       </div>
     </div>

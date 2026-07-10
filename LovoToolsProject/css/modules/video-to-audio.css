@@ -1,0 +1,104 @@
+/* Video to Audio Styles */
+.v2a-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 2.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-ring);
+}
+
+.v2a-file-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 1.5rem;
+}
+
+.v2a-file-info > i {
+  font-size: 2.25rem;
+  color: var(--primary);
+}
+
+.v2a-file-info div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.v2a-file-info strong {
+  font-size: 1.05rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v2a-file-info span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.v2a-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.v2a-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.v2a-progress-track {
+  width: 100%;
+  height: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.v2a-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.v2a-result {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.v2a-result-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-main);
+}
+
+.v2a-result-info i {
+  font-size: 1.5rem;
+  color: var(--success);
+}
+
+.v2a-result-info strong {
+  margin-left: auto;
+  color: var(--success);
+}
+
+.hidden { display: none !important; }

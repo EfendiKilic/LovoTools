@@ -169,6 +169,90 @@
   gap: 1.5rem;
 }
 
+/* Bölge kenar tutamaçları: wavesurfer inline stil bastığı için !important gerekli */
+.waveform handle.wavesurfer-handle {
+  width: 14px !important;
+  max-width: 14px !important;
+  background-color: var(--primary) !important;
+  opacity: 0.75;
+  cursor: ew-resize !important;
+  transition: opacity 0.15s;
+  z-index: 4;
+}
+
+.waveform handle.wavesurfer-handle:hover {
+  opacity: 1;
+}
+
+.waveform handle.wavesurfer-handle-start {
+  border-radius: 8px 0 0 8px;
+}
+
+.waveform handle.wavesurfer-handle-end {
+  border-radius: 0 8px 8px 0;
+}
+
+/* Tutamaç ortasındaki kavrama çizgisi */
+.waveform handle.wavesurfer-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 26px;
+  background: #ffffff;
+  border-radius: 2px;
+  opacity: 0.9;
+}
+
+.trim-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.trim-field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.trim-field label {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.trim-field .custom-input {
+  width: 110px;
+  font-variant-numeric: tabular-nums;
+}
+
+.trim-selection-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.trim-selection-info i {
+  color: var(--primary);
+}
+
+.trim-selection-info .trim-duration {
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
 .export-actions {
   display: flex;
   align-items: center;

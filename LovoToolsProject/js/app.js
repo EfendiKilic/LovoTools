@@ -3,8 +3,13 @@ import { initVideoCompressor } from './modules/videoCompressor.js';
 import { initUrlShortener } from './modules/urlShortener.js';
 import { initQrGenerator } from './modules/qrGenerator.js';
 import { initPdfEditor } from './modules/pdfEditor.js';
+import { initPdfConvert } from './modules/pdfConvert.js';
 import { initImageEditor } from './modules/imageEditor.js';
 import { initCodeTools } from './modules/codeTools.js';
+import { initVideoToAudio } from './modules/videoToAudio.js';
+import { initImagePdf } from './modules/imagePdf.js';
+import { initDevTools } from './modules/devTools.js';
+import { initGifVideo } from './modules/gifVideo.js';
 import { applyTranslations, toggleLang, currentLang } from './i18n.js';
 
 /**
@@ -24,10 +29,14 @@ class App {
             'audio-editor-panel': { file: 'audio-editor.html', css: 'audio-editor.css', init: initAudioEditor, dependencies: ['editor-template.html'] },
             'url-shortener-panel': { file: 'url-shortener.html', css: 'url-shortener.css', init: initUrlShortener },
             'qr-generator-panel': { file: 'qr-generator.html', css: 'qr-generator.css', init: initQrGenerator },
-            'pdf-editor-panel': { file: 'pdf-editor.html', css: 'pdf-editor.css', init: initPdfEditor },
+            'pdf-editor-panel': { file: 'pdf-editor.html', css: 'pdf-editor.css', init: () => { initPdfEditor(); initPdfConvert(); } },
             'video-compressor-panel': { file: 'video-compressor.html', css: 'video-compressor.css', init: initVideoCompressor },
             'image-editor-panel': { file: 'image-editor.html', css: 'image-editor.css', init: initImageEditor },
             'code-center-panel': { file: 'code-tools.html', css: 'code-tools.css', init: initCodeTools },
+            'video-audio-panel': { file: 'video-to-audio.html', css: 'video-to-audio.css', init: initVideoToAudio },
+            'image-pdf-panel': { file: 'image-pdf.html', css: 'image-pdf.css', init: initImagePdf },
+            'dev-tools-panel': { file: 'dev-tools.html', css: 'dev-tools.css', init: initDevTools },
+            'gif-video-panel': { file: 'gif-video.html', css: 'gif-video.css', init: initGifVideo },
             'resources-panel': { file: 'resources.html', css: 'resources.css', init: null },
             'updates-panel': { file: 'updates.html', css: 'updates.css', init: null }
         };

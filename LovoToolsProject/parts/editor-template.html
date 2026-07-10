@@ -39,6 +39,24 @@
 
       <div class="controls-divider"></div>
 
+      <div class="trim-controls">
+        <div class="trim-field">
+          <label data-i18n="audio_tpl_start_label">Başlangıç (sn):</label>
+          <input type="number" class="custom-input trim-start" min="0" step="0.1" value="0">
+        </div>
+        <div class="trim-field">
+          <label data-i18n="audio_tpl_end_label">Bitiş (sn):</label>
+          <input type="number" class="custom-input trim-end" min="0" step="0.1" value="0">
+        </div>
+        <div class="trim-selection-info">
+          <i class="ph ph-scissors"></i>
+          <span data-i18n="audio_tpl_selection">Seçim:</span>
+          <span class="trim-duration">0.0</span>
+        </div>
+      </div>
+
+      <div class="controls-divider"></div>
+
       <div class="controls-row-bottom">
         <div class="edit-inputs">
           <div class="filename-input">
@@ -52,6 +70,8 @@
               <option value="mp3">MP3</option>
               <option value="wav">WAV</option>
               <option value="ogg">OGG</option>
+              <option value="flac">FLAC</option>
+              <option value="m4a">M4A</option>
             </select>
           </div>
         </div>

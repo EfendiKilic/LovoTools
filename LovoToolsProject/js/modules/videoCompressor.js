@@ -1,4 +1,5 @@
 import { showToast, formatBytes, preventDefaults } from '../utils.js';
+import { getFFmpeg, fetchFile } from '../ffmpegLoader.js';
 
 /**
  * Video Sıkıştırma Modülü - FFmpeg.wasm Entegrasyonu ile
@@ -25,7 +26,7 @@ export function initVideoCompressor() {
 
     let currentVideoFile = null;
     let finalVideoUrl = null;
-    let ffmpeg = null;
+    let progressHandlerAttached = false;
 
     if (!videoInput || !videoUploadZone) return;
 
@@ -88,27 +89,17 @@ export function initVideoCompressor() {
 
     /* --- FFmpeg Initialization --- */
     async function loadFFmpeg() {
-        if (ffmpeg) return ffmpeg;
-
-        const { FFmpeg } = window.FFmpeg;
-        ffmpeg = new FFmpeg();
-
-
-        ffmpeg.on('log', ({ message }) => {
-            console.log(message);
-        });
-
-        ffmpeg.on('progress', ({ progress }) => {
-            const pct = Math.round(progress * 100);
-            progressBar.style.width = pct + '%';
-            progressPercent.textContent = pct + '%';
-        });
-
         progressText.textContent = "FFmpeg modülleri yükleniyor (İlk seferde zaman alabilir)...";
+        const ffmpeg = await getFFmpeg();
 
-        await ffmpeg.load({
-            coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
-        });
+        if (!progressHandlerAttached) {
+            ffmpeg.on('progress', ({ progress }) => {
+                const pct = Math.min(100, Math.max(0, Math.round(progress * 100)));
+                progressBar.style.width = pct + '%';
+                progressPercent.textContent = pct + '%';
+            });
+            progressHandlerAttached = true;
+        }
 
         return ffmpeg;
     }
@@ -125,7 +116,6 @@ export function initVideoCompressor() {
 
         try {
             const instance = await loadFFmpeg();
-            const { fetchFile } = window.FFmpegUtil;
 
             const inputName = 'input_' + currentVideoFile.name;
             const outputFormat = exportFormatSelect.value;
@@ -155,6 +145,8 @@ export function initVideoCompressor() {
 
 
             const data = await instance.readFile(outputName);
+            try { await instance.deleteFile(inputName); } catch (_) {}
+            try { await instance.deleteFile(outputName); } catch (_) {}
             const finalBlob = new Blob([data.buffer], { type: `video/${outputFormat}` });
 
             finalVideoUrl = URL.createObjectURL(finalBlob);

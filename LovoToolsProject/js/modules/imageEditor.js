@@ -21,10 +21,12 @@ export function initImageEditor() {
     const newSizeSpan = document.getElementById('image-new-size');
     const saveRatioText = document.getElementById('image-save-ratio');
     const btnDownload = document.getElementById('btn-download-image');
+    const filenameInput = document.getElementById('image-filename-input');
 
     if (!uploadZone || !input) return;
 
     let currentFile = null;
+    let sourceImage = null;
     let processedBlob = null;
     let processedUrl = null;
     let originalWidth = 0;
@@ -89,11 +91,15 @@ export function initImageEditor() {
         reader.onload = (e) => {
             const img = new Image();
             img.onload = () => {
+                sourceImage = img;
                 originalWidth = img.naturalWidth;
                 originalHeight = img.naturalHeight;
                 imageDimensions.textContent = `${originalWidth} x ${originalHeight} px`;
-                
+
                 preview.src = e.target.result;
+                if (filenameInput) {
+                    filenameInput.value = file.name.replace(/\.[^/.]+$/, '') + '_lovo';
+                }
                 updateEstimatedDimensions();
 
                 uploadZone.classList.remove('active');
@@ -125,23 +131,37 @@ export function initImageEditor() {
         btnProcess.innerHTML = '<i class="ph ph-spinner ph-spin"></i> İşleniyor...';
 
         try {
+            if (!sourceImage) throw new Error("Görsel henüz yüklenmedi.");
+
             const scaleRatio = selectedScale / 100;
-            const targetWidth = Math.round(originalWidth * scaleRatio);
+            const targetWidth = Math.max(1, Math.round(originalWidth * scaleRatio));
+            const targetHeight = Math.max(1, Math.round(originalHeight * scaleRatio));
+            const mime = formatSelect.value;
 
-            const options = {
-                maxSizeMB: 10,
-                maxWidthOrHeight: targetWidth,
-                useWebWorker: true,
-                initialQuality: selectedQuality / 100,
-                fileType: formatSelect.value
-            };
+            // Harici kütüphane yerine tarayıcının canvas API'siyle boyutlandır + sıkıştır
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            const ctx = canvas.getContext('2d');
 
-            if (typeof imageCompression === 'undefined') {
-                throw new Error("Sıkıştırma kütüphanesi yüklenemedi.");
+            // JPEG şeffaflık desteklemez: şeffaf alanlar siyah olmasın diye beyaz zemin
+            if (mime === 'image/jpeg') {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, targetWidth, targetHeight);
             }
 
-            processedBlob = await imageCompression(currentFile, options);
-            
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(sourceImage, 0, 0, targetWidth, targetHeight);
+
+            processedBlob = await new Promise((resolve, reject) => {
+                canvas.toBlob(
+                    blob => blob ? resolve(blob) : reject(new Error("Görsel dönüştürülemedi.")),
+                    mime,
+                    selectedQuality / 100
+                );
+            });
+
             if (processedUrl) URL.revokeObjectURL(processedUrl);
             processedUrl = URL.createObjectURL(processedBlob);
             
@@ -171,7 +191,9 @@ export function initImageEditor() {
     btnDownload.addEventListener('click', () => {
         if (!processedBlob || !processedUrl) return;
         const extension = formatSelect.value.split('/')[1].replace('jpeg', 'jpg');
-        const fileName = currentFile.name.split('.')[0] + '_lovo.' + extension;
+
+        const rawName = (filenameInput && filenameInput.value.trim()) || currentFile.name.replace(/\.[^/.]+$/, '') + '_lovo';
+        const fileName = rawName.replace(/[\\/:*?"<>|]/g, '') + '.' + extension;
 
         const link = document.createElement('a');
         link.href = processedUrl;

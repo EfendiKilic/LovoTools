@@ -1,0 +1,76 @@
+<section id="video-audio-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="v2a_breadcrumb">Medya</span>
+    </div>
+    <h2 data-i18n="v2a_title">Videodan Ses Çıkarma</h2>
+  </div>
+
+  <section id="v2a-upload-zone" class="upload-zone active">
+    <div class="upload-card" onclick="document.getElementById('v2a-input').click()">
+      <div class="icon-circle">
+        <i class="ph ph-music-notes-plus"></i>
+      </div>
+      <h3 data-i18n="v2a_upload_title">Sesini çıkarmak istediğiniz videoyu yükleyin</h3>
+      <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="v2a_note">(Video cihazınızdan çıkmaz, tamamen tarayıcıda işlenir)</small>
+      <input type="file" id="v2a-input" accept="video/*" hidden>
+      <button class="btn btn-primary" style="margin-top: 1.5rem; padding: 1rem 3rem;" data-i18n="v2a_select_btn">Video Seç</button>
+    </div>
+  </section>
+
+  <section id="v2a-editor-zone" class="editor-zone">
+    <div class="v2a-card">
+      <div class="v2a-file-info">
+        <i class="ph ph-file-video"></i>
+        <div>
+          <strong id="v2a-file-name">-</strong>
+          <span id="v2a-file-size">-</span>
+        </div>
+        <button id="v2a-btn-reset" class="btn btn-icon btn-danger" data-i18n-title="v2a_reset_title" style="margin-left: auto;">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <div class="v2a-options">
+        <div class="v2a-field">
+          <label data-i18n="v2a_format_label">Ses Formatı:</label>
+          <select id="v2a-format" class="custom-select" style="width: 100%;">
+            <option value="mp3" selected>MP3</option>
+            <option value="wav">WAV</option>
+            <option value="ogg">OGG</option>
+            <option value="m4a">M4A</option>
+            <option value="flac">FLAC</option>
+          </select>
+        </div>
+        <div class="v2a-field">
+          <label data-i18n="v2a_filename_label">Çıktı Dosya Adı:</label>
+          <input type="text" id="v2a-filename" class="custom-input" style="width: 100%;" data-i18n-placeholder="v2a_filename_placeholder">
+        </div>
+      </div>
+
+      <button id="v2a-btn-extract" class="btn btn-primary btn-glow" style="width: 100%; padding: 1.25rem; font-size: 1.1rem; border-radius: 14px; margin-top: 1.5rem;">
+        <i class="ph ph-music-notes"></i> <span data-i18n="v2a_extract_btn">Sesi Çıkar</span>
+      </button>
+
+      <div id="v2a-progress" class="hidden" style="margin-top: 1.5rem;">
+        <div class="v2a-progress-track">
+          <div id="v2a-progress-bar" class="v2a-progress-fill"></div>
+        </div>
+        <p id="v2a-progress-text" style="text-align: center; margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-muted);" data-i18n="v2a_processing">İşleniyor...</p>
+      </div>
+
+      <div id="v2a-result" class="hidden v2a-result">
+        <div class="v2a-result-info">
+          <i class="ph ph-check-circle"></i>
+          <span data-i18n="v2a_done">Ses başarıyla çıkarıldı!</span>
+          <strong id="v2a-result-size">-</strong>
+        </div>
+        <button id="v2a-btn-download" class="btn btn-success" style="width: 100%; padding: 1rem; border-radius: 12px;">
+          <i class="ph ph-download-simple"></i> <span data-i18n="v2a_download_btn">Sesi İndir</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,150 @@
+/* OCR Tool Styles */
+.ocr-layout { max-width: 900px; margin: 0 auto; }
+
+.ocr-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-ring);
+}
+
+.ocr-file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 1.5rem;
+}
+
+.ocr-file-info i { font-size: 1.8rem; color: var(--primary); }
+.ocr-file-info strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ocr-file-info span { color: var(--text-muted); font-size: 0.9rem; flex-shrink: 0; }
+.ocr-file-info .btn-icon { margin-left: auto; }
+
+.ocr-preview-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.ocr-preview-box {
+  position: relative;
+  background: var(--bg-subtle);
+  border: 2px dashed var(--border-strong);
+  border-radius: 16px;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ocr-preview-box img {
+  max-width: 100%;
+  max-height: 260px;
+  border-radius: 12px;
+  display: block;
+}
+
+.ocr-pdf-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.ocr-pdf-badge i { font-size: 3.5rem; color: var(--primary); }
+.ocr-pdf-badge span { font-weight: 600; }
+
+.ocr-controls { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.ocr-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.ocr-progress-track {
+  width: 100%;
+  height: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ocr-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.ocr-status {
+  text-align: center;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  min-height: 1.2em;
+}
+
+.ocr-result {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
+  animation: fadeIn 0.4s ease;
+}
+
+.ocr-result > label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.ocr-output {
+  width: 100%;
+  height: 260px;
+  resize: vertical;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 1.25rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  outline: none;
+}
+
+.ocr-output:focus { border-color: var(--primary); }
+
+.ocr-result-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.ocr-word-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+  .ocr-preview-row { grid-template-columns: 1fr; }
+}
+
+.hidden { display: none !important; }

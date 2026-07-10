@@ -1,4 +1,5 @@
 import { showToast, formatTime, preventDefaults } from '../utils.js';
+import { getFFmpeg, fetchFile } from '../ffmpegLoader.js';
 
 /**
  * Ses Düzenleme Modülü
@@ -6,7 +7,6 @@ import { showToast, formatTime, preventDefaults } from '../utils.js';
 export function initAudioEditor() {
     let uploadedFiles = [];
     let playbackCtx = null;
-    let ffmpeg = null;
 
     const audioPanel = document.getElementById('audio-editor-panel');
     if (!audioPanel) return;
@@ -20,18 +20,6 @@ export function initAudioEditor() {
     const editorTemplate = document.getElementById('editor-template');
 
     if (!fileInput || !uploadZone) return;
-
-
-    /* --- FFmpeg & Audio Context Setup --- */
-    async function getFFmpeg() {
-        if (ffmpeg) return ffmpeg;
-        const { FFmpeg } = window.FFmpeg;
-        ffmpeg = new FFmpeg();
-        await ffmpeg.load({
-            coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
-        });
-        return ffmpeg;
-    }
 
 
     /* --- Drag & Drop Handlers --- */
@@ -102,7 +90,10 @@ export function initAudioEditor() {
             volumeSlider: card.querySelector('.volume-slider'),
             exportFilename: card.querySelector('.export-filename'),
             exportFormat: card.querySelector('.export-format'),
-            btnCutExport: card.querySelector('.btn-cut-export')
+            btnCutExport: card.querySelector('.btn-cut-export'),
+            trimStart: card.querySelector('.trim-start'),
+            trimEnd: card.querySelector('.trim-end'),
+            trimDuration: card.querySelector('.trim-duration')
         };
 
         ui.fileNameDisplay.textContent = fileObj.name;
@@ -145,20 +136,48 @@ export function initAudioEditor() {
             color: 'rgba(99, 102, 241, 0.2)'
         });
 
+        // Bölge <-> saniye kutuları iki yönlü senkron tutulur;
+        // dışa aktarma her zaman bu değerleri kullanır.
+        function syncTrimInputs(region) {
+            if (!region) return;
+            ui.trimStart.value = region.start.toFixed(1);
+            ui.trimEnd.value = region.end.toFixed(1);
+            ui.trimDuration.textContent = (region.end - region.start).toFixed(1) + ' sn';
+        }
+
+        function applyTrimInputs() {
+            const region = fileObj.activeRegion;
+            if (!region) return;
+            const dur = ws.getDuration();
+            let start = parseFloat(ui.trimStart.value);
+            let end = parseFloat(ui.trimEnd.value);
+            if (isNaN(start)) start = region.start;
+            if (isNaN(end)) end = region.end;
+            start = Math.max(0, Math.min(start, dur - 0.1));
+            end = Math.max(start + 0.1, Math.min(end, dur));
+            region.update({ start, end });
+            fileObj.activeRegion = region;
+            syncTrimInputs(region);
+        }
+
+        ui.trimStart.addEventListener('change', applyTrimInputs);
+        ui.trimEnd.addEventListener('change', applyTrimInputs);
+
         ws.on('ready', () => {
             ui.totalTimeDisplay.textContent = formatTime(ws.getDuration());
-            
+
             ui.loadingOverlay.style.display = 'none';
 
+            // Varsayılan seçim tüm dosyadır: hiç dokunulmazsa dosyanın tamamı dışa aktarılır
             ws.addRegion({
                 id: 'default-region',
                 start: 0,
-                end: Math.min(10, ws.getDuration()),
+                end: ws.getDuration(),
                 color: 'rgba(99, 102, 241, 0.25)',
                 drag: true,
                 resize: true
             });
-            
+
             if (btnBatchExport) btnBatchExport.removeAttribute('disabled');
         });
 
@@ -181,10 +200,17 @@ export function initAudioEditor() {
             });
             fileObj.activeRegion = region;
             ui.btnCutExport.disabled = false;
+            syncTrimInputs(region);
+        });
+
+        ws.on('region-updated', (region) => {
+            fileObj.activeRegion = region;
+            syncTrimInputs(region);
         });
 
         ws.on('region-update-end', (region) => {
             fileObj.activeRegion = region;
+            syncTrimInputs(region);
         });
 
         ui.btnPlayPause.addEventListener('click', async () => {
@@ -250,15 +276,23 @@ export function initAudioEditor() {
     /* --- Audio Processing & Export --- */
     async function handleSingleExport(fileObj, ui) {
         if (!fileObj.activeRegion || !fileObj.audioBufferInfo) return;
-        
-        ui.loadingText.textContent = "İşleniyor...";
+
+        const totalDur = fileObj.audioBufferInfo.duration;
+        const start = Math.max(0, fileObj.activeRegion.start);
+        const end = Math.min(totalDur, fileObj.activeRegion.end);
+        if (end - start < 0.1) {
+            showToast("Seçim çok kısa. Başlangıç ve bitiş değerlerini kontrol edin.", "error");
+            return;
+        }
+
+        ui.loadingText.textContent = "İşleniyor... (İlk kullanımda ses motoru indirilir, biraz sürebilir)";
         ui.loadingOverlay.style.display = 'flex';
 
         try {
             const blob = await processAudioExport(
                 fileObj,
-                fileObj.activeRegion.start,
-                fileObj.activeRegion.end,
+                start,
+                end,
                 ui.exportFormat.value,
                 parseFloat(ui.volumeSlider.value)
             );
@@ -309,26 +343,42 @@ export function initAudioEditor() {
         }
     }
 
+    const FORMAT_CODECS = {
+        mp3:  { codec: 'libmp3lame', mime: 'audio/mpeg' },
+        wav:  { codec: 'pcm_s16le',  mime: 'audio/wav' },
+        ogg:  { codec: 'libvorbis',  mime: 'audio/ogg' },
+        flac: { codec: 'flac',       mime: 'audio/flac' },
+        m4a:  { codec: 'aac',        mime: 'audio/mp4' }
+    };
+
     async function processAudioExport(fileObj, start, end, format, volume) {
         const instance = await getFFmpeg();
-        const { fetchFile } = window.FFmpegUtil;
-        
-        const inputName = 'input_audio';
-        const outputName = `output.${format}`;
-        
+        const fmt = FORMAT_CODECS[format] || FORMAT_CODECS.mp3;
+
+        const stamp = Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+        const inputName = 'in_' + stamp;
+        const outputName = `out_${stamp}.${format}`;
+
         await instance.writeFile(inputName, await fetchFile(fileObj));
 
-        const args = [
-            '-i', inputName,
-            '-ss', start.toString(),
-            '-to', end.toString(),
-            '-filter:a', `volume=${volume}`,
-            outputName
-        ];
+        const args = ['-i', inputName, '-ss', start.toString(), '-to', end.toString()];
+        if (Math.abs(volume - 1) > 0.001) {
+            args.push('-filter:a', `volume=${volume}`);
+        }
+        args.push('-c:a', fmt.codec, '-vn', outputName);
 
-        await instance.exec(args);
-        const data = await instance.readFile(outputName);
-        return new Blob([data.buffer], { type: `audio/${format}` });
+        try {
+            await instance.exec(args);
+            const data = await instance.readFile(outputName);
+            if (!data || data.length === 0) {
+                throw new Error("Dönüştürme başarısız oldu, çıktı üretilemedi.");
+            }
+            return new Blob([data.buffer], { type: fmt.mime });
+        } finally {
+            // Sanal dosya sistemini temizle ki art arda işlemlerde bellek şişmesin
+            try { await instance.deleteFile(inputName); } catch (_) {}
+            try { await instance.deleteFile(outputName); } catch (_) {}
+        }
     }
 
     function downloadBlob(blob, filename) {

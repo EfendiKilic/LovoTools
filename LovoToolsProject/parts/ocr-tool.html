@@ -1,0 +1,85 @@
+<section id="ocr-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="ocr_breadcrumb">Araçlar</span>
+    </div>
+    <h2 data-i18n="ocr_title">Görüntüden Metin Çıkarma (OCR)</h2>
+  </div>
+
+  <div class="ocr-layout">
+    <section id="ocr-upload-zone" class="upload-zone active">
+      <div class="upload-card" onclick="document.getElementById('ocr-input').click()">
+        <div class="icon-circle">
+          <i class="ph ph-text-align-left"></i>
+        </div>
+        <h3 data-i18n="ocr_upload_title">Metnini çıkarmak istediğiniz görseli veya PDF'i yükleyin</h3>
+        <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+        <small data-i18n="ocr_note">(Taranmış belgeler, ekran görüntüleri, fotoğraflar — tamamen tarayıcıda işlenir)</small>
+        <input type="file" id="ocr-input" accept="image/*,application/pdf" hidden>
+        <button class="btn btn-primary" style="margin-top: 1.5rem; padding: 1rem 3rem;" data-i18n="ocr_select_btn">Dosya Seç</button>
+      </div>
+    </section>
+
+    <section id="ocr-workspace" class="editor-zone">
+      <div class="ocr-card">
+        <div class="ocr-file-info">
+          <i class="ph ph-file-text" id="ocr-file-icon"></i>
+          <strong id="ocr-file-name">-</strong>
+          <span id="ocr-file-size">-</span>
+          <button id="ocr-btn-reset" class="btn btn-icon btn-danger" data-i18n-title="ocr_reset_title">
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+
+        <div class="ocr-preview-row">
+          <div class="ocr-preview-box">
+            <img id="ocr-preview" alt="Önizleme" class="hidden">
+            <div id="ocr-pdf-badge" class="ocr-pdf-badge hidden">
+              <i class="ph ph-file-pdf"></i>
+              <span id="ocr-pdf-pages">-</span>
+            </div>
+          </div>
+
+          <div class="ocr-controls">
+            <div class="ocr-field">
+              <label data-i18n="ocr_lang_label">Belge Dili:</label>
+              <select id="ocr-lang" class="custom-select" style="width: 100%;">
+                <option value="tur" selected data-i18n="ocr_lang_tr">Türkçe</option>
+                <option value="eng" data-i18n="ocr_lang_en">İngilizce</option>
+                <option value="tur+eng" data-i18n="ocr_lang_treng">Türkçe + İngilizce</option>
+              </select>
+            </div>
+
+            <button id="ocr-btn-run" class="btn btn-primary btn-glow" style="width: 100%; padding: 1.1rem; border-radius: 14px;">
+              <i class="ph ph-magic-wand"></i> <span data-i18n="ocr_run_btn">Metni Çıkar</span>
+            </button>
+
+            <div id="ocr-progress" class="hidden">
+              <div class="ocr-progress-track">
+                <div id="ocr-progress-bar" class="ocr-progress-fill"></div>
+              </div>
+              <p id="ocr-status" class="ocr-status"></p>
+            </div>
+          </div>
+        </div>
+
+        <div id="ocr-result" class="ocr-result hidden">
+          <label data-i18n="ocr_result_label">Çıkarılan Metin:</label>
+          <textarea id="ocr-output" class="ocr-output" spellcheck="false"></textarea>
+          <div class="ocr-result-actions">
+            <span id="ocr-word-count" class="ocr-word-count">-</span>
+            <div style="display: flex; gap: 0.75rem;">
+              <button id="ocr-btn-copy" class="btn btn-outline">
+                <i class="ph ph-copy"></i> <span data-i18n="ocr_copy_btn">Kopyala</span>
+              </button>
+              <button id="ocr-btn-download" class="btn btn-success">
+                <i class="ph ph-download-simple"></i> <span data-i18n="ocr_download_btn">.txt İndir</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

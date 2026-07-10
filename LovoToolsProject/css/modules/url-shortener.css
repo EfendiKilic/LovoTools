@@ -108,3 +108,97 @@
   justify-content: center;
   font-size: 1.5rem;
 }
+
+/* --- Shortening History --- */
+.url-history-section {
+  margin: 3rem auto 0;
+  max-width: 600px;
+  text-align: left;
+  animation: fadeIn 0.4s ease;
+}
+
+.url-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.url-history-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.url-history-clear {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.url-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.url-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 0.9rem 1.25rem;
+}
+
+.url-history-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.url-history-short {
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.url-history-short:hover {
+  text-decoration: underline;
+}
+
+.url-history-original {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.url-history-copy {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.url-history-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}

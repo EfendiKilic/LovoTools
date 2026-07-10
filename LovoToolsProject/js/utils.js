@@ -67,3 +67,21 @@ export const preventDefaults = (e) => {
     e.preventDefault();
     e.stopPropagation();
 };
+
+export const downloadBlob = (blob, filename) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 100);
+};
+
+export const sanitizeFilename = (name, fallback = 'lovo_dosya') => {
+    const cleaned = (name || '').trim().replace(/[\\/:*?"<>|]/g, '');
+    return cleaned || fallback;
+};

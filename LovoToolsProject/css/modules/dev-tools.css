@@ -1,0 +1,114 @@
+/* Developer Mini Tools Styles */
+.devt-tabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 0 auto 2rem;
+  max-width: 820px;
+}
+
+.devt-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.devt-tab:hover { border-color: var(--primary); color: var(--primary); }
+
+.devt-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.devt-section { display: none; max-width: 820px; margin: 0 auto; }
+.devt-section.active { display: block; animation: fadeIn 0.3s ease; }
+
+.devt-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow-ring);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.devt-card > label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.devt-textarea {
+  width: 100%;
+  height: 120px;
+  resize: vertical;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.devt-textarea:focus { border-color: var(--primary); }
+
+.devt-btn-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.devt-btn-row .btn { flex: 1; }
+
+.devt-inline-row {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-end;
+}
+
+.devt-inline-row label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.devt-checks {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.devt-checks label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.devt-checks input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.devt-copy-btn { align-self: flex-start; }

@@ -43,6 +43,14 @@
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_video">Video İşleme</span>
               </div>
+              <div class="nav-dropdown-item" onclick="openPanel('video-audio-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_v2a">Videodan Ses</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('gif-video-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_gifv">GIF ↔ Video</span>
+              </div>
             </div>
             <div class="nav-dropdown-col">
               <div class="nav-dropdown-item" onclick="openPanel('pdf-editor-panel')">
@@ -53,11 +61,19 @@
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_image">Görsel Düzenleyici</span>
               </div>
+              <div class="nav-dropdown-item" onclick="openPanel('image-pdf-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_ipdf">Görsel ↔ PDF</span>
+              </div>
             </div>
             <div class="nav-dropdown-col">
               <div class="nav-dropdown-item" onclick="openPanel('code-center-panel')">
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_dev">Geliştirici</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_code">Kod Merkezi</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('dev-tools-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_dev">Geliştirici</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_devt">Mini Araçlar</span>
               </div>
               <div class="nav-dropdown-item" onclick="openPanel('qr-generator-panel')">
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_tools">Araçlar</span>
@@ -206,6 +222,46 @@
             <img src="assets/img/image_art.png" class="card-art" alt="Image Art">
           </div>
 
+          <!-- Videodan Ses (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('video-audio-panel')">
+            <div class="tool-icon"><i class="ph ph-music-notes"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_v2a_title">Videodan Ses</h3>
+              <p data-i18n="card_v2a_desc">Videodan MP3/WAV çıkar.</p>
+            </div>
+            <img src="assets/img/audio_edit_art.png" class="card-art" alt="Video to Audio Art">
+          </div>
+
+          <!-- GIF Video (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('gif-video-panel')">
+            <div class="tool-icon"><i class="ph ph-film-strip"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_gifv_title">GIF ↔ Video</h3>
+              <p data-i18n="card_gifv_desc">İki yönlü dönüştürücü.</p>
+            </div>
+            <img src="assets/img/video_art.png" class="card-art" alt="GIF Video Art">
+          </div>
+
+          <!-- Görsel PDF (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('image-pdf-panel')">
+            <div class="tool-icon"><i class="ph ph-file-image"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_ipdf_title">Görsel ↔ PDF</h3>
+              <p data-i18n="card_ipdf_desc">Görselden PDF, PDF'den görsel.</p>
+            </div>
+            <img src="assets/img/pdf_art.png" class="card-art" alt="Image PDF Art">
+          </div>
+
+          <!-- Geliştirici Mini Araçları (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('dev-tools-panel')">
+            <div class="tool-icon"><i class="ph ph-wrench"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_devt_title">Mini Araçlar</h3>
+              <p data-i18n="card_devt_desc">Base64, UUID, Hash, Şifre.</p>
+            </div>
+            <img src="assets/img/code_art.png" class="card-art" alt="Dev Tools Art">
+          </div>
+
         </div>
       </section>
 
@@ -283,18 +339,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/dialog/dialog.min.js"></script>
   
   <!-- Emmet & Multi-file Support -->
-  <script src="https://cdn.jsdelivr.net/npm/@emmetio/codemirror-plugin@0.5.4/dist/emmet-codemirror.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emmetio/codemirror-plugin@0.5.4/dist/emmet-codemirror-plugin.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 
-  <!-- Media Tools Libraries (Restored) -->
+  <!-- Media Tools Libraries -->
   <script src="https://unpkg.com/wavesurfer.js@6.6.4"></script>
   <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.regions.min.js"></script>
   <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.timeline.min.js"></script>
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.model.js"></script> <!-- Note: Using UMD version -->
-  <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="vendor/pdfjs/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+
+  <!-- FFmpeg.wasm (self-hosted: worker'lar cross-origin CDN'den yüklenemediği için lokal servis ediliyor) -->
+  <script src="vendor/ffmpeg/util.js"></script>
+  <script src="vendor/ffmpeg/ffmpeg.js"></script>
 
   <script type="module" src="js/app.js"></script>
 

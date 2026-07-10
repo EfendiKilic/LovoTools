@@ -1,4 +1,5 @@
 import { showToast, preventDefaults } from '../utils.js';
+import { t } from '../i18n.js';
 
 /**
  * Pro PDF İşlemleri Modülü - File & Page Logic Ayrılmış
@@ -11,6 +12,11 @@ export function initPdfEditor() {
 
     const pdfPanel = document.getElementById('pdf-editor-panel');
     if (!pdfPanel) return;
+
+    // pdf.js worker'ı self-host edilir (CDN worker'ları cross-origin engeline takılır)
+    if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('vendor/pdfjs/pdf.worker.min.js', document.baseURI).href;
+    }
 
     const pdfHome = pdfPanel.querySelector('#pdf-home');
     const pdfWorkspace = pdfPanel.querySelector('#pdf-workspace');
@@ -27,6 +33,33 @@ export function initPdfEditor() {
     const organizeOptions = document.getElementById('organize-options');
     const rangeInput = document.getElementById('pdf-range-input');
     const btnProcessPdf = document.getElementById('btn-process-pdf');
+    const filenameInput = document.getElementById('pdf-filename-input');
+
+    let filenameTouched = false;
+    if (filenameInput) {
+        filenameInput.addEventListener('input', () => { filenameTouched = true; });
+    }
+
+    function suggestFilename() {
+        if (!filenameInput || filenameTouched) return;
+        if (selectedFiles.length === 0) {
+            filenameInput.value = '';
+            return;
+        }
+        const base = selectedFiles[0].name.replace(/\.pdf$/i, '');
+        const suggestions = {
+            merge: 'birlesmis_dosyalar',
+            split: base + '_kesit',
+            organize: base + '_duzenlenmis'
+        };
+        filenameInput.value = suggestions[currentMode] || base;
+    }
+
+    function getOutputFilename() {
+        const raw = filenameInput ? filenameInput.value.trim() : '';
+        const cleaned = raw.replace(/[\\/:*?"<>|]/g, '').replace(/\.pdf$/i, '');
+        return (cleaned || 'lovo_pdf') + '.pdf';
+    }
 
 
     if (window.Sortable) {
@@ -49,11 +82,17 @@ export function initPdfEditor() {
 
         if (mode === 'home') {
             pdfHome.classList.add('active');
+            pdfHome.style.display = 'grid';
             pdfWorkspace.classList.add('hidden');
+            if (window.__pdfConvertClose) window.__pdfConvertClose();
+            pdfModeTitle.textContent = t('pdf_title');
             resetPdfTool();
         } else {
             currentMode = mode;
+            filenameTouched = false;
             pdfHome.classList.remove('active');
+            pdfHome.style.display = 'none';
+            if (window.__pdfConvertClose) window.__pdfConvertClose();
             pdfWorkspace.classList.remove('hidden');
             
             const titles = {
@@ -73,6 +112,10 @@ export function initPdfEditor() {
             else if (mode === 'organize') organizeOptions.classList.remove('hidden');
 
 
+            // Ayır modunda sürükleme kapalı (tıklayarak seçim), diğerlerinde sıralama açık
+            if (sortable) sortable.option('disabled', mode === 'split');
+            pdfPagesGrid.dataset.mode = mode;
+
             pdfInput.multiple = (mode === 'merge');
             pdfInput.click();
         }
@@ -83,6 +126,9 @@ export function initPdfEditor() {
         selectedPageIndices.clear();
         pdfPagesGrid.innerHTML = '';
         pdfInput.value = '';
+        filenameTouched = false;
+        if (filenameInput) filenameInput.value = '';
+        if (rangeInput) rangeInput.value = '';
     }
 
     pdfInput.addEventListener('change', (e) => {
@@ -93,6 +139,11 @@ export function initPdfEditor() {
 
     /* --- File Parsing & Thumbnail Rendering --- */
     async function handlePdfSelect(files) {
+        if (!window.pdfjsLib) {
+            showToast("PDF görüntüleme kütüphanesi yüklenemedi. Sayfayı yenileyin.", "error");
+            return;
+        }
+
         if (currentMode !== 'merge') {
             selectedFiles = [];
             pdfPagesGrid.innerHTML = '';
@@ -103,7 +154,9 @@ export function initPdfEditor() {
         for (const file of files) {
             try {
                 const arrayBuffer = await file.arrayBuffer();
-                const doc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                // Kopya veriyoruz: pdf.js buffer'ı worker'a transfer edip erişilmez yapar,
+                // orijinal buffer ise sonradan pdf-lib tarafından kullanılır
+                const doc = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
                 
                 const fileEntry = {
                     file: file,
@@ -189,6 +242,8 @@ export function initPdfEditor() {
             return;
         }
 
+        suggestFilename();
+
         if (currentMode === 'merge') {
             infoName.textContent = `${selectedFiles.length} Dosya`;
             infoPages.textContent = selectedFiles.reduce((acc, f) => acc + f.pagesCount, 0);
@@ -242,7 +297,7 @@ export function initPdfEditor() {
         }
 
         const pdfBytes = await mergedPdf.save();
-        downloadPdf(pdfBytes, "birlesmis_dosyalar.pdf");
+        downloadPdf(pdfBytes, getOutputFilename());
         showToast("Dosyalar başarıyla birleştirildi!", "success");
     }
 
@@ -259,7 +314,7 @@ export function initPdfEditor() {
         copiedPages.forEach((page) => organizedPdf.addPage(page));
 
         const pdfBytes = await organizedPdf.save();
-        downloadPdf(pdfBytes, `${fileObj.name.replace(".pdf", "")}_duzenlenmis.pdf`);
+        downloadPdf(pdfBytes, getOutputFilename());
         showToast("Sayfa sırası güncellendi!", "success");
     }
 
@@ -277,7 +332,7 @@ export function initPdfEditor() {
         copiedPages.forEach((page) => splitPdf.addPage(page));
 
         const pdfBytes = await splitPdf.save();
-        downloadPdf(pdfBytes, `${fileObj.name.replace(".pdf", "")}_kesit.pdf`);
+        downloadPdf(pdfBytes, getOutputFilename());
         showToast("Seçilen sayfalar ayrıldı!", "success");
     }
 
@@ -308,6 +363,9 @@ export function initPdfEditor() {
         a.download = filename;
         document.body.appendChild(a);
         a.click();
-        URL.revokeObjectURL(url);
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 100);
     }
 }
