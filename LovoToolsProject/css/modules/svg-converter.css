@@ -1,0 +1,92 @@
+/* SVG Converter Styles */
+.svgc-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-ring);
+}
+
+.svgc-io {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+}
+
+.svgc-left, .svgc-right { display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
+
+.svgc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.svgc-head label,
+.svgc-right > label,
+.svgc-field label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.svgc-field label { display: block; margin-bottom: 0.5rem; }
+
+.svgc-textarea {
+  width: 100%;
+  flex: 1;
+  min-height: 420px;
+  resize: vertical;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 1rem;
+  border-radius: 12px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  outline: none;
+}
+
+.svgc-textarea:focus { border-color: var(--primary); }
+
+.svgc-preview {
+  background: var(--bg-subtle);
+  background-image: linear-gradient(45deg, rgba(128,128,128,0.12) 25%, transparent 25%, transparent 75%, rgba(128,128,128,0.12) 75%),
+                    linear-gradient(45deg, rgba(128,128,128,0.12) 25%, transparent 25%, transparent 75%, rgba(128,128,128,0.12) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  border: 2px dashed var(--border-strong);
+  border-radius: 14px;
+  min-height: 180px;
+  max-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.75rem;
+}
+
+.svgc-preview img { max-width: 100%; max-height: 190px; }
+
+.svgc-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.svgc-info {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  min-height: 1.2em;
+}
+
+@media (max-width: 860px) {
+  .svgc-io { grid-template-columns: 1fr; }
+  .svgc-textarea { min-height: 240px; }
+}

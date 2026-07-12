@@ -1,10 +1,25 @@
 import { showToast } from '../utils.js';
 
 /**
- * QR Kod Oluşturucu Modülü
- * Önizleme canvas ile yapılır; indirme sırasında seçilen format (PNG/JPG/WebP/SVG)
- * ve boyutta yeniden üretilir, böylece çıktı her zaman keskin olur.
+ * QR Kod Oluşturucu + Okuyucu Modülü
+ * Oluşturma: önizleme canvas ile; indirme seçilen format (PNG/JPG/WebP/SVG)
+ * ve boyutta yeniden üretilir. Okuma: jsQR (vendor, lazy-load) ile görselden çözülür.
  */
+
+let jsQrPromise = null;
+function loadJsQr() {
+    if (window.jsQR) return Promise.resolve();
+    if (jsQrPromise) return jsQrPromise;
+    jsQrPromise = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'vendor/jsqr/jsQR.js';
+        s.onload = resolve;
+        s.onerror = () => { jsQrPromise = null; reject(new Error("jsQR yüklenemedi")); };
+        document.head.appendChild(s);
+    });
+    return jsQrPromise;
+}
+
 export function initQrGenerator() {
     const btnGenerateQR = document.getElementById('btn-generate-qr');
     const qrUrlInput = document.getElementById('qr-url-input');
@@ -20,6 +35,79 @@ export function initQrGenerator() {
     if (!btnGenerateQR || !qrUrlInput) return;
 
     let currentContent = null;
+
+    /* --- Sekmeler: Oluşturucu / Okuyucu --- */
+    const tabGenerate = document.getElementById('qr-tab-generate');
+    const tabRead = document.getElementById('qr-tab-read');
+    const sectionGenerate = document.getElementById('qr-generate-section');
+    const sectionRead = document.getElementById('qr-read-section');
+
+    if (tabGenerate && tabRead) {
+        const switchTab = (mode) => {
+            tabGenerate.classList.toggle('active', mode === 'generate');
+            tabRead.classList.toggle('active', mode === 'read');
+            sectionGenerate.classList.toggle('active', mode === 'generate');
+            sectionRead.classList.toggle('active', mode === 'read');
+        };
+        tabGenerate.addEventListener('click', () => switchTab('generate'));
+        tabRead.addEventListener('click', () => switchTab('read'));
+    }
+
+    /* --- QR Okuyucu --- */
+    const readInput = document.getElementById('qr-read-input');
+    const readResult = document.getElementById('qr-read-result');
+    const readOutput = document.getElementById('qr-read-output');
+    const readCopy = document.getElementById('qr-read-copy');
+    const readOpen = document.getElementById('qr-read-open');
+
+    if (readInput) {
+        readInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                showToast("Lütfen geçerli bir görsel dosyası seçin.", "error");
+                return;
+            }
+
+            try {
+                await loadJsQr();
+                const bitmap = await createImageBitmap(file);
+                // Çok büyük görselleri makul boyuta indir (jsQR performansı için)
+                const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+                const cv = document.createElement('canvas');
+                cv.width = Math.max(1, Math.round(bitmap.width * scale));
+                cv.height = Math.max(1, Math.round(bitmap.height * scale));
+                const ctx = cv.getContext('2d');
+                ctx.drawImage(bitmap, 0, 0, cv.width, cv.height);
+                const imageData = ctx.getImageData(0, 0, cv.width, cv.height);
+
+                const code = window.jsQR(imageData.data, cv.width, cv.height);
+                if (!code || !code.data) {
+                    readResult.classList.add('hidden');
+                    showToast("Görselde okunabilir bir QR kod bulunamadı.", "warning");
+                    return;
+                }
+
+                readOutput.value = code.data;
+                const isUrl = /^https?:\/\//i.test(code.data.trim());
+                readOpen.classList.toggle('hidden', !isUrl);
+                if (isUrl) readOpen.href = code.data.trim();
+                readResult.classList.remove('hidden');
+                showToast("QR kod başarıyla çözüldü!", "success");
+            } catch (err) {
+                console.error("QR Read:", err);
+                showToast("QR kod okunamadı.", "error");
+            }
+            readInput.value = '';
+        });
+
+        readCopy.addEventListener('click', () => {
+            if (!readOutput.value) return;
+            navigator.clipboard.writeText(readOutput.value)
+                .then(() => showToast("İçerik kopyalandı!", "success"))
+                .catch(() => showToast("Kopyalama başarısız oldu.", "error"));
+        });
+    }
 
     function getColors() {
         return {

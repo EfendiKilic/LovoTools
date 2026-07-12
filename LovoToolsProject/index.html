@@ -51,6 +51,14 @@
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_gifv">GIF ↔ Video</span>
               </div>
+              <div class="nav-dropdown-item" onclick="openPanel('svg-converter-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_svgc">SVG → PNG/JPG</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('color-tools-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_media">Medya</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_clr">Renk Araçları</span>
+              </div>
             </div>
             <div class="nav-dropdown-col">
               <div class="nav-dropdown-item" onclick="openPanel('pdf-editor-panel')">
@@ -65,6 +73,14 @@
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_ipdf">Görsel ↔ PDF</span>
               </div>
+              <div class="nav-dropdown-item" onclick="openPanel('subtitle-converter-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_sub">Altyazı Dönüştürücü</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('data-convert-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_dconv">Veri Dönüştürücü</span>
+              </div>
             </div>
             <div class="nav-dropdown-col">
               <div class="nav-dropdown-item" onclick="openPanel('code-center-panel')">
@@ -75,6 +91,10 @@
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_dev">Geliştirici</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_devt">Mini Araçlar</span>
               </div>
+              <div class="nav-dropdown-item" onclick="openPanel('markdown-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_dev">Geliştirici</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_md">Markdown ↔ HTML</span>
+              </div>
               <div class="nav-dropdown-item" onclick="openPanel('qr-generator-panel')">
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_tools">Araçlar</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_qr">QR Kod</span>
@@ -82,6 +102,10 @@
               <div class="nav-dropdown-item" onclick="openPanel('url-shortener-panel')">
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_tools">Araçlar</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_url">Link Kısaltma</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('ocr-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_tools">Araçlar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_ocr">Metin Çıkarma (OCR)</span>
               </div>
             </div>
           </div>
@@ -260,6 +284,66 @@
               <p data-i18n="card_devt_desc">Base64, UUID, Hash, Şifre.</p>
             </div>
             <img src="assets/img/code_art.png" class="card-art" alt="Dev Tools Art">
+          </div>
+
+          <!-- OCR (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('ocr-panel')">
+            <div class="tool-icon"><i class="ph ph-text-align-left"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_ocr_title">Metin Çıkarma (OCR)</h3>
+              <p data-i18n="card_ocr_desc">Görsel ve taranmış PDF'den metin.</p>
+            </div>
+            <img src="assets/img/image_art.png" class="card-art" alt="OCR Art">
+          </div>
+
+          <!-- Veri Dönüştürücü (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('data-convert-panel')">
+            <div class="tool-icon"><i class="ph ph-table"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_dconv_title">Veri Dönüştürücü</h3>
+              <p data-i18n="card_dconv_desc">JSON, CSV ve Excel arası dönüşüm.</p>
+            </div>
+            <img src="assets/img/code_art.png" class="card-art" alt="Data Convert Art">
+          </div>
+
+          <!-- Markdown (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('markdown-panel')">
+            <div class="tool-icon"><i class="ph ph-markdown-logo"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_md_title">Markdown ↔ HTML</h3>
+              <p data-i18n="card_md_desc">Canlı önizlemeli dönüştürücü.</p>
+            </div>
+            <img src="assets/img/code_art.png" class="card-art" alt="Markdown Art">
+          </div>
+
+          <!-- SVG Dönüştürücü (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('svg-converter-panel')">
+            <div class="tool-icon"><i class="ph ph-vector-three"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_svgc_title">SVG → PNG/JPG</h3>
+              <p data-i18n="card_svgc_desc">Vektörü istediğin boyutta rasterle.</p>
+            </div>
+            <img src="assets/img/image_art.png" class="card-art" alt="SVG Art">
+          </div>
+
+          <!-- Altyazı Dönüştürücü (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('subtitle-converter-panel')">
+            <div class="tool-icon"><i class="ph ph-subtitles"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_sub_title">Altyazı Dönüştürücü</h3>
+              <p data-i18n="card_sub_desc">SRT, VTT ve ASS arası dönüşüm.</p>
+            </div>
+            <img src="assets/img/video_art.png" class="card-art" alt="Subtitle Art">
+          </div>
+
+          <!-- Renk Araçları (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('color-tools-panel')">
+            <div class="tool-icon"><i class="ph ph-palette"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_clr_title">Renk Araçları</h3>
+              <p data-i18n="card_clr_desc">Palet çıkar, HEX/RGB/HSL çevir.</p>
+            </div>
+            <img src="assets/img/image_art.png" class="card-art" alt="Color Art">
           </div>
 
         </div>

@@ -1,0 +1,53 @@
+<section id="svg-converter-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="svgc_breadcrumb">Medya</span>
+    </div>
+    <h2 data-i18n="svgc_title">SVG → PNG/JPG Dönüştürücü</h2>
+  </div>
+
+  <div class="svgc-card">
+    <div class="svgc-io">
+      <div class="svgc-left">
+        <div class="svgc-head">
+          <label data-i18n="svgc_input_label">SVG Kodu veya Dosyası:</label>
+          <button id="svgc-btn-file" class="btn btn-outline" style="padding: 0.55rem 1rem; font-size: 0.85rem;">
+            <i class="ph ph-upload-simple"></i> <span data-i18n="svgc_file_btn">Dosya Yükle</span>
+          </button>
+          <input type="file" id="svgc-file-input" accept=".svg,image/svg+xml" hidden>
+        </div>
+        <textarea id="svgc-input" class="svgc-textarea" spellcheck="false" data-i18n-placeholder="svgc_placeholder"></textarea>
+      </div>
+
+      <div class="svgc-right">
+        <label data-i18n="svgc_preview_label">Önizleme:</label>
+        <div id="svgc-preview" class="svgc-preview">
+          <i class="ph ph-image-square" style="font-size: 3rem; color: var(--text-muted);"></i>
+        </div>
+        <div class="svgc-options">
+          <div class="svgc-field">
+            <label data-i18n="svgc_format_label">Format:</label>
+            <select id="svgc-format" class="custom-select" style="width: 100%;">
+              <option value="png" selected>PNG</option>
+              <option value="jpg">JPG</option>
+              <option value="webp">WebP</option>
+            </select>
+          </div>
+          <div class="svgc-field">
+            <label data-i18n="svgc_width_label">Genişlik (px):</label>
+            <input type="number" id="svgc-width" class="custom-input" style="width: 100%;" value="1024" min="16" max="8192" step="1">
+          </div>
+        </div>
+        <div class="svgc-field">
+          <label data-i18n="svgc_filename_label">Çıktı Dosya Adı:</label>
+          <input type="text" id="svgc-filename" class="custom-input" style="width: 100%;" value="svg_gorsel">
+        </div>
+        <button id="svgc-btn-run" class="btn btn-primary btn-glow" style="width: 100%; padding: 1rem; border-radius: 12px;">
+          <i class="ph ph-download-simple"></i> <span data-i18n="svgc_run_btn">Dönüştür ve İndir</span>
+        </button>
+        <p id="svgc-info" class="svgc-info"></p>
+      </div>
+    </div>
+  </div>
+</section>

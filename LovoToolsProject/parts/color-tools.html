@@ -1,0 +1,74 @@
+<section id="color-tools-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="clr_breadcrumb">Medya</span>
+    </div>
+    <h2 data-i18n="clr_title">Renk Araçları</h2>
+  </div>
+
+  <div class="clr-tabs">
+    <button id="clr-tab-palette" class="clr-tab active">
+      <i class="ph ph-palette"></i> <span data-i18n="clr_tab_palette">Palet Çıkarıcı</span>
+    </button>
+    <button id="clr-tab-convert" class="clr-tab">
+      <i class="ph ph-swatches"></i> <span data-i18n="clr_tab_convert">Renk Dönüştürücü</span>
+    </button>
+  </div>
+
+  <!-- Palet Çıkarıcı -->
+  <div id="clr-palette-section" class="clr-section active">
+    <div class="clr-card">
+      <div class="upload-card clr-upload" onclick="document.getElementById('clr-image-input').click()">
+        <div class="icon-circle"><i class="ph ph-palette"></i></div>
+        <h3 data-i18n="clr_upload_title">Renklerini çıkarmak istediğiniz görseli yükleyin</h3>
+        <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+        <input type="file" id="clr-image-input" accept="image/*" hidden>
+      </div>
+
+      <div id="clr-palette-result" class="clr-palette-result hidden">
+        <div class="clr-preview-wrap">
+          <img id="clr-image-preview" alt="Görsel önizleme">
+        </div>
+        <p class="clr-hint" data-i18n="clr_click_hint">Kopyalamak için rengin üzerine tıklayın.</p>
+        <div id="clr-swatches" class="clr-swatches"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Renk Dönüştürücü -->
+  <div id="clr-convert-section" class="clr-section">
+    <div class="clr-card">
+      <div class="clr-convert-grid">
+        <div class="clr-picker-side">
+          <label data-i18n="clr_pick_label">Renk Seç:</label>
+          <input type="color" id="clr-picker" value="#4f46e5">
+          <div id="clr-big-swatch" class="clr-big-swatch"></div>
+        </div>
+        <div class="clr-fields">
+          <div class="clr-field">
+            <label>HEX</label>
+            <div class="clr-field-row">
+              <input type="text" id="clr-hex" class="custom-input" value="#4f46e5" spellcheck="false">
+              <button class="btn btn-outline clr-copy-btn" data-copy-target="clr-hex"><i class="ph ph-copy"></i></button>
+            </div>
+          </div>
+          <div class="clr-field">
+            <label>RGB</label>
+            <div class="clr-field-row">
+              <input type="text" id="clr-rgb" class="custom-input" readonly>
+              <button class="btn btn-outline clr-copy-btn" data-copy-target="clr-rgb"><i class="ph ph-copy"></i></button>
+            </div>
+          </div>
+          <div class="clr-field">
+            <label>HSL</label>
+            <div class="clr-field-row">
+              <input type="text" id="clr-hsl" class="custom-input" readonly>
+              <button class="btn btn-outline clr-copy-btn" data-copy-target="clr-hsl"><i class="ph ph-copy"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

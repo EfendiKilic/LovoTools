@@ -7,7 +7,42 @@
     <h2 data-i18n="qr_title">QR Kod Oluşturucu</h2>
   </div>
 
-  <div class="editor-main-container" style="background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 24px; padding: 4rem; box-shadow: var(--shadow-ring); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1100px; margin: 0 auto;">
+  <div class="qr-tabs" style="display: flex; gap: 0.75rem; margin: 0 auto 2rem; max-width: 1100px;">
+    <button id="qr-tab-generate" class="qr-tab active">
+      <i class="ph ph-qr-code"></i> <span data-i18n="qr_tab_generate">Oluşturucu</span>
+    </button>
+    <button id="qr-tab-read" class="qr-tab">
+      <i class="ph ph-scan"></i> <span data-i18n="qr_tab_read">Okuyucu</span>
+    </button>
+  </div>
+
+  <!-- QR Okuyucu -->
+  <div id="qr-read-section" class="qr-section" style="max-width: 1100px; margin: 0 auto;">
+    <div style="background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 24px; padding: 2.5rem; box-shadow: var(--shadow-ring);">
+      <div class="upload-card" onclick="document.getElementById('qr-read-input').click()" style="cursor: pointer;">
+        <div class="icon-circle"><i class="ph ph-scan"></i></div>
+        <h3 data-i18n="qr_read_upload_title">QR kod içeren görseli yükleyin</h3>
+        <p data-i18n="common_upload_drag">Sürükleyip bırakın veya seçmek için tıklayın.</p>
+        <small data-i18n="qr_read_note">(Ekran görüntüsü, fotoğraf — tamamen tarayıcıda çözülür)</small>
+        <input type="file" id="qr-read-input" accept="image/*" hidden>
+      </div>
+
+      <div id="qr-read-result" class="hidden" style="margin-top: 2rem; padding: 1.5rem; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; animation: fadeIn 0.4s ease;">
+        <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; font-size: 0.9rem; color: var(--text-muted);" data-i18n="qr_read_result_label">Çözülen İçerik:</label>
+        <textarea id="qr-read-output" readonly style="width: 100%; height: 100px; resize: vertical; background: var(--bg-elevated); border: 1px solid var(--border-light); color: var(--text-main); padding: 1rem; border-radius: 12px; font-size: 0.95rem; outline: none;"></textarea>
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap;">
+          <button id="qr-read-copy" class="btn btn-success" style="padding: 0.75rem 1.5rem; border-radius: 10px;">
+            <i class="ph ph-copy"></i> <span data-i18n="qr_read_copy">Kopyala</span>
+          </button>
+          <a id="qr-read-open" class="btn btn-outline hidden" target="_blank" rel="noopener noreferrer" style="padding: 0.75rem 1.5rem; border-radius: 10px; text-decoration: none;">
+            <i class="ph ph-arrow-square-out"></i> <span data-i18n="qr_read_open">Bağlantıyı Aç</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="qr-generate-section" class="qr-section active editor-main-container" style="background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-strong); border-radius: 24px; padding: 4rem; box-shadow: var(--shadow-ring); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1100px; margin: 0 auto;">
     <!-- Controls (Left) -->
     <div class="qr-controls">
       <div class="input-group" style="margin-bottom: 2rem;">
@@ -81,4 +116,29 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  .qr-tab {
+    flex: 1;
+    max-width: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .qr-tab i { font-size: 1.3rem; }
+  .qr-tab:hover { border-color: var(--primary); color: var(--primary); }
+  .qr-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: var(--shadow-md); }
+
+  .qr-section { display: none; }
+  .qr-section.active { display: block; }
+  #qr-generate-section.active { display: grid; }
 </style>

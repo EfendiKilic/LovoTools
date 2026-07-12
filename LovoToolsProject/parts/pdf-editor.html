@@ -27,6 +27,11 @@
             <h3 data-i18n="pdf_organize_title">Düzenle</h3>
             <p data-i18n="pdf_organize_desc">Sayfaların yerini sürükleyip değiştirin.</p>
         </div>
+        <div class="pdf-tool-card" onclick="openPdfConvert('stamp')">
+            <div class="tool-icon"><i class="ph ph-stamp"></i></div>
+            <h3 data-i18n="pdfc_stamp_title">Damgala & Döndür</h3>
+            <p data-i18n="pdfc_stamp_desc">Filigran, sayfa numarası ve döndürme.</p>
+        </div>
       </div>
     </div>
     <div>
@@ -86,6 +91,36 @@
             <option value="balanced" selected data-i18n="pdfc_q_balanced">Dengeli (önerilen)</option>
             <option value="small" data-i18n="pdfc_q_small">Küçük Boyut (maksimum sıkıştırma)</option>
           </select>
+        </div>
+
+        <div id="pdfc-stamp-group" class="hidden">
+          <div class="pdfc-field">
+            <label data-i18n="pdfc_wm_label">Filigran Metni (boş bırakılabilir):</label>
+            <input type="text" id="pdfc-wm-text" class="custom-input" style="width: 100%;" data-i18n-placeholder="pdfc_wm_placeholder">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div class="pdfc-field">
+              <label data-i18n="pdfc_wm_opacity_label">Filigran Yoğunluğu:</label>
+              <select id="pdfc-wm-opacity" class="custom-select" style="width: 100%;">
+                <option value="0.12" data-i18n="pdfc_wm_light">Hafif</option>
+                <option value="0.25" selected data-i18n="pdfc_wm_medium">Orta</option>
+                <option value="0.45" data-i18n="pdfc_wm_strong">Belirgin</option>
+              </select>
+            </div>
+            <div class="pdfc-field">
+              <label data-i18n="pdfc_rotate_label">Sayfaları Döndür:</label>
+              <select id="pdfc-rotate" class="custom-select" style="width: 100%;">
+                <option value="0" selected data-i18n="pdfc_rotate_none">Döndürme yok</option>
+                <option value="90">90° (saat yönü)</option>
+                <option value="180">180°</option>
+                <option value="270">270°</option>
+              </select>
+            </div>
+          </div>
+          <div class="pdfc-field" style="display: flex; align-items: center; gap: 0.6rem;">
+            <input type="checkbox" id="pdfc-pagenum" style="width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer;">
+            <label for="pdfc-pagenum" style="margin: 0; cursor: pointer;" data-i18n="pdfc_pagenum_label">Sayfa numarası ekle (alt orta, "1 / N")</label>
+          </div>
         </div>
 
         <div class="pdfc-field">

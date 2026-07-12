@@ -1,0 +1,63 @@
+<section id="subtitle-converter-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="sub_breadcrumb">Dosyalar</span>
+    </div>
+    <h2 data-i18n="sub_title">Altyazı Dönüştürücü (SRT · VTT · ASS)</h2>
+  </div>
+
+  <div class="sub-card">
+    <div class="sub-io-row">
+      <div class="sub-col">
+        <div class="sub-col-head">
+          <label data-i18n="sub_input_label">Girdi:</label>
+          <button id="sub-btn-file" class="btn btn-outline" style="padding: 0.55rem 1rem; font-size: 0.85rem;">
+            <i class="ph ph-upload-simple"></i> <span data-i18n="sub_file_btn">Dosya Yükle</span>
+          </button>
+          <input type="file" id="sub-file-input" accept=".srt,.vtt,.ass,.ssa" hidden>
+        </div>
+        <textarea id="sub-input" class="sub-textarea" spellcheck="false" data-i18n-placeholder="sub_input_placeholder"></textarea>
+      </div>
+
+      <div class="sub-middle">
+        <div class="sub-field">
+          <label data-i18n="sub_source_label">Kaynak:</label>
+          <select id="sub-source" class="custom-select" style="width: 100%;">
+            <option value="auto" selected data-i18n="sub_auto">Otomatik Algıla</option>
+            <option value="srt">SRT</option>
+            <option value="vtt">VTT</option>
+            <option value="ass">ASS/SSA</option>
+          </select>
+        </div>
+        <div class="sub-field">
+          <label data-i18n="sub_target_label">Hedef:</label>
+          <select id="sub-target" class="custom-select" style="width: 100%;">
+            <option value="vtt" selected>VTT</option>
+            <option value="srt">SRT</option>
+            <option value="ass">ASS</option>
+          </select>
+        </div>
+        <button id="sub-btn-run" class="btn btn-primary btn-glow" style="width: 100%; padding: 1rem; border-radius: 12px;">
+          <i class="ph ph-arrows-left-right"></i> <span data-i18n="sub_run_btn">Dönüştür</span>
+        </button>
+        <p id="sub-status" class="sub-note"></p>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-col-head">
+          <label data-i18n="sub_output_label">Sonuç:</label>
+          <div style="display: flex; gap: 0.6rem;">
+            <button id="sub-btn-copy" class="btn btn-outline" style="padding: 0.55rem 1rem; font-size: 0.85rem;">
+              <i class="ph ph-copy"></i> <span data-i18n="sub_copy_btn">Kopyala</span>
+            </button>
+            <button id="sub-btn-download" class="btn btn-success" style="padding: 0.55rem 1rem; font-size: 0.85rem;" disabled>
+              <i class="ph ph-download-simple"></i> <span data-i18n="sub_download_btn">İndir</span>
+            </button>
+          </div>
+        </div>
+        <textarea id="sub-output" class="sub-textarea" readonly></textarea>
+      </div>
+    </div>
+  </div>
+</section>

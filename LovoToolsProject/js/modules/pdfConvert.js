@@ -78,8 +78,15 @@ export function initPdfConvert() {
             accept: '.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation', ext: '.pptx', outExt: 'pdf', suffix: '',
             titleKey: 'pdfc_ppt2pdf_title', uploadKey: 'pdfc_ppt2pdf_upload', hintKey: 'pdfc_ppt2pdf_hint',
             runKey: 'pdfc_ppt2pdf_run', quality: false, run: runPpt2Pdf
+        },
+        stamp: {
+            accept: 'application/pdf', ext: '.pdf', outExt: 'pdf', suffix: '_damgali',
+            titleKey: 'pdfc_stamp_title', uploadKey: 'pdfc_stamp_upload', hintKey: 'pdfc_stamp_hint',
+            runKey: 'pdfc_stamp_run', quality: false, stamp: true, run: runStamp
         }
     };
+
+    const stampGroup = document.getElementById('pdfc-stamp-group');
 
     window.openPdfConvert = (mode) => {
         const cfg = MODES[mode];
@@ -104,6 +111,7 @@ export function initPdfConvert() {
         optionsBox.classList.add('hidden');
         resultBox.classList.add('hidden');
         qualityGroup.classList.toggle('hidden', !cfg.quality);
+        if (stampGroup) stampGroup.classList.toggle('hidden', !cfg.stamp);
         statusEl.textContent = '';
         input.value = '';
     };
@@ -589,5 +597,83 @@ export function initPdfConvert() {
         const outBytes = await outDoc.save();
         const blob = new Blob([outBytes], { type: 'application/pdf' });
         return { blob, message: `${slidePaths.length} ${t('pdfc_slides_converted')}` };
+    }
+
+    /* ==================== 6) Damgala & Döndür ==================== */
+    async function runStamp(file) {
+        const wmText = document.getElementById('pdfc-wm-text').value.trim();
+        const wmOpacity = parseFloat(document.getElementById('pdfc-wm-opacity').value) || 0.25;
+        const rotateBy = parseInt(document.getElementById('pdfc-rotate').value, 10) || 0;
+        const addPageNum = document.getElementById('pdfc-pagenum').checked;
+
+        if (!wmText && !addPageNum && rotateBy === 0) {
+            const err = new Error("nothing selected");
+            err.userMessage = t('pdfc_stamp_nothing');
+            throw err;
+        }
+
+        const { PDFDocument, degrees, rgb } = window.PDFLib;
+        const doc = await PDFDocument.load(await file.arrayBuffer());
+
+        // Türkçe karakterli filigran/numara için gömülü font gerekir
+        let font = null;
+        if (wmText || addPageNum) {
+            statusEl.textContent = t('pdfc_loading_libs');
+            await loadScript('vendor/fontkit/fontkit.umd.min.js');
+            doc.registerFontkit(window.fontkit);
+            const fontBytes = await fetch('vendor/fonts/DejaVuSans.ttf').then(r => r.arrayBuffer());
+            font = await doc.embedFont(fontBytes, { subset: true });
+        }
+
+        const pages = doc.getPages();
+        const total = pages.length;
+
+        pages.forEach((page, idx) => {
+            statusEl.textContent = t('pdfc_page_progress') + ` ${idx + 1} / ${total}`;
+            const { width, height } = page.getSize();
+
+            // Filigran: çapraz, ortalanmış, sayfaya oranlı boyut
+            if (wmText && font) {
+                const diag = Math.sqrt(width * width + height * height);
+                let size = 48;
+                const w48 = font.widthOfTextAtSize(wmText, size);
+                size = Math.max(14, Math.min(120, size * (diag * 0.55) / w48));
+                const textW = font.widthOfTextAtSize(wmText, size);
+                const cos = Math.cos(Math.PI / 4), sin = Math.sin(Math.PI / 4);
+                page.drawText(wmText, {
+                    x: width / 2 - (textW / 2) * cos,
+                    y: height / 2 - (textW / 2) * sin,
+                    size,
+                    font,
+                    color: rgb(0.45, 0.45, 0.5),
+                    opacity: wmOpacity,
+                    rotate: degrees(45)
+                });
+            }
+
+            // Sayfa numarası: alt orta "1 / N"
+            if (addPageNum && font) {
+                const label = `${idx + 1} / ${total}`;
+                const size = 10;
+                const textW = font.widthOfTextAtSize(label, size);
+                page.drawText(label, {
+                    x: width / 2 - textW / 2,
+                    y: 18,
+                    size,
+                    font,
+                    color: rgb(0.3, 0.3, 0.35)
+                });
+            }
+
+            // Döndürme en son uygulanır (görsel sonuç: içerik sayfayla birlikte döner)
+            if (rotateBy !== 0) {
+                const current = page.getRotation().angle || 0;
+                page.setRotation(degrees((current + rotateBy) % 360));
+            }
+        });
+
+        const outBytes = await doc.save();
+        const blob = new Blob([outBytes], { type: 'application/pdf' });
+        return { blob, message: `${total} ${t('pdfc_pages_stamped')}` };
     }
 }

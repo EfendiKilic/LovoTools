@@ -10,6 +10,12 @@ import { initVideoToAudio } from './modules/videoToAudio.js';
 import { initImagePdf } from './modules/imagePdf.js';
 import { initDevTools } from './modules/devTools.js';
 import { initGifVideo } from './modules/gifVideo.js';
+import { initOcrTool } from './modules/ocrTool.js';
+import { initDataConvert } from './modules/dataConvert.js';
+import { initMarkdownTool } from './modules/markdownTool.js';
+import { initSvgConverter } from './modules/svgConverter.js';
+import { initSubtitleConverter } from './modules/subtitleConverter.js';
+import { initColorTools } from './modules/colorTools.js';
 import { applyTranslations, toggleLang, currentLang } from './i18n.js';
 
 /**
@@ -37,6 +43,12 @@ class App {
             'image-pdf-panel': { file: 'image-pdf.html', css: 'image-pdf.css', init: initImagePdf },
             'dev-tools-panel': { file: 'dev-tools.html', css: 'dev-tools.css', init: initDevTools },
             'gif-video-panel': { file: 'gif-video.html', css: 'gif-video.css', init: initGifVideo },
+            'ocr-panel': { file: 'ocr-tool.html', css: 'ocr-tool.css', init: initOcrTool },
+            'data-convert-panel': { file: 'data-convert.html', css: 'data-convert.css', init: initDataConvert },
+            'markdown-panel': { file: 'markdown-tool.html', css: 'markdown-tool.css', init: initMarkdownTool },
+            'svg-converter-panel': { file: 'svg-converter.html', css: 'svg-converter.css', init: initSvgConverter },
+            'subtitle-converter-panel': { file: 'subtitle-converter.html', css: 'subtitle-converter.css', init: initSubtitleConverter },
+            'color-tools-panel': { file: 'color-tools.html', css: 'color-tools.css', init: initColorTools },
             'resources-panel': { file: 'resources.html', css: 'resources.css', init: null },
             'updates-panel': { file: 'updates.html', css: 'updates.css', init: null }
         };
