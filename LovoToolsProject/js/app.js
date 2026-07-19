@@ -18,7 +18,7 @@ import { initSubtitleConverter } from './modules/subtitleConverter.js';
 import { initColorTools } from './modules/colorTools.js';
 import { initFileConverter } from './modules/fileConverter.js';
 import { initShortcutGuide } from './modules/shortcutGuide.js';
-import { applyTranslations, toggleLang, currentLang } from './i18n.js';
+import { applyTranslations, setLang, currentLang } from './i18n.js';
 
 /**
  * Main Application Orchestrator
@@ -69,7 +69,7 @@ class App {
         window.app = this;
         window.openPanel = (panelId) => this.openPanel(panelId);
         window.openDashboard = () => this.openDashboard();
-        window.toggleLang = toggleLang;
+        window.setLang = setLang;
 
 
         document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
@@ -318,7 +318,7 @@ function toggleTheme() {
 /**
  * Initialization lifecycle
  */
-document.addEventListener('DOMContentLoaded', () => {
+function boot() {
     initTheme();
     window.toggleTheme = toggleTheme;
     new App();
@@ -326,4 +326,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavDropdown();
     applyTranslations();
     document.documentElement.lang = currentLang;
-});
+}
+
+// i18n.js'teki top-level await (dil paketi yükleme) modül yürütmesini askıya alabildiği için
+// DOMContentLoaded bu modülden önce ateşlenmiş olabilir — readyState ile iki durumu da karşıla.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+} else {
+    boot();
+}

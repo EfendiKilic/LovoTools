@@ -501,6 +501,44 @@ body {
   transition: all 0.2s;
 }
 
+/* Dil seçici (navbar) */
+.lang-select-wrap {
+  cursor: pointer;
+  position: relative;
+}
+
+.lang-select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding-right: 1.1rem;
+  outline: none;
+}
+
+.lang-select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.lang-select-wrap select option {
+  background: var(--bg-card, #fff);
+  color: var(--text-main, #111);
+}
+
 .nav-btn-primary {
   padding: 0.5rem 1.25rem;
   border-radius: 10px;

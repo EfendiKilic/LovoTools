@@ -132,10 +132,20 @@
         <button class="nav-btn-secondary theme-toggle-btn" onclick="window.toggleTheme()" title="Tema Değiştir" style="cursor:pointer; border:none; padding: 0.5rem 0.75rem;">
           <i class="ph-fill ph-moon" id="theme-icon"></i>
         </button>
-        <button class="nav-btn-secondary" onclick="window.toggleLang()" style="cursor:pointer; border:none;">
+        <label class="nav-btn-secondary lang-select-wrap" title="Dil / Language">
           <i class="ph-fill ph-translate"></i>
-          <span data-i18n="lang_other">EN</span>
-        </button>
+          <select id="lang-select" onchange="window.setLang(this.value)">
+            <option value="tr">Türkçe</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="it">Italiano</option>
+            <option value="kk">Қазақша</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+          </select>
+        </label>
         <a href="#" class="nav-btn-primary" data-i18n="nav_start">Hemen Başla</a>
       </div>
     </div>
@@ -201,7 +211,7 @@
               <h3 data-i18n="card_fconv_title">Dosya Dönüştürücü</h3>
               <p data-i18n="card_fconv_desc">Görsel, ses, video, veri ve belgeleri toplu dönüştür, ZIP olarak indir.</p>
             </div>
-            <img src="assets/img/code_art.png" class="card-art" alt="File Converter Art">
+            <img src="assets/img/file_convert_art.png" class="card-art" alt="File Converter Art">
           </div>
 
           <!-- Kod Merkezi (Wide) -->
@@ -214,27 +224,9 @@
             <img src="assets/img/code_art.png" class="card-art" alt="Code Art">
           </div>
 
-          <!-- QR Kod (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('qr-generator-panel')">
-            <div class="tool-icon"><i class="ph ph-qr-code"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_qr_title">QR Kod</h3>
-              <p data-i18n="card_qr_desc">Hızlı ve kurumsal QR oluşturucu.</p>
-            </div>
-            <img src="assets/img/qr_art.png" class="card-art" alt="QR Art">
-          </div>
+          <!-- ═══ Satır 3 — Medya ═══ -->
 
-          <!-- Link Kısaltma (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('url-shortener-panel')">
-            <div class="tool-icon"><i class="ph ph-link"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_url_title">Link Kısaltma</h3>
-              <p data-i18n="card_url_desc">Analitik ve güvenli kısaltma.</p>
-            </div>
-            <img src="assets/img/url_art.png" class="card-art" alt="URL Art">
-          </div>
-
-          <!-- Ses Düzenleme (Normal) -->
+          <!-- Ses Düzenleme -->
           <div id="media" class="tool-card" onclick="app.openPanel('audio-editor-panel')">
             <div class="tool-icon"><i class="ph ph-wave-sine"></i></div>
             <div class="card-content">
@@ -244,8 +236,8 @@
             <img src="assets/img/audio_edit_art.png" class="card-art" alt="Audio Art">
           </div>
 
-          <!-- Video Sıkıştırma (Wide) -->
-          <div class="tool-card card-wide" onclick="app.openPanel('video-compressor-panel')">
+          <!-- Video İşleme -->
+          <div class="tool-card" onclick="app.openPanel('video-compressor-panel')">
             <div class="tool-icon"><i class="ph ph-video-camera"></i></div>
             <div class="card-content">
               <h3 data-i18n="card_video_title">Video İşleme</h3>
@@ -254,7 +246,29 @@
             <img src="assets/img/video_art.png" class="card-art" alt="Video Art">
           </div>
 
-          <!-- Görsel Düzenleyici (Normal) -->
+          <!-- Videodan Ses -->
+          <div class="tool-card" onclick="app.openPanel('video-audio-panel')">
+            <div class="tool-icon"><i class="ph ph-music-notes"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_v2a_title">Videodan Ses</h3>
+              <p data-i18n="card_v2a_desc">Videodan MP3/WAV çıkar.</p>
+            </div>
+            <img src="assets/img/video_to_audio_art.png" class="card-art" alt="Video to Audio Art">
+          </div>
+
+          <!-- GIF Video -->
+          <div class="tool-card" onclick="app.openPanel('gif-video-panel')">
+            <div class="tool-icon"><i class="ph ph-film-strip"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_gifv_title">GIF ↔ Video</h3>
+              <p data-i18n="card_gifv_desc">İki yönlü dönüştürücü.</p>
+            </div>
+            <img src="assets/img/gif_video_art.png" class="card-art" alt="GIF Video Art">
+          </div>
+
+          <!-- ═══ Satır 4 — Görsel ═══ -->
+
+          <!-- Görsel Düzenleyici -->
           <div class="tool-card" onclick="app.openPanel('image-editor-panel')">
             <div class="tool-icon"><i class="ph ph-image"></i></div>
             <div class="card-content">
@@ -264,114 +278,118 @@
             <img src="assets/img/image_art.png" class="card-art" alt="Image Art">
           </div>
 
-          <!-- Videodan Ses (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('video-audio-panel')">
-            <div class="tool-icon"><i class="ph ph-music-notes"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_v2a_title">Videodan Ses</h3>
-              <p data-i18n="card_v2a_desc">Videodan MP3/WAV çıkar.</p>
-            </div>
-            <img src="assets/img/audio_edit_art.png" class="card-art" alt="Video to Audio Art">
-          </div>
-
-          <!-- GIF Video (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('gif-video-panel')">
-            <div class="tool-icon"><i class="ph ph-film-strip"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_gifv_title">GIF ↔ Video</h3>
-              <p data-i18n="card_gifv_desc">İki yönlü dönüştürücü.</p>
-            </div>
-            <img src="assets/img/video_art.png" class="card-art" alt="GIF Video Art">
-          </div>
-
-          <!-- Görsel PDF (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('image-pdf-panel')">
-            <div class="tool-icon"><i class="ph ph-file-image"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_ipdf_title">Görsel ↔ PDF</h3>
-              <p data-i18n="card_ipdf_desc">Görselden PDF, PDF'den görsel.</p>
-            </div>
-            <img src="assets/img/pdf_art.png" class="card-art" alt="Image PDF Art">
-          </div>
-
-          <!-- Geliştirici Mini Araçları (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('dev-tools-panel')">
-            <div class="tool-icon"><i class="ph ph-wrench"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_devt_title">Mini Araçlar</h3>
-              <p data-i18n="card_devt_desc">Base64, UUID, Hash, Şifre.</p>
-            </div>
-            <img src="assets/img/code_art.png" class="card-art" alt="Dev Tools Art">
-          </div>
-
-          <!-- OCR (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('ocr-panel')">
-            <div class="tool-icon"><i class="ph ph-text-align-left"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_ocr_title">Metin Çıkarma (OCR)</h3>
-              <p data-i18n="card_ocr_desc">Görsel ve taranmış PDF'den metin.</p>
-            </div>
-            <img src="assets/img/image_art.png" class="card-art" alt="OCR Art">
-          </div>
-
-          <!-- Veri Dönüştürücü (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('data-convert-panel')">
-            <div class="tool-icon"><i class="ph ph-table"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_dconv_title">Veri Dönüştürücü</h3>
-              <p data-i18n="card_dconv_desc">JSON, CSV ve Excel arası dönüşüm.</p>
-            </div>
-            <img src="assets/img/code_art.png" class="card-art" alt="Data Convert Art">
-          </div>
-
-          <!-- Markdown (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('markdown-panel')">
-            <div class="tool-icon"><i class="ph ph-markdown-logo"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_md_title">Markdown ↔ HTML</h3>
-              <p data-i18n="card_md_desc">Canlı önizlemeli dönüştürücü.</p>
-            </div>
-            <img src="assets/img/code_art.png" class="card-art" alt="Markdown Art">
-          </div>
-
-          <!-- SVG Dönüştürücü (Normal) -->
+          <!-- SVG Dönüştürücü -->
           <div class="tool-card" onclick="app.openPanel('svg-converter-panel')">
             <div class="tool-icon"><i class="ph ph-vector-three"></i></div>
             <div class="card-content">
               <h3 data-i18n="card_svgc_title">SVG → PNG/JPG</h3>
               <p data-i18n="card_svgc_desc">Vektörü istediğin boyutta rasterle.</p>
             </div>
-            <img src="assets/img/image_art.png" class="card-art" alt="SVG Art">
+            <img src="assets/img/svg_art.png" class="card-art" alt="SVG Art">
           </div>
 
-          <!-- Altyazı Dönüştürücü (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('subtitle-converter-panel')">
-            <div class="tool-icon"><i class="ph ph-subtitles"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_sub_title">Altyazı Dönüştürücü</h3>
-              <p data-i18n="card_sub_desc">SRT, VTT ve ASS arası dönüşüm.</p>
-            </div>
-            <img src="assets/img/video_art.png" class="card-art" alt="Subtitle Art">
-          </div>
-
-          <!-- Kısayol Rehberi (Normal) -->
-          <div class="tool-card" onclick="app.openPanel('shortcut-guide-panel')">
-            <div class="tool-icon"><i class="ph ph-keyboard"></i></div>
-            <div class="card-content">
-              <h3 data-i18n="card_sck_title">Kısayol Rehberi</h3>
-              <p data-i18n="card_sck_desc">Windows, VS Code, Photoshop ve daha fazlası.</p>
-            </div>
-            <img src="assets/img/code_art.png" class="card-art" alt="Shortcut Art">
-          </div>
-
-          <!-- Renk Araçları (Normal) -->
+          <!-- Renk Araçları -->
           <div class="tool-card" onclick="app.openPanel('color-tools-panel')">
             <div class="tool-icon"><i class="ph ph-palette"></i></div>
             <div class="card-content">
               <h3 data-i18n="card_clr_title">Renk Araçları</h3>
               <p data-i18n="card_clr_desc">Palet çıkar, HEX/RGB/HSL çevir.</p>
             </div>
-            <img src="assets/img/image_art.png" class="card-art" alt="Color Art">
+            <img src="assets/img/color_art.png" class="card-art" alt="Color Art">
+          </div>
+
+          <!-- Görsel PDF -->
+          <div class="tool-card" onclick="app.openPanel('image-pdf-panel')">
+            <div class="tool-icon"><i class="ph ph-file-image"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_ipdf_title">Görsel ↔ PDF</h3>
+              <p data-i18n="card_ipdf_desc">Görselden PDF, PDF'den görsel.</p>
+            </div>
+            <img src="assets/img/image_pdf_art.png" class="card-art" alt="Image PDF Art">
+          </div>
+
+          <!-- ═══ Satır 5 — Dosya & Veri ═══ -->
+
+          <!-- Veri Dönüştürücü -->
+          <div class="tool-card" onclick="app.openPanel('data-convert-panel')">
+            <div class="tool-icon"><i class="ph ph-table"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_dconv_title">Veri Dönüştürücü</h3>
+              <p data-i18n="card_dconv_desc">JSON, CSV ve Excel arası dönüşüm.</p>
+            </div>
+            <img src="assets/img/data_convert_art.png" class="card-art" alt="Data Convert Art">
+          </div>
+
+          <!-- Altyazı Dönüştürücü -->
+          <div class="tool-card" onclick="app.openPanel('subtitle-converter-panel')">
+            <div class="tool-icon"><i class="ph ph-subtitles"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_sub_title">Altyazı Dönüştürücü</h3>
+              <p data-i18n="card_sub_desc">SRT, VTT ve ASS arası dönüşüm.</p>
+            </div>
+            <img src="assets/img/subtitle_art.png" class="card-art" alt="Subtitle Art">
+          </div>
+
+          <!-- OCR -->
+          <div class="tool-card" onclick="app.openPanel('ocr-panel')">
+            <div class="tool-icon"><i class="ph ph-text-align-left"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_ocr_title">Metin Çıkarma (OCR)</h3>
+              <p data-i18n="card_ocr_desc">Görsel ve taranmış PDF'den metin.</p>
+            </div>
+            <img src="assets/img/ocr_art.png" class="card-art" alt="OCR Art">
+          </div>
+
+          <!-- Markdown -->
+          <div class="tool-card" onclick="app.openPanel('markdown-panel')">
+            <div class="tool-icon"><i class="ph ph-markdown-logo"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_md_title">Markdown ↔ HTML</h3>
+              <p data-i18n="card_md_desc">Canlı önizlemeli dönüştürücü.</p>
+            </div>
+            <img src="assets/img/markdown_art.png" class="card-art" alt="Markdown Art">
+          </div>
+
+          <!-- ═══ Satır 6 — Araçlar ═══ -->
+
+          <!-- QR Kod -->
+          <div class="tool-card" onclick="app.openPanel('qr-generator-panel')">
+            <div class="tool-icon"><i class="ph ph-qr-code"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_qr_title">QR Kod</h3>
+              <p data-i18n="card_qr_desc">Hızlı ve kurumsal QR oluşturucu.</p>
+            </div>
+            <img src="assets/img/qr_art.png" class="card-art" alt="QR Art">
+          </div>
+
+          <!-- Link Kısaltma -->
+          <div class="tool-card" onclick="app.openPanel('url-shortener-panel')">
+            <div class="tool-icon"><i class="ph ph-link"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_url_title">Link Kısaltma</h3>
+              <p data-i18n="card_url_desc">Analitik ve güvenli kısaltma.</p>
+            </div>
+            <img src="assets/img/url_art.png" class="card-art" alt="URL Art">
+          </div>
+
+          <!-- Geliştirici Mini Araçları -->
+          <div class="tool-card" onclick="app.openPanel('dev-tools-panel')">
+            <div class="tool-icon"><i class="ph ph-wrench"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_devt_title">Mini Araçlar</h3>
+              <p data-i18n="card_devt_desc">Base64, UUID, Hash, Şifre.</p>
+            </div>
+            <img src="assets/img/dev_tools_art.png" class="card-art" alt="Dev Tools Art">
+          </div>
+
+          <!-- Kısayol Rehberi -->
+          <div class="tool-card" onclick="app.openPanel('shortcut-guide-panel')">
+            <div class="tool-icon"><i class="ph ph-keyboard"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_sck_title">Kısayol Rehberi</h3>
+              <p data-i18n="card_sck_desc">Windows, VS Code, Photoshop ve daha fazlası.</p>
+            </div>
+            <img src="assets/img/shortcut_art.png" class="card-art" alt="Shortcut Art">
           </div>
 
         </div>

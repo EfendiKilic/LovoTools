@@ -27,6 +27,11 @@
             <h3 data-i18n="pdf_organize_title">Düzenle</h3>
             <p data-i18n="pdf_organize_desc">Sayfaların yerini sürükleyip değiştirin.</p>
         </div>
+        <div class="pdf-tool-card" onclick="openPdfConvert('compress')">
+            <div class="tool-icon"><i class="ph ph-archive"></i></div>
+            <h3 data-i18n="pdfc_compress_title">Sıkıştır</h3>
+            <p data-i18n="pdfc_compress_desc">PDF dosya boyutunu küçültün.</p>
+        </div>
         <div class="pdf-tool-card" onclick="openPdfConvert('stamp')">
             <div class="tool-icon"><i class="ph ph-stamp"></i></div>
             <h3 data-i18n="pdfc_stamp_title">Damgala & Döndür</h3>
@@ -36,12 +41,7 @@
     </div>
     <div>
       <h4 class="pdf-group-title" data-i18n="pdf_group_convert">Dönüştürme</h4>
-      <div class="pdf-home-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
-        <div class="pdf-tool-card" onclick="openPdfConvert('compress')">
-            <div class="tool-icon"><i class="ph ph-archive"></i></div>
-            <h3 data-i18n="pdfc_compress_title">Sıkıştır</h3>
-            <p data-i18n="pdfc_compress_desc">PDF dosya boyutunu küçültün.</p>
-        </div>
+      <div class="pdf-home-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
         <div class="pdf-tool-card" onclick="openPdfConvert('pdf2word')">
             <div class="tool-icon"><i class="ph ph-file-doc"></i></div>
             <h3 data-i18n="pdfc_pdf2word_title">PDF → Word</h3>

@@ -26,7 +26,6 @@ const translations = {
         nav_tool_sub: 'Altyazı Dönüştürücü',
         nav_tool_dconv: 'Veri Dönüştürücü',
         nav_tool_md: 'Markdown ↔ HTML',
-        lang_other: 'EN',
         // Hero
         hero_subtitle: 'LovoTools, tüm dijital ihtiyaçlarınız için hepsi bir arada, modern ve yüksek performanslı bir araç merkezidir.',
         stat_tools_number: '19 Araç',
@@ -556,7 +555,6 @@ const translations = {
         nav_tool_sub: 'Subtitle Converter',
         nav_tool_dconv: 'Data Converter',
         nav_tool_md: 'Markdown ↔ HTML',
-        lang_other: 'TR',
         // Hero
         hero_subtitle: 'LovoTools is an all-in-one, modern and high-performance tool hub for all your digital needs.',
         stat_tools_number: '19 Tools',
@@ -1061,24 +1059,62 @@ const translations = {
     }
 };
 
+/**
+ * Desteklenen diller. tr ve en bu dosyada gömülüdür;
+ * diğerleri js/locales/<kod>.js dosyasından yalnızca seçildiğinde yüklenir.
+ */
+export const SUPPORTED_LANGS = {
+    tr: 'Türkçe',
+    en: 'English',
+    de: 'Deutsch',
+    fr: 'Français',
+    es: 'Español',
+    it: 'Italiano',
+    kk: 'Қазақша',
+    ja: '日本語',
+    zh: '中文'
+};
+
 export let currentLang = localStorage.getItem('lang') || 'tr';
+if (!SUPPORTED_LANGS[currentLang]) currentLang = 'tr';
 
 export function t(key) {
-    return translations[currentLang]?.[key] ?? key;
+    // Eksik anahtarlar önce İngilizce'ye, sonra Türkçe'ye düşer
+    return translations[currentLang]?.[key] ?? translations.en[key] ?? translations.tr[key] ?? key;
 }
 
-export function setLang(lang) {
+async function loadLocale(lang) {
+    if (translations[lang] || !SUPPORTED_LANGS[lang]) return;
+    const mod = await import(`./locales/${lang}.js`);
+    translations[lang] = mod.default;
+}
+
+export async function setLang(lang) {
+    if (!SUPPORTED_LANGS[lang]) return;
+    try {
+        await loadLocale(lang);
+    } catch (err) {
+        console.error(`Dil paketi yüklenemedi (${lang}):`, err);
+        return;
+    }
     currentLang = lang;
     localStorage.setItem('lang', lang);
     document.documentElement.lang = lang;
     applyTranslations();
 }
 
-export function toggleLang() {
-    setLang(currentLang === 'tr' ? 'en' : 'tr');
+// Kaydedilmiş dil gömülü değilse sayfa açılışında yükle (top-level await, ES module)
+if (!translations[currentLang]) {
+    try {
+        await loadLocale(currentLang);
+    } catch (_) {
+        currentLang = 'tr';
+    }
 }
 
 export function applyTranslations(root = document) {
+    const langSelect = document.getElementById('lang-select');
+    if (langSelect && langSelect.value !== currentLang) langSelect.value = currentLang;
     root.querySelectorAll('[data-i18n]').forEach(el => {
         el.textContent = t(el.dataset.i18n);
     });
