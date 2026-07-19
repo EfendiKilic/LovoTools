@@ -1,0 +1,46 @@
+<section id="file-converter-panel" class="tool-panel">
+  <div class="tool-header">
+    <div class="tool-breadcrumb" onclick="openDashboard()">
+      <i class="ph ph-squares-four"></i> <span data-i18n="breadcrumb_tools">Araçlar</span>
+      <i class="ph ph-caret-right"></i> <span data-i18n="fconv_breadcrumb">Dosyalar</span>
+    </div>
+    <h2 data-i18n="fconv_title">Dosya Dönüştürücü</h2>
+  </div>
+
+  <section id="fconv-upload-zone" class="upload-zone active">
+    <div class="upload-card" onclick="document.getElementById('fconv-input').click()">
+      <div class="icon-circle">
+        <i class="ph ph-swap"></i>
+      </div>
+      <h3 data-i18n="fconv_upload_title">Dönüştürmek istediğiniz dosyaları yükleyin</h3>
+      <p data-i18n="fconv_upload_drag">Birden fazla dosyayı sürükleyip bırakın veya seçmek için tıklayın.</p>
+      <small data-i18n="fconv_note">(Görsel, ses, video, veri ve belge — dosyalar cihazınızdan çıkmaz, tamamen tarayıcıda işlenir)</small>
+      <input type="file" id="fconv-input" multiple hidden>
+      <button class="btn btn-primary" style="margin-top: 1.5rem; padding: 1rem 3rem;" data-i18n="fconv_select_btn">Dosya Seç</button>
+    </div>
+  </section>
+
+  <section id="fconv-workspace" class="editor-zone">
+    <div class="fconv-card">
+      <div class="fconv-toolbar">
+        <button id="fconv-btn-add" class="btn btn-outline">
+          <i class="ph ph-plus"></i> <span data-i18n="fconv_add_more">Dosya Ekle</span>
+        </button>
+        <span id="fconv-count" class="fconv-count"></span>
+        <div class="fconv-toolbar-right">
+          <button id="fconv-btn-clear" class="btn btn-outline">
+            <i class="ph ph-trash"></i> <span data-i18n="fconv_clear_btn">Temizle</span>
+          </button>
+          <button id="fconv-btn-convert-all" class="btn btn-primary">
+            <i class="ph ph-arrows-clockwise"></i> <span data-i18n="fconv_convert_all">Tümünü Dönüştür</span>
+          </button>
+          <button id="fconv-btn-zip" class="btn btn-primary fconv-btn-zip" disabled>
+            <i class="ph ph-file-zip"></i> <span data-i18n="fconv_zip_btn">Tümünü İndir (ZIP)</span>
+          </button>
+        </div>
+      </div>
+      <div id="fconv-list" class="fconv-list"></div>
+      <p class="fconv-hint" data-i18n="fconv_hint">Her satırda hedef formatı ve çıktı adını ayarlayıp tek tek ya da toplu dönüştürebilirsiniz.</p>
+    </div>
+  </section>
+</section>

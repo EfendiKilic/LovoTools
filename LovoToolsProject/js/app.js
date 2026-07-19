@@ -16,6 +16,8 @@ import { initMarkdownTool } from './modules/markdownTool.js';
 import { initSvgConverter } from './modules/svgConverter.js';
 import { initSubtitleConverter } from './modules/subtitleConverter.js';
 import { initColorTools } from './modules/colorTools.js';
+import { initFileConverter } from './modules/fileConverter.js';
+import { initShortcutGuide } from './modules/shortcutGuide.js';
 import { applyTranslations, toggleLang, currentLang } from './i18n.js';
 
 /**
@@ -49,6 +51,8 @@ class App {
             'svg-converter-panel': { file: 'svg-converter.html', css: 'svg-converter.css', init: initSvgConverter },
             'subtitle-converter-panel': { file: 'subtitle-converter.html', css: 'subtitle-converter.css', init: initSubtitleConverter },
             'color-tools-panel': { file: 'color-tools.html', css: 'color-tools.css', init: initColorTools },
+            'file-converter-panel': { file: 'file-converter.html', css: 'file-converter.css', init: initFileConverter },
+            'shortcut-guide-panel': { file: 'shortcut-guide.html', css: 'shortcut-guide.css', init: initShortcutGuide },
             'resources-panel': { file: 'resources.html', css: 'resources.css', init: null },
             'updates-panel': { file: 'updates.html', css: 'updates.css', init: null }
         };

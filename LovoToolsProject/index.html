@@ -81,6 +81,10 @@
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_dconv">Veri Dönüştürücü</span>
               </div>
+              <div class="nav-dropdown-item" onclick="openPanel('file-converter-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_files">Dosyalar</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_fconv">Dosya Dönüştürücü</span>
+              </div>
             </div>
             <div class="nav-dropdown-col">
               <div class="nav-dropdown-item" onclick="openPanel('code-center-panel')">
@@ -94,6 +98,10 @@
               <div class="nav-dropdown-item" onclick="openPanel('markdown-panel')">
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_dev">Geliştirici</span>
                 <span class="nav-dropdown-title" data-i18n="nav_tool_md">Markdown ↔ HTML</span>
+              </div>
+              <div class="nav-dropdown-item" onclick="openPanel('shortcut-guide-panel')">
+                <span class="nav-dropdown-cat" data-i18n="nav_cat_dev">Geliştirici</span>
+                <span class="nav-dropdown-title" data-i18n="nav_tool_sck">Kısayol Rehberi</span>
               </div>
               <div class="nav-dropdown-item" onclick="openPanel('qr-generator-panel')">
                 <span class="nav-dropdown-cat" data-i18n="nav_cat_tools">Araçlar</span>
@@ -184,6 +192,16 @@
               <p data-i18n="card_pdf_desc">Merge, Split ve çok daha fazlası. Masaüstü kalitesinde PDF araçları tarayıcınızda.</p>
             </div>
             <img src="assets/img/pdf_art.png" class="card-art" alt="PDF Art">
+          </div>
+
+          <!-- Dosya Dönüştürücü (Wide) -->
+          <div class="tool-card card-wide" onclick="app.openPanel('file-converter-panel')">
+            <div class="tool-icon"><i class="ph ph-swap"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_fconv_title">Dosya Dönüştürücü</h3>
+              <p data-i18n="card_fconv_desc">Görsel, ses, video, veri ve belgeleri toplu dönüştür, ZIP olarak indir.</p>
+            </div>
+            <img src="assets/img/code_art.png" class="card-art" alt="File Converter Art">
           </div>
 
           <!-- Kod Merkezi (Wide) -->
@@ -334,6 +352,16 @@
               <p data-i18n="card_sub_desc">SRT, VTT ve ASS arası dönüşüm.</p>
             </div>
             <img src="assets/img/video_art.png" class="card-art" alt="Subtitle Art">
+          </div>
+
+          <!-- Kısayol Rehberi (Normal) -->
+          <div class="tool-card" onclick="app.openPanel('shortcut-guide-panel')">
+            <div class="tool-icon"><i class="ph ph-keyboard"></i></div>
+            <div class="card-content">
+              <h3 data-i18n="card_sck_title">Kısayol Rehberi</h3>
+              <p data-i18n="card_sck_desc">Windows, VS Code, Photoshop ve daha fazlası.</p>
+            </div>
+            <img src="assets/img/code_art.png" class="card-art" alt="Shortcut Art">
           </div>
 
           <!-- Renk Araçları (Normal) -->

@@ -1,0 +1,191 @@
+/* File Converter Styles */
+.fconv-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-ring);
+}
+
+.fconv-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 1.5rem;
+}
+
+.fconv-toolbar-right {
+  margin-left: auto;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.fconv-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.fconv-btn-zip:not(:disabled) {
+  background: var(--success, #10b981);
+}
+
+.fconv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fconv-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(140px, 1.2fr) minmax(120px, 1fr) auto auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.fconv-row.done {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.06);
+}
+
+.fconv-row.error {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.fconv-row-icon i {
+  font-size: 1.75rem;
+  color: var(--primary);
+}
+
+.fconv-row.done .fconv-row-icon i {
+  color: var(--success, #10b981);
+}
+
+.fconv-row-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fconv-row-info strong {
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fconv-row-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.fconv-out-info {
+  color: var(--success, #10b981);
+  font-weight: 600;
+}
+
+.fconv-name-input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.fconv-target-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fconv-target-wrap > i {
+  color: var(--text-muted);
+}
+
+.fconv-format-select {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.fconv-row-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.fconv-row-actions .btn {
+  padding: 0.55rem 0.8rem;
+  border-radius: 10px;
+}
+
+.fconv-btn-download {
+  background: var(--success, #10b981);
+  color: #fff;
+}
+
+.fconv-btn-remove {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+}
+
+.fconv-btn-remove:hover {
+  color: var(--danger, #ef4444);
+  border-color: var(--danger, #ef4444);
+}
+
+.fconv-row-progress {
+  grid-column: 1 / -1;
+  height: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fconv-row-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.fconv-hint {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+#fconv-workspace.dragover .fconv-card {
+  border-color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .fconv-row {
+    grid-template-columns: auto 1fr auto;
+  }
+  .fconv-name-input {
+    grid-column: 2 / -1;
+  }
+  .fconv-toolbar-right {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+.hidden { display: none !important; }
